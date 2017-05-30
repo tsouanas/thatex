@@ -1,1 +1,4 @@
-# thatex
+# ThaTeX
+
+Thanos's TeX macros
+
