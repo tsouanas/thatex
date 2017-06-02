@@ -98,6 +98,7 @@
 \centerline{\fourteenbf\chaptername~##1}\vskip\fullproofskip
 \fi
 \noindent{\bf \refn{##3}.}
+\definexref{##3_fullproof}{S}{fullproof}%
 ##4
 \goodbreak\vskip\fullproofskip
 }
@@ -542,9 +543,7 @@
 \def\notetag{\notetagdecorate{\the\chapterno.\the\notecounter}}%
 \def\notename{}%
 \def\noterefclass{}%
-\def\noteheadahook{}%
-\def\noteheadzhook{}%
-\def\notehead{\medbreak\noindent\bgroup\bf\noteheadahook\notetag.~\ifEmpty\notename\else\notename.\enspace\fi\noteheadzhook\egroup}%
+\def\notehead{\medbreak\noindent\bgroup\bf\notetag.~\ifEmpty\notename\else\notename.\enspace\fi\egroup}%
 \def\notebodyahook{\bgroup}%
 \def\notebodyzhook{\egroup\par\medbreak}%
 \def\notebodytext{}%
@@ -566,32 +565,16 @@
 %\notehead%
 \medbreak%
 \noindent%
-\noteheadahook%
 {\bf\notetag.\enspace%
 \ifEmpty\notename\else\notename.\enspace\fi}%
-\noteheadzhook%
 \notebody%
 }%
 }
 
-\def\proclaim#1. #2\par{
-{%
-\notemixin%
-% overrides:
-\notecounterinc%
-\ifnull#1\\%
-\def\notename{}%
-\else%
-\def\notename{#1}%
-\fi%
-\def\notebodytext{\sl#2}%
-\notehead%
-\notebody%
-\par%
-}%
-}
-
-\def\gennote#1#2#3#4{
+\def\gennote#1#2#3{
+% #1: name of note (theorem)
+% #2: title (Thales)
+% #3: body
 {%
 \notemixin%
 % overrides:
@@ -606,6 +589,21 @@
 \def\label##1{\definexref{##1}{\notetag}{note}}%
 \def\notebodytext{%
 \def\label####1{\definexref{####1}{\notetag}{#1}}%
+%%%%%%%
+#3%
+}%
+\expandafter\label{\notelabel}%
+\notehead%
+\notebody%
+}%
+\medbreak
+}
+
+\def\genproclaim#1#2#3{%
+% #1: name of note (theorem)
+% #2: title (Thales)
+% #3: body
+\gennote{#1}{#2}{%
 \innernewif\ifhideproof%
 \hideprooffalse%
 %%%%
@@ -613,7 +611,7 @@
 \long\def\sketch####1. ####2\qes{%
 \hideprooftrue%
 \medskip
-\par\noindent%
+\endgraf\noindent%
 \llap{\activitysymbol\enspace}%
 \ifEqStr{####1}{}%
 \argumentationheadstyle{\sketchname}. %
@@ -622,15 +620,14 @@
 \fi%
 \bgroup\rm%
 ####2%
-\eolfill\qessymbol
+\eolfill\qessymbol%
 \egroup%
-\par%
 }%
 %%%%
 % wrongproof 
 \long\def\wrongproof####1. ####2\mistaqed{%
 \hideprooftrue%
-\par\noindent%
+\endgraf\noindent%
 \bgroup\rm%
 \ifEqStr{####1}{}%
 \argumentationheadstyle{\llap{\activitysymbol\enspace}\proofname}. %
@@ -640,7 +637,7 @@
 ####2%
 {\hfill\mistakesymbol}%
 \egroup%
-\par%
+\endgraf%
 }%
 %%%%
 % proof 
@@ -651,31 +648,20 @@
 \def\proofhead{####1}%
 \fi%
 \ifhideproof%
+\rlap{\xrefn{\notelabel_fullproof}}
 \immediate\writefullproof{\number\chapterno}{\notetag}{\notelabel}{{\unexpanded{\scshape} \proofhead}\unexpanded{####2}\unexpanded{\hfill\qedsymbol}}%
 \else%
-\par\noindent%
+\endgraf\noindent%
 \bgroup\rm%
 %
 \argumentationheadstyle{\proofhead}%
 ####2%
 {\hfill\qedsymbol}%
 \egroup%
-\par%
+\endgraf%
 \fi%
 }%
-%%%%%%%
-#3%
-}%
-\def\noteheadahook{#4}%
-\notehead%
-\expandafter\label{\notelabel}%
-\notebody%
-}%
-\medbreak
-}
-
-\def\genproclaim#1#2#3{%
-\gennote{#1}{#2}{\sl#3}{}%
+\sl#3}%
 }
 
 \def\theorem#1. #2\par{\genproclaim{theorem}{#1}{#2}}
@@ -688,12 +674,12 @@
 \def\axiom#1. #2\par{\genproclaim{axiom}{#1}{#2}}
 \def\principle#1. #2\par{\genproclaim{principle}{#1}{#2}}
 \def\criterion#1. #2\par{\genproclaim{criterion}{#1}{#2}}
-\def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}{}}
-\def\program#1. #2\par{\gennote{program}{#1}{#2}{}}
-\def\remark#1. #2\par{\gennote{remark}{#1}{#2}{}}
-\def\beware#1. #2\par{\gennote{beware}{#1}{#2}{}}
-\def\warning#1. #2\par{\gennote{warning}{#1}{#2}{}}
-\def\definition#1. #2\par{\gennote{definition}{#1}{#2}{}}
+\def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}}
+\def\program#1. #2\par{\gennote{program}{#1}{#2}}
+\def\remark#1. #2\par{\gennote{remark}{#1}{#2}}
+\def\beware#1. #2\par{\gennote{beware}{#1}{#2}}
+\def\warning#1. #2\par{\gennote{warning}{#1}{#2}}
+\def\definition#1. #2\par{\gennote{definition}{#1}{#2}}
 \def\blah#1. #2\par{\medskip#2\medskip}
 
 \def\algospec INPUT: #1 OUTPUT: #2\endspec{%
@@ -810,7 +796,7 @@
 \def\writefullproof#1#2#3#4{%
 % #1: chapterno
 % #2: tag (Θ4.2, Λ3.2, etc.)
-% #3: label (fullproof_8.23)
+% #3: label (8.23)
 % #4: proof text
 \write\fullproofsfile{%
 \expandafter\string\csname fullproofentry\endcsname
