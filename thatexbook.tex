@@ -92,13 +92,13 @@
 \immediate\closeout\fullproofsfile
 \innernewcount\curchapterno
 
-\def\fullproofentry##1##2##3{%
+\def\fullproofentry##1##2##3##4{%
 \ifnum##1>\curchapterno
 \curchapterno=##1
 \centerline{\fourteenbf\chaptername~##1}\vskip\fullproofskip
 \fi
-\noindent{\bf ##2.}
-##3
+\noindent{\bf \refn{##3}.}
+##4
 \goodbreak\vskip\fullproofskip
 }
 
@@ -602,6 +602,8 @@
 \else%
 \edef\notename{\csname#1name\endcsname~(#2)}%
 \fi%
+\def\notelabel{note\notetag}
+\def\label##1{\definexref{##1}{\notetag}{note}}%
 \def\notebodytext{%
 \def\label####1{\definexref{####1}{\notetag}{#1}}%
 \innernewif\ifhideproof%
@@ -620,8 +622,7 @@
 \fi%
 \bgroup\rm%
 ####2%
-\ifhmode\unskip\nobreak\fi\hfill\quad\qessymbol
-%\hfill\qessymbol\hss%
+\eolfill\qessymbol
 \egroup%
 \par%
 }%
@@ -650,7 +651,7 @@
 \def\proofhead{####1}%
 \fi%
 \ifhideproof%
-\immediate\writefullproof{\number\chapterno}{\notetag}{{\unexpanded{\scshape} \proofhead}\unexpanded{####2}\unexpanded{\hfill\qedsymbol}}%
+\immediate\writefullproof{\number\chapterno}{\notetag}{\notelabel}{{\unexpanded{\scshape} \proofhead}\unexpanded{####2}\unexpanded{\hfill\qedsymbol}}%
 \else%
 \par\noindent%
 \bgroup\rm%
@@ -662,11 +663,12 @@
 \par%
 \fi%
 }%
-%%%%
+%%%%%%%
 #3%
 }%
 \def\noteheadahook{#4}%
 \notehead%
+\expandafter\label{\notelabel}%
 \notebody%
 }%
 \medbreak
@@ -805,15 +807,17 @@
 }
 }
 
-\def\writefullproof#1#2#3{%
+\def\writefullproof#1#2#3#4{%
 % #1: chapterno
 % #2: tag (Θ4.2, Λ3.2, etc.)
-% #3: proof text
+% #3: label (fullproof_8.23)
+% #4: proof text
 \write\fullproofsfile{%
 \expandafter\string\csname fullproofentry\endcsname
     {#1}
     {#2}
     {#3}
+    {#4}
 }
 }
 
