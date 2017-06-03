@@ -265,6 +265,7 @@
 \def\bord#1{\abs{#1}}
 \def\ginv#1{{#1}^{-1}}
 \def\pginv#1{\paren{#1}^{-1}}
+\def\dih#1{{{\cal D}_{#1}}}
 \makeatletter
 \def\pmodr#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \def\pmodl#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
@@ -275,6 +276,9 @@
 \let\subgrp=\subgroup
 \let\nsubgrp=\nsubgroup
 \def\generate#1{\left\langle#1\right\rangle}
+\def\normalsubgroup{\mathrel{\trianglelefteq}}
+\let\normal=\normalsubgroup
+\let\normsub=\normalsubgroup
 
 % placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
