@@ -98,7 +98,7 @@
 \centerline{\fourteenbf\chaptername~##1}\vskip\fullproofskip
 \fi
 \noindent{\bf \refn{##3}.}
-\definexref{##3_fullproof}{S}{fullproof}%
+\xrdef{##3_fullproof}%
 ##4
 \goodbreak\vskip\fullproofskip
 }
@@ -648,7 +648,7 @@
 \def\proofhead{####1}%
 \fi%
 \ifhideproof%
-\rlap{\xrefn{\notelabel_fullproof}}
+\rlap{~{\eightrm (\xrefn[p.]{\notelabel_fullproof})}}%
 \immediate\writefullproof{\number\chapterno}{\notetag}{\notelabel}{{\unexpanded{\scshape} \proofhead}\unexpanded{####2}\unexpanded{\hfill\qedsymbol}}%
 \else%
 \endgraf\noindent%
@@ -757,7 +757,7 @@
     {#5}
     {#6}
     {#7}
-}
+}%
 }
 \def\writehint#1#2#3#4#5#6{%
 % #1: group (exercise or problem)
@@ -774,7 +774,7 @@
     {#4}
     {#5}
     {#6}
-}
+}%
 }
 
 \def\writesolution#1#2#3#4#5{%
@@ -790,7 +790,7 @@
     {#3}
     {#4}
     {#5}
-}
+}%
 }
 
 \def\writefullproof#1#2#3#4{%
@@ -804,7 +804,7 @@
     {#2}
     {#3}
     {#4}
-}
+}%
 }
 
 
@@ -885,7 +885,7 @@
 % solution
 \def\solution##1\par{%
 \noindent%
-%\ifEqStr{##1}{}%
+%\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
 %\argumentationheadstyle{\solutionname}. %
 %\else%
 %\argumentationheadstyle{##1}%
