@@ -600,6 +600,7 @@
 \medbreak
 }
 
+\def\proclaimstyle{\sl}
 \def\genproclaim#1#2#3{%
 % #1: name of note (theorem)
 % #2: title (Thales)
@@ -662,7 +663,7 @@
 \endgraf%
 \fi%
 }%
-\sl#3}%
+\proclaimstyle#3}%
 }
 
 \def\theorem#1. #2\par{\genproclaim{theorem}{#1}{#2}}
