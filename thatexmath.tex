@@ -82,10 +82,14 @@
 \def\mathsf#1{\hbox{\sf#1}}
 \def\mathtt#1{\hbox{\tt#1}}
 \def\txt#1{\text{\tt #1}}
-\def\namedpred#1{\mathop{\rm #1}\nolimits}
+\def\namedpred#1{\operatorname{#1}\nolimits}
 \def\namedfun#1{\operatorname{#1}\nolimits}
 \def\namedop#1{\operatorname{#1}}
 \def\cal{\Cal}
+
+% metadefs
+\def\DefPred#1{\expandafter\def\csname #1\endcsname{\namedpred{#1}}}
+\def\DefPredicate#1#2{\def#1{\namedpred{#2}}}
 
 % elementary math
 \def\abs#1{\left|#1\right|}
@@ -267,6 +271,7 @@
 \def\complement#1{\widetilde{#1}}
 \def\russell#1{{{r}(#1)}}
 \def\metain{\mathrel{\in\kern-0.425em\in}}
+\DefPred{Set}
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
@@ -297,12 +302,12 @@
 
 % placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
-\def\hole{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}
-\def\dhole{\ensuremath{\mathord{-}}}
+\def\hole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
+\def\dhole{{\ensuremath{\mathord{-}}}}
 \def\thole{\thinspace\vrule height 0.0pt depth 0.4pt width 1em\thinspace}
 \def\lthole{\thinspace\vrule height 0.0pt depth 0.4pt width 2em\thinspace}
 \def\xlthole{\thinspace\vrule height 0.0pt depth 0.4pt width 4em\thinspace}
-\def\holed#1{\ensuremath{\colorbox{holecolor}{$#1$}}}
+\def\holed#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
 
 % algorithm styling
 \def\algorithmstyle#1{\text{{\scshape #1}}}
