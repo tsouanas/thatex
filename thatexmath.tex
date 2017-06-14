@@ -231,8 +231,8 @@
 \def\finsubseteq{\subseteq_{\text{\sixss fin}}}
 \def\finsubset{\subset_{\text{\sixss fin}}}
 \def\seq#1{\left\langle#1\right\rangle}
-\def\pset#1{{\wp}#1}
-\def\psetfin#1{{\wp_{\text{\rm f}}}#1}
+\def\pset{{\wp}}
+\def\psetfin{{\wp_{\text{\rm f}}}}
 \let\powerset=\pset
 \def\card#1{\abs{#1}}
 \def\id{\mathrm{id}}
@@ -280,6 +280,7 @@
 \DefPred{Relation}
 \DefFun{first}
 \DefFun{second}
+\def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
