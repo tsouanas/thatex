@@ -83,13 +83,15 @@
 \def\mathtt#1{\hbox{\tt#1}}
 \def\txt#1{\text{\tt #1}}
 \def\namedpred#1{\operatorname{#1}\nolimits}
-\def\namedfun#1{\operatorname{#1}\nolimits}
+\def\namedfun#1{\mathit{#1}}
 \def\namedop#1{\operatorname{#1}}
 \def\cal{\Cal}
 
 % metadefs
-\def\DefPred#1{\expandafter\def\csname #1\endcsname{\namedpred{#1}}}
-\def\DefPredicate#1#2{\def#1{\namedpred{#2}}}
+\def\DefPred#1{\expandafter\def\csname #1\endcsname{{\namedpred{#1}}}}
+\def\DefFun#1{\expandafter\def\csname #1\endcsname{{\namedfun{#1}}}}
+\def\DefPredicate#1#2{\def#1{{\namedpred{#2}}}}
+\def\DefFunction#1#2{\def#1{{\namedfun{#2}}}}
 
 % elementary math
 \def\abs#1{\left|#1\right|}
@@ -276,6 +278,8 @@
 \DefPred{Pair}
 \DefPred{Function}
 \DefPred{Relation}
+\DefFun{first}
+\DefFun{second}
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
