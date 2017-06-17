@@ -64,6 +64,18 @@
 
 %%}}}
 
+% mathfonts
+\def\mathit#1{\hbox{\it#1}}
+\def\mathrm#1{\hbox{\rm#1}}
+\def\mathsf#1{\hbox{\sf#1}}
+\def\mathtt#1{\hbox{\tt#1}}
+\def\mathbf#1{\hbox{\bf#1}}
+\def\txt#1{\text{\tt #1}}
+\def\namedpred#1{\operatorname{#1}\nolimits}
+\def\namedfun#1{\mathit{#1}}
+\def\namedop#1{\operatorname{#1}}
+\def\cal{\Cal}
+
 % funky symbols
 \def\woohoo{\mathord{\ddot\smile}}
 \def\boohoo{\mathord{\ddot\frown}}
@@ -75,17 +87,6 @@
 \def\reals{{\bbb R}}
 \def\complex{{\bbb C}}
 \def\bools{{\bbb B}}
-
-% mathfonts
-\def\mathit#1{\hbox{\it#1}}
-\def\mathrm#1{\hbox{\rm#1}}
-\def\mathsf#1{\hbox{\sf#1}}
-\def\mathtt#1{\hbox{\tt#1}}
-\def\txt#1{\text{\tt #1}}
-\def\namedpred#1{\operatorname{#1}\nolimits}
-\def\namedfun#1{\mathit{#1}}
-\def\namedop#1{\operatorname{#1}}
-\def\cal{\Cal}
 
 % metadefs
 \def\DefPred#1{\expandafter\def\csname #1\endcsname{{\namedpred{#1}}}}
@@ -213,12 +214,15 @@
 \def\surjto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
 \def\injto{\rightarrowtail}
 \def\bijto{\injto\mathrel{\kern-.8em}\rightarrow}
+\def\parto{\mathrel{\rightharpoonup}}
 \def\decorateover#1#2{\mathrel{{\buildrel{#1} \over {#2}}}}
 \def\transcl#1{\decorateover{+}{#1}}
 \def\rtranscl#1{\decorateover{*}{#1}}
 \def\symcl#1{\decorateover{\leftrightarrow}{#1}}
 \def\refcl#1{\decorateover{=}{#1}}
 \def\set#1{\left\{#1\right\}}
+\def\fsset#1{\{#1\}}% fixed-size set
+\def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
 \def\tup#1{\left<#1\right>}
 \def\paren#1{{\left({#1}\right)}}
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
