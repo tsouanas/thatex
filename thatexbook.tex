@@ -468,13 +468,13 @@
 % generic 
 \def\sectionoidwrapper#1#2{%
 {%
-#2%
 \medbreak\goodbreak\noindent%
 {%
 \centerline{\fourteenbf#1}\nopagebreak%
 \immediate\writetocentry{sectionoid}{#1}{}%
 \hldestizepage\vskip\sectiontitleskip\par\nopagebreak%
 }%
+\noindent#2%
 }%
 }
 
