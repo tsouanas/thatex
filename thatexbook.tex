@@ -469,8 +469,12 @@
 \def\sectionoidwrapper#1#2{%
 {%
 #2%
+\medbreak\goodbreak\noindent%
+{%
+\centerline{\fourteenbf#1}\nopagebreak%
 \immediate\writetocentry{sectionoid}{#1}{}%
-\medbreak\noindent{\centerline{\fourteenbf#1}\hldestizepage\vskip\sectiontitleskip\par\nopagebreak\noindent}%
+\hldestizepage\vskip\sectiontitleskip\par\nopagebreak%
+}%
 }%
 }
 
