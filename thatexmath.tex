@@ -68,6 +68,7 @@
 \def\mathit#1{\hbox{\it#1}}
 \def\mathrm#1{\hbox{\rm#1}}
 \def\mathsf#1{\hbox{\sf#1}}
+\def\mathsfbf#1{\hbox{\sfbf#1}}
 \def\mathtt#1{\hbox{\tt#1}}
 \def\mathbf#1{\hbox{\bf#1}}
 \def\txt#1{\text{\tt #1}}
@@ -267,6 +268,16 @@
 \let\of=\compose
 \let\following=\compose
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
+
+% lambda calculus
+\def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
+\def\Lmac#1{\underline{\mathtt{#1}}}
+\def\Lfinto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
+\def\Lnum#1{{\underline{#1}}}
+
+% combinatory logic
+\def\C#1{{\mathord{\mathsfbf{#1}}}}
+\def\Cto{\mathrel{\triangleright}}
 
 % set theory
 \def\continuum{\euf{c}}
