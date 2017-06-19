@@ -588,14 +588,16 @@
 }%
 }
 
-\def\gennote#1#2#3{
+\def\gennote#1#2#3#4{
 % #1: name of note (theorem)
 % #2: title (Thales)
 % #3: body
+% #4: tag decorator
 {%
 \notemixin%
 % overrides:
 \def\notekind{#1}
+\def\notetagdecorate##1{#4##1}
 \notecounterinc%
 \ifnull#2\\%
 \edef\notename{\csname#1name\endcsname}%
@@ -617,10 +619,11 @@
 }
 
 \def\proclaimstyle{\sl}
-\def\genproclaim#1#2#3{%
+\def\genproclaim#1#2#3#4{%
 % #1: name of note (theorem)
 % #2: title (Thales)
 % #3: body
+% #4: tag decorator
 \gennote{#1}{#2}{%
 \innernewif\ifhideproof%
 \hideprooffalse%
@@ -679,25 +682,25 @@
 \endgraf%
 \fi%
 }%
-\proclaimstyle#3}%
+\proclaimstyle#3}{#4}%
 }
 
-\def\theorem#1. #2\par{\genproclaim{theorem}{#1}{#2}}
-\def\lemma#1. #2\par{\genproclaim{lemma}{#1}{#2}}
-\def\proposition#1. #2\par{\genproclaim{proposition}{#1}{#2}}
-\def\property#1. #2\par{\genproclaim{property}{#1}{#2}}
-\def\corollary#1. #2\par{\genproclaim{corollary}{#1}{#2}}
-\def\conjecture#1. #2\par{\genproclaim{conjecture}{#1}{#2}}
-\def\question#1. #2\par{\genproclaim{question}{#1}{#2}}
-\def\axiom#1. #2\par{\genproclaim{axiom}{#1}{#2}}
-\def\principle#1. #2\par{\genproclaim{principle}{#1}{#2}}
-\def\criterion#1. #2\par{\genproclaim{criterion}{#1}{#2}}
-\def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}}
-\def\program#1. #2\par{\gennote{program}{#1}{#2}}
-\def\remark#1. #2\par{\gennote{remark}{#1}{#2}}
-\def\beware#1. #2\par{\gennote{beware}{#1}{#2}}
-\def\warning#1. #2\par{\gennote{warning}{#1}{#2}}
-\def\definition#1. #2\par{\gennote{definition}{#1}{#2}}
+\def\theorem#1. #2\par{\genproclaim{theorem}{#1}{#2}{Θ}}
+\def\lemma#1. #2\par{\genproclaim{lemma}{#1}{#2}{Λ}}
+\def\proposition#1. #2\par{\genproclaim{proposition}{#1}{#2}{}}
+\def\property#1. #2\par{\genproclaim{property}{#1}{#2}{}}
+\def\corollary#1. #2\par{\genproclaim{corollary}{#1}{#2}{}}
+\def\conjecture#1. #2\par{\genproclaim{conjecture}{#1}{#2}{}}
+\def\question#1. #2\par{\genproclaim{question}{#1}{#2}{}}
+\def\axiom#1. #2\par{\genproclaim{axiom}{#1}{#2}{}}
+\def\principle#1. #2\par{\genproclaim{principle}{#1}{#2}{}}
+\def\criterion#1. #2\par{\genproclaim{criterion}{#1}{#2}{}}
+\def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}{}}
+\def\program#1. #2\par{\gennote{program}{#1}{#2}{}}
+\def\remark#1. #2\par{\gennote{remark}{#1}{#2}{}}
+\def\beware#1. #2\par{\gennote{beware}{#1}{#2}{}}
+\def\warning#1. #2\par{\gennote{warning}{#1}{#2}{}}
+\def\definition#1. #2\par{\gennote{definition}{#1}{#2}{D}}
 \def\blah#1. #2\par{\medskip#2\medskip}
 
 \def\algospec INPUT: #1 OUTPUT: #2\endspec{%
@@ -824,7 +827,6 @@
     {#4}
 }%
 }
-
 
 %%}}}
 
