@@ -9,12 +9,15 @@
 \message{[ThaTeX]}
 
 %%{{{ \inputs 
+
 % eplain
 \let\noarrow=t
 \input eplain
 \let\noarrow\relax
 
-\input xkeyval % must be loaded before the following LaTeX packages
+% these must be loaded before the following LaTeX packages
+\input bussproofs.sty
+\input xkeyval
 
 % LaTeX packages
 \beginpackages
@@ -33,6 +36,7 @@
 \usetikzlibrary{cd}
 \let\color\eplaincolor
 \let\definecolor\eplaindefinecolor
+
 %%}}}
 
 %%{{{ ThaTeX hyperlinks 
