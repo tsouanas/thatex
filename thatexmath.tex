@@ -214,9 +214,9 @@
 \def\union{\cup}
 \def\Union{\bigcup}
 \def\symdiff{\mathbin{\triangle}}
-\def\surjto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
-\def\injto{\rightarrowtail}
-\def\bijto{\injto\mathrel{\kern-.8em}\rightarrow}
+\def\surjto{\mathrel{\rightarrow\mkern-15mu\rightarrow}}
+\def\injto{\mathrel{\rightarrowtail}}
+\def\bijto{\mathrel{\injto\mkern-15mu\rightarrow}}
 \def\parto{\mathrel{\rightharpoonup}}
 \def\decorateover#1#2{\mathrel{{\buildrel{#1} \over {#2}}}}
 \def\transcl#1{\decorateover{+}{#1}}
@@ -330,6 +330,8 @@
 \def\incomparable{\mathrel{\mid\mkern-2mu\mid}}
 \def\altincomparable{\mathrel{\rangle\mkern-5mu\langle}}
 \let\incomp=\incomparable
+\def\embto{\mathrel{\hookrightarrow}}
+\def\embijto{\hookrightarrow\mathrel{\mkern-15mu}\rightarrow}
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
