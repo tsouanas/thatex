@@ -203,6 +203,8 @@
 
 % sets, relations, and functions
 \def\notni{\not\ni}
+\def\nleq{\mathrel{\not\leq}}
+\def\ngeq{\mathrel{\not\geq}}
 \def\intersection{\cap}
 \let\inters=\intersection
 \let\inter=\intersection
@@ -310,6 +312,14 @@
 \let\dunion=\disjunion
 \let\Dunion=\Disjunion
 \def\setsucc#1{{#1}{}^+}
+
+% order theory
+\def\covby{\mathrel{-\mkern-4mu}<}
+\def\wellbelow{\mathrel{\ll}}
+\let\wbelow=\wellbelow
+\def\incomparable{\mathrel{\mid\mkern-2mu\mid}}
+\def\altincomparable{\mathrel{\rangle\mkern-5mu\langle}}
+\let\incomp=\incomparable
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
