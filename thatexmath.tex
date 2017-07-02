@@ -347,6 +347,10 @@
 \def\meet{\mathbin{\wedge}}
 \def\Join{\bigvee}
 \def\Meet{\bigwedge}
+\def\downsets#1{\cal O(#1)}
+\let\downs=\downsets
+\def\dualposet#1{{#1}^\partial}
+\let\dual=\dualposet
 
 % group theory
 \def\quotgrp#1#2{\quotset#1#2}
@@ -371,6 +375,8 @@
 \let\normsub=\normalsubgroup
 \def\aut{\namedop{Aut}}
 \def\paut#1{\aut\paren{#1}}
+\def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
+\def\altgroupind#1#2{i_{#1}(#2)}
 
 % structured sets
 \def\isomorphicto{\mathrel{\knuthcong}}
