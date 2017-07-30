@@ -95,6 +95,7 @@
 \def\fullproofentry##1##2##3##4{%
 \ifnum##1>\curchapterno
 \curchapterno=##1
+\goodbreak
 \centerline{\fourteenbf\chaptername~##1}\vskip\fullproofskip
 \fi
 \noindent{\bf \refn{##3}.}
@@ -155,6 +156,7 @@
 \def\solutionentry##1##2##3##4##5{%
 \ifnum##2>\curchapterno
 \curchapterno=##2
+\goodbreak
 \centerline{\fourteenbf\chaptername~##2}\vskip\solutionskip
 \fi
 \noindent\llap{\bf \refn{##4}.\enspace}%
@@ -697,6 +699,7 @@
 \def\criterion#1. #2\par{\genproclaim{criterion}{#1}{#2}{}}
 \def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}{}}
 \def\program#1. #2\par{\gennote{program}{#1}{#2}{}}
+\def\grammar#1. #2\par{\gennote{grammar}{#1}{#2}{}}
 \def\remark#1. #2\par{\gennote{remark}{#1}{#2}{}}
 \def\beware#1. #2\par{\gennote{beware}{#1}{#2}{}}
 \def\warning#1. #2\par{\gennote{warning}{#1}{#2}{}}

@@ -195,8 +195,9 @@
 
 % grammars
 \def\bnf#1{\left<\mathit{#1}\,\right>}
-\def\bnfor{\mathrel{\,\mid\,}}
 \def\bnfeq{\mathrel{\,::=\,}}
+\def\bnfor{\mathrel{\,\mid\,}}
+\def\bnfOR{\mathrel{\,\phantom{::}\,|\,\,\,}}
 
 % logic formulae
 \def\univ{U}
@@ -406,6 +407,9 @@
 
 % algorithm styling
 \def\algorithmstyle#1{\text{{\scshape #1}}}
+
+% code
+\def\code#1{\mathtt{#1}}
 
 % numerical
 \def\digit#1{\text{\sf #1}}
