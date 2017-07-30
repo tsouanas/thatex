@@ -186,6 +186,17 @@
 \def\rldir{``$\Leftarrow$''}
 \def\bidir{``$\Leftrightarrow$''}
 \def\ttherefore{$\therefore$~~}
+\def\syneq{\mathrel{\equiv}}
+\def\synneq{\mathrel{\not\equiv}}
+\def\semeq{\mathrel{\eqcirc}}
+\def\semneq{\mathrel{\not\eqcirc}}
+\def\leadsto{\mathrel{\rightsquigarrow}}
+\def\leadstoby#1{\decorateover{#1}{\leadsto}}
+
+% grammars
+\def\bnf#1{\left<\mathit{#1}\,\right>}
+\def\bnfor{\mathrel{\,\mid\,}}
+\def\bnfeq{\mathrel{\,::=\,}}
 
 % logic formulae
 \def\univ{U}
@@ -398,6 +409,7 @@
 
 % numerical
 \def\digit#1{\text{\sf #1}}
+\def\numeral#1{\underline{\text{\sf #1}}}
 
 % complex numbers
 \def\modulus#1{\left|#1\right|}
