@@ -197,6 +197,8 @@
 \def\leadstoby#1{\decorateover{#1}{\leadsto}}
 \def\abbreq{\mathrel{{\buildrel{\text{\sixss def}} \over {\equiv}}}}
 \let\sugareq=\abbreq
+\def\abbriff{\;\mathrel{\Lleftarrow\mkern-3mu\Rrightarrow}\;}
+\let\sugariff=\abbriff
 
 % grammars
 \def\bnf#1{\left<\mathit{#1}\,\right>}
@@ -343,6 +345,11 @@
 \let\inclass=\metain
 \def\class#1#2{\pmb{\{}\;{#1}\;\st \;{#2}\;\pmb{\}}}
 \def\classimg#1#2{{#1}{\pmb[}\,{#2}\,{\pmb]}}
+\def\universet{{\cal U}}
+\DefPred{Set}
+\DefPred{Singleton}
+\DefPred{Empty}
+\DefPred{Universal}
 \DefPred{Set}
 \DefPred{Pair}
 \DefPred{Function}
