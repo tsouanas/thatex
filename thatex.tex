@@ -96,10 +96,8 @@
 \multiply\minutes by -1
 \twodigitfmt{\the\hours}:\twodigitfmt{\the\minutes}
 }
-
 \let\numfootnote=\numberedfootnote\relax
 \everyfootnote={\ninerm}
-
 %%}}}
 
 %%{{{ ThaTeX lists
@@ -113,8 +111,8 @@
 %%}}}
 
 %%{{{ ThaTeX draft 
-\definecolor{todocolor}{rgb}{.75,.66,.2}
-\def\TODO{\noindent {\bf\color{todocolor}TODO}}
+\definecolor{todocolor}{rgb}{.0,.5,.75}
+\def\TODO#1\par{{}\par\noindent {\color{todocolor}{$\blacktriangleright$}\sf\enspace#1}}
 %%}}}
 
 %%{{{ ThaTeX text 
