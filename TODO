@@ -4,3 +4,4 @@ ThaTeX gentzen.
 
 LuaTeX.
 
+Reimplement double/triplecolumns because eplain's doesn't play well with li-lists.
