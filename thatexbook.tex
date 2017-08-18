@@ -849,7 +849,7 @@
 \def\exercisetag{x\the\chapterno.\the\exerciseno}%
 \def\exerciselabel{x\the\chapterno.\the\exerciseno}%
 \def\label##1{\definexref{##1}{\exercisetag}{exercise}}%
-\smallbreak\noindent%
+\goodbreak\smallbreak\noindent%
 \llap{\activitysymbol\enspace}%
 \leftline{\eightbf \toupper{\exercisename}~{\ninebf \exercisetag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
 \expandafter\label{\exerciselabel}%
@@ -902,7 +902,7 @@
 \def\exampletag{\the\chapterno.\the\noteno}%
 \def\examplelabel{eg\the\chapterno.\the\noteno}%
 \def\label##1{\definexref{##1}{\exampletag}{example}}%
-\smallbreak\noindent%
+\goodbreak\smallbreak\noindent%
 \llap{\examplesymbol\enspace}%
 \leftline{\eightbf \toupper{\examplename}~{\ninebf \exampletag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
 \expandafter\label{\examplelabel}%
@@ -931,7 +931,7 @@
 \global\advance\codeitno by 1\relax%
 \hintno=0
 \def\codeittag{c\the\chapterno.\the\codeitno}%
-\smallbreak\noindent%
+\goodbreak\smallbreak\noindent%
 \llap{\activitysymbol\enspace}%
 \leftline{\eightbf \toupper{\codeitname}~{\ninebf \codeittag}\ifnull#1\\\else~{\ninebf (\;{\ninett #1}\;)}\fi.}\break
 \bgroup
