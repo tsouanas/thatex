@@ -12,3 +12,4 @@ and codeit), that can be avoided by better meta programming macros.
 Fix \ifnull behaviour (when used from within a theorem/definition title that
 contains math, it breaks.
 
+\beginol and friends misbehave in doublecolumns when near the end of a page.
