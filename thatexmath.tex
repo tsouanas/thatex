@@ -130,6 +130,8 @@
 % layout/text tools
 \definecolor{explanationcolor}{cmyk}{0,0,0,.666}
 \def\explanationstyle#1{{\color{explanationcolor} #1}}
+\def\fact#1{~\ensuremath{^{\text{\explanationstyle{(#1)}}}}}
+\def\byfact#1{\text{\explanationstyle{(#1)}}}
 \def\mathby#1{\text{\explanationstyle{(#1)}}}
 \definecolor{hintstatuscolor}{cmyk}{0,0,0,.666}
 \def\hintstatusstyle#1{{\sixrm\color{hintstatuscolor} (#1)}}
