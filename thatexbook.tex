@@ -1009,6 +1009,11 @@
 }
 %%}}}
 
+%%{{{ sourcecode listing 
+\def\printlistinglineno{\llap{\explanationstyle{\rm\the\lineno}}\quad}
+\def\sourcecode#1;{{\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}}
+%%}}}
+
 %%{{{ argumentations 
 
 \def\argumentationheadstyle#1{{\scshape #1}}
