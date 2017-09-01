@@ -1,0 +1,15 @@
+%{{{ [vim] 
+% vim:foldmarker=%{{{,%}}}
+% vim:foldmethod=marker
+% vim:foldcolumn=4
+%}}}
+%% thatextikz.tex
+%% author: Thanos Tsouanas <thanos@tsouanas.org>
+
+\message{[ThaTeX-tikz]}
+
+\def\TIKZPREFIX{tikz/}
+\def\tikzi #1;{\input \TIKZPREFIX#1}
+
+\def\drawmapsto#1#2;{\draw[|->] (#1) -- (#2);}
+
