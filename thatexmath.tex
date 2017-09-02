@@ -325,6 +325,7 @@
 \let\rel=\mathrel
 \let\of=\compose
 \let\following=\compose
+\def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
 \def\inbag{\mathrel{\varepsilon}}
@@ -335,6 +336,8 @@
 \def\subbag{\mathrel{\Subset}}
 \def\notsubbag{\mathrel{\not\Subset}}
 \def\emptybag{\bag{\mkern-3mu}}
+\def\finv#1{{#1}^{-1}}
+\def\finvp#1{\finv{\paren{#1}}}
 
 % lambda calculus
 \def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
