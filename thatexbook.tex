@@ -516,6 +516,14 @@
 \endsectionoid
 }
 
+\def\summary#1. #2\par{%
+\sectionoidwrapper{\ifEqStr{#1}{}\summaryname\else#1\fi}{#2}%
+}
+
+\def\endsummary{%
+\endsectionoid
+}
+
 
 \def\hintsection#1. #2\par{%
 \def\hintsectiontitle{\hintsname\ \##1}
