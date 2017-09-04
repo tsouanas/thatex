@@ -5,3 +5,6 @@ ThaTeX gentzen.
 LuaTeX.
 
 Reimplement double/triplecolumns because eplain's doesn't play well with li-lists.
+
+Chapter contexts need to be repeated for each \solution and \hint they appear in.
+
