@@ -200,8 +200,8 @@
 \def\asseq{\mathrel{:=}}
 \let\leteq=\asseq
 \let\eqlet=\eqass
-\def\mland{\mathbin{\;\&\;}}
-\def\mlor{\mathbin{\;\text{\rm \orword}\;}}
+\def\mland{{\mathbin{\;\&\;}}}
+\def\mlor{{\mathbin{\;\text{\rm \orword}\;}}}
 \def\nimplies{\smartnot\implies}
 \def\lrdir{``$\Rightarrow$''}
 \def\rldir{``$\Leftarrow$''}
@@ -342,6 +342,9 @@
 \def\emptybag{\bag{\mkern-3mu}}
 \def\finv#1{{#1}^{-1}}
 \def\finvp#1{\finv{\paren{#1}}}
+\def\rinv#1{\rel{{#1}^{-1}}}
+\def\rinvp#1{\rinv{\paren{#1}}}
+\def\frel#1{\approx_{#1}}
 
 % lambda calculus
 \def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
@@ -478,3 +481,7 @@
 
 % complex numbers
 \def\modulus#1{\left|#1\right|}
+
+% analysis
+\def\norm#1{\left\Vert#1\right\Vert}
+
