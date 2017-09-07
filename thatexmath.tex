@@ -274,8 +274,16 @@
 \def\rtranscl#1{\decorateover{*}{#1}}
 \def\symcl#1{\decorateover{\leftrightarrow}{#1}}
 \def\refcl#1{\decorateover{=}{#1}}
-\def\toarrow#1{\mathrel{\decorateover{#1}{\longrightarrow}}}
-\def\fromarrow#1{\mathrel{\decorateover{#1}{\longleftarrow}}}
+\def\to{\mathbin{\rightarrow}}
+\def\from{\mathbin{\leftarrow}}
+\def\toarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrow}}}}
+\def\fromarrow#1{\mathrel{\decorateover{#1}{\mathord{\leftarrow\mkern-8mu-\mkern-8mu-}}}}
+\def\reltoarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrowtriangle}}}}
+\def\relfromarrow#1{\mathrel{\decorateover{#1}{\mathord{\leftarrowtriangle\mkern-8mu-\mkern-8mu-}}}}
+\let\rtoarrow=\reltoarrow
+\let\rfromarrow=\relfromarrow
+\let\ftoarrow=\toarrow
+\let\ffromarrow=\fromarrow
 \def\set#1{\left\{#1\right\}}
 \def\fsset#1{\{#1\}}% fixed-size set
 \def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
@@ -294,7 +302,6 @@
 \def\famil#1#2#3{{\family {{#1}_{#2}} {{#2}\in{#3}}}}
 \def\sequence#1#2{{\set{#1_{#2}}_{#2}}}
 \def\emph#1{{\it #1}}
-\def\from{:}
 \def\sset#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
 \def\ssetfont{\cal}
 \def\finsubseteq{\subseteq_{\text{\sixss fin}}}
@@ -328,6 +335,7 @@
 \let\img=\funimg
 \let\pre=\funpreimg
 \let\rel=\mathrel
+\def\relp#1{\rel{(#1)}}
 \let\of=\fcompose
 \let\following=\compose
 \def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
@@ -346,6 +354,10 @@
 \def\rinv#1{\rel{{#1}^{-1}}}
 \def\rinvp#1{\rinv{\paren{#1}}}
 \def\frel#1{\approx_{#1}}
+\def\relto{\mathbin{\rightarrowtriangle}}
+\def\relfrom{\mathbin{\leftarrowtriangle}}
+\let\rto=\relto
+\let\fto=\to
 
 % lambda calculus
 \def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
@@ -396,7 +408,6 @@
 \DefPred{Infinite}
 \DefFun{first}
 \DefFun{second}
-\def\relto{\mathrel{-\kern-0.4em-}}
 \def\relspace#1#2{\namedop{Rel}({#1},{#2})}
 \def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
 \def\disjunion{\mathbin{\uplus}}
