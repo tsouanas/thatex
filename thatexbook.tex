@@ -855,6 +855,8 @@
 \hintno=0
 {% exercise-scope
 \def\exercisetag{x\the\chapterno.\the\exerciseno}%
+\let\notetag=\exercisetag%
+\def\notekind{exercise}%
 \def\exerciselabel{x\the\chapterno.\the\exerciseno}%
 \def\label##1{\definexref{##1}{\exercisetag}{exercise}}%
 \goodbreak\smallbreak\noindent%
@@ -969,6 +971,8 @@
 \hintno=0
 {% problem-scope
 \def\problemtag{Π\the\chapterno.\the\problemno}%
+\let\notetag=\problemtag%
+\def\notekind{problem}%
 \def\problemlabel{Pi\the\chapterno.\the\problemno}%
 \def\label##1{\definexref{##1}{\problemtag}{problem}}%
 \medbreak\noindent%
