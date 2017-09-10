@@ -65,17 +65,17 @@
 %%}}}
 
 % mathfonts
-\def\mathit#1{\hbox{\it#1}}
-\def\mathrm#1{\hbox{\rm#1}}
-\def\mathsf#1{\hbox{\sf#1}}
-\def\mathsfbf#1{\hbox{\sfbf#1}}
-\def\mathtt#1{\hbox{\tt#1}}
-\def\mathbf#1{\hbox{\bf#1}}
+\def\mathit#1{\hbox{\text{\it#1}}}
+\def\mathrm#1{\hbox{\text{\rm#1}}}
+\def\mathsf#1{\hbox{\text{\sf#1}}}
+\def\mathsfbf#1{\hbox{\text{\sfbf#1}}}
+\def\mathtt#1{\hbox{\text{\tt#1}}}
+\def\mathbf#1{\hbox{\text{\bf#1}}}
 \def\txt#1{\text{\tt #1}}
 \def\textrm#1{\text{\rm#1}}
 \def\namedpred#1{\operatorname{#1}\nolimits}
-\def\namedfun#1{\mathit{#1}}
-\def\namedtype#1{\mathsf{#1}}
+\def\namedfun#1{\mathord{\mathit{#1}}}
+\def\namedtype#1{\mathord{\mathsf{#1}}}
 \def\namedop#1{\operatorname{#1}}
 \def\cal{\Cal}
 
