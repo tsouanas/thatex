@@ -262,6 +262,8 @@
 \let\Inter=\Intersection
 \def\union{\cup}
 \def\Union{\bigcup}
+\def\Unionl{\Union\nolimits}
+\def\Interl{\Inter\nolimits}
 \let\minus=\setminus
 \def\Product{\prod}
 \let\Prod=\Product
@@ -332,8 +334,8 @@
 \def\eqclassimp#1{[#1]}
 \def\quotset#1#2{\mathord{#1}\mathord{/}\mathord{#2}}
 \def\graph{\namedop{graph}}
-\def\funimg#1#2{#1[#2]}
-\def\funpreimg#1#2{#1^{-1}[#2]}
+\def\funimg#1#2{#1\bracket{#2}}
+\def\funpreimg#1#2{#1^{-1}\bracket{#2}}
 \let\img=\funimg
 \let\pre=\funpreimg
 \let\rel=\mathrel
