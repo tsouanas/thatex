@@ -197,6 +197,7 @@
 \def\defeq{\mathrel{{\buildrel{\text{\sixss def}} \over {=}}}}
 \def\pseudodefeq{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {=}}}}
 \def\askeq{\mathrel{{\buildrel{\text?} \over {=}}}}
+\def\asteq{\mathrel{{\buildrel{\text*} \over {=}}}}
 \def\eqass{\mathrel{=:}}
 \def\asseq{\mathrel{:=}}
 \let\leteq=\asseq
@@ -261,6 +262,7 @@
 \let\Inter=\Intersection
 \def\union{\cup}
 \def\Union{\bigcup}
+\let\minus=\setminus
 \def\Product{\prod}
 \let\Prod=\Product
 \def\symdiff{\mathbin{\triangle}}
@@ -490,8 +492,8 @@
 % placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
 \def\hole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
-\def\dhole{{\ensuremath{\mathord{-}}}}
-\def\bhole{{\ensuremath{\mathord{\bullet}}}}
+\def\dhole{{\mathord{-}}}
+\def\bhole{{\mathord{\bullet}}}
 \def\thole{\thinspace\vrule height 0.0pt depth 0.4pt width 1em\thinspace}
 \def\lthole{\thinspace\vrule height 0.0pt depth 0.4pt width 2em\thinspace}
 \def\xlthole{\thinspace\vrule height 0.0pt depth 0.4pt width 4em\thinspace}
