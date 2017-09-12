@@ -159,6 +159,7 @@
 % generic TeX symbol machinery
 \def\smartnot{\mathpalette\NoT}
 \def\NoT#1#2{\mathrel{\ooalign{\hfil$#1{#2}$\hfil\cr\hfil$#1/$\hfil}}}
+\def\stackrel#1#2{{\buildrel{#1} \over {#2}}}
 
 % generic tools
 \def\ensuremath#1{\ifmmode#1\else$#1$\fi}
@@ -323,9 +324,9 @@
 \def\coim{\namedop{coim}}
 \def\dom{\namedop{dom}}
 \def\cod{\namedop{cod}}
-\def\compose{\circ}
-\def\fcompose{\circ}
-\def\rcompose{\circ}
+\def\compose{\mathbin{\circ}}
+\def\fcompose{\mathbin{\circ}}
+\def\rcompose{\mathbin{\circ}}
 \let\rcom=\rcompose
 \let\fcom=\fcompose
 \let\com=\compose
