@@ -278,6 +278,7 @@
 %%{{{ Symbols 
 \def\activitysymbol{{\manual\char'170}}
 \def\examplesymbol{{$\bullet$}}
+\def\nonexamplesymbol{{$\bullet$}}
 %%}}}
 
 %%{{{ \Report 
@@ -934,6 +935,37 @@
 #2%
 \eolfill$\qexsymbol$\par\egroup\medbreak
 }% /example-scope
+}
+%%}}}
+
+%%{{{ nonexample 
+\long\def\nonexample#1. #2\endnonexample{%
+\global\advance\noteno by 1\relax%
+{% nonexample-scope 
+\def\nonexampletag{\the\chapterno.\the\noteno}%
+\def\nonexamplelabel{eg\the\chapterno.\the\noteno}%
+\def\label##1{\definexref{##1}{\nonexampletag}{nonexample}}%
+\goodbreak\smallbreak\noindent%
+\llap{\nonexamplesymbol\enspace}%
+\leftline{\eightbf \toupper{\nonexamplename}~{\ninebf \nonexampletag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
+\expandafter\label{\nonexamplelabel}%
+\break
+\bgroup%
+\def\label##1{\definexref{##1}{\nonexampletag}{nonexample}}% label for nonexample body 
+% solution
+\def\solution##1\par{%
+\noindent%
+%\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
+%\argumentationheadstyle{\solutionname}. %
+%\else%
+%\argumentationheadstyle{##1}%
+%\fi%
+\argumentationheadstyle{\solutionname}. %
+{##1}
+}%
+#2%
+\eolfill$\qexsymbol$\par\egroup\medbreak
+}% /nonexample-scope
 }
 %%}}}
 
