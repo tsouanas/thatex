@@ -126,6 +126,15 @@
 \definecolor{faded}{rgb}{.666,.666,.666}
 \def\alert#1{{\color{alert}#1}}
 \def\faded#1{{\color{faded}#1}}
+\def\quote#1{%
+\smallskip
+\endgraf
+\advance \leftskip 2\parindent \advance \rightskip 2\parindent%
+#1
+\endgraf
+\advance \leftskip -2\parindent \advance \rightskip -2\parindent%
+\smallskip
+}
 %%}}}
 
 %%{{{ ThaTeX aux files
