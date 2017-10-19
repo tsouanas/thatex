@@ -336,7 +336,7 @@
 \def\trel#1{<<#1>>}
 \def\eqclass#1#2{[\mathord{#1}\mathord{/}\mathord{#2}]}
 \def\eqclassimp#1{[#1]}
-\def\quotset#1#2{\mathord{#1}\mathord{/}\mathord{#2}}
+\def\quoset#1#2{\mathord{#1}\mathord{/}\mathord{#2}}
 \def\graph{\namedop{graph}}
 \def\funimg#1#2{#1\bracket{#2}}
 \def\funpreimg#1#2{#1^{-1}\bracket{#2}}
@@ -465,8 +465,8 @@
 \let\dual=\dualposet
 
 % group theory
-\def\quotgroup#1#2{\quotset#1#2}
-\let\quotgrp=\quotgroup
+\def\quogroup#1#2{\quoset#1#2}
+\let\quogrp=\quogroup
 \def\gord#1{\mathord{\it o}\paren{#1}}
 \def\tord#1{\mathrm{ord}\paren{#1}}
 \def\bord#1{\abs{#1}}
