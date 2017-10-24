@@ -300,6 +300,7 @@
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
 \def\bigparen#1{{\mathopen{\big(}{#1}\mathclose{\big)}}}% forced big-size parens
 \def\biggparen#1{{\mathopen{\bigg(}{#1}\mathclose{\bigg)}}}% forced bigg-size parens
+\let\funparen=\paren
 \def\bracket#1{{\left[\shave{#1}\right]}}
 \def\st{\;\mathord{\pmb{\mid}}\;}
 \def\setst#1#2{\set{\,#1 \;\st\; #2\,}}
@@ -467,11 +468,11 @@
 % group theory
 \def\quogroup#1#2{\quoset#1#2}
 \let\quogrp=\quogroup
-\def\gord#1{\mathord{\it o}\paren{#1}}
-\def\tord#1{\mathrm{ord}\paren{#1}}
+\def\gord#1{\mathord{\it o}\funparen{#1}}
+\def\tord#1{\mathrm{ord}\funparen{#1}}
 \def\bord#1{\abs{#1}}
 \def\ginv#1{{#1}^{-1}}
-\def\ginvp#1{\ginv{\paren{#1}}}
+\def\ginvp#1{\ginv{\funparen{#1}}}
 \def\ginvt{\namedfun{inv}}
 \def\dih#1{{{\cal D}_{#1}}}
 \makeatletter
@@ -489,7 +490,7 @@
 \let\normal=\normalsubgroup
 \let\normsub=\normalsubgroup
 \def\aut{\namedop{Aut}}
-\def\paut#1{\aut\paren{#1}}
+\def\paut#1{\aut\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
 
