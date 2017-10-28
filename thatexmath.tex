@@ -105,6 +105,7 @@
 \def\frac#1#2{{#1\over#2}}
 \def\ntimes{\mathbin{\cdot}}
 \def\stimes{\,}
+\def\plus{+}
 \def\floor#1{\left\lfloor#1\right\rfloor}
 \def\ceil#1{\left\lceil#1\right\rceil}
 \def\cancel#1{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,color=black!33,text=black]{$#1$};}
@@ -510,6 +511,9 @@
 \def\lthole{\thinspace\vrule height 0.0pt depth 0.4pt width 2em\thinspace}
 \def\xlthole{\thinspace\vrule height 0.0pt depth 0.4pt width 4em\thinspace}
 \def\holed#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
+
+% strings
+\def\concat{\mathbin{+\mkern-8mu+}}
 
 % algorithm styling
 \def\algorithmstyle#1{\text{{\scshape #1}}}
