@@ -242,6 +242,8 @@
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
+\def\pexists#1{\paren{\exists#1}}
+\def\pforall#1{\paren{\forall#1}}
 \def\zolang{{\frak L_0}}
 \def\folang{{\frak L_1}}
 \def\zolvars{{\mathrm{Pvar}}}
@@ -426,6 +428,7 @@
 \DefPred{Eq}
 \DefPred{Set}
 \DefPred{Singleton}
+\DefPred{Doubleton}
 \DefPred{Empty}
 \DefPred{Universal}
 \DefPred{Set}
@@ -443,6 +446,10 @@
 \let\dunion=\disjunion
 \let\Dunion=\Disjunion
 \def\setsucc#1{{#1}{}^+}
+\def\kleenestar#1{{#1}^\star}
+\def\kleenestarp#1{\paren{#1}^\star}
+\let\kstar=\kleenestar
+\let\kstarp=\kleenestarp
 
 % types
 \def\type#1{{\namedtype{#1}}}
