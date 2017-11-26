@@ -223,8 +223,9 @@
 \def\leadstoby#1{\decorateover{#1}{\leadsto}}
 \def\abbreq{\mathrel{{\buildrel{\text{\sixss def}} \over {\equiv}}}}
 \let\sugareq=\abbreq
-\def\abbriff{\;\mathrel{\Lleftarrow\mkern-3mu\Rrightarrow}\;}
+\def\abbriff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\Lleftarrow\mkern-3mu\Rrightarrow}}\;}}
 \let\sugariff=\abbriff
+\def\eqin#1{\mathrel{=_{#1}}}
 
 % grammars
 \def\bnf#1{\left<\mathit{#1}\,\right>}
@@ -419,7 +420,7 @@
 \def\Univ{{\bbb V}}
 \def\complement#1{\widetilde{#1}}
 \let\compl=\complement
-\def\russell#1{{{r}(#1)}}
+\def\russell#1{{\mathbf{r}(#1)}}
 \def\metain{\mathrel{\in\kern-0.425em\in}}
 \let\inclass=\metain
 \def\class#1#2{\pmb{\{}\;{#1}\;\st \;{#2}\;\pmb{\}}}
