@@ -162,6 +162,7 @@
 \definecolor{hintstatuscolor}{cmyk}{0,0,0,.666}
 \def\hintstatusstyle#1{{\sixrm\color{hintstatuscolor} (#1)}}
 \def\explanation#1{\text{\explanationstyle{(#1)}}}
+\def\alignx#1{$$\alignat2#1\endalignat$$}
 \def\qqby#1{&\qquad&\mathby{#1}}
 \def\toverbrace#1#2{\overbrace{#1}^{\text{#2}}}
 \def\moverbrace#1#2{\overbrace{#1}^{{#2}}}
@@ -220,11 +221,11 @@
 \def\mland{{\mathbin{\;\;\text{\rm \andword}\;\;}}}
 \def\mlor{{\mathbin{\;\;\text{\rm \orword}\;\;}}}
 \def\nimplies{\smartnot\implies}
-\def\lrdir{``$\Rightarrow$''}
-\def\rldir{``$\Leftarrow$''}
-\def\bidir{``$\Leftrightarrow$''}
-\def\lrdirset{``$\subseteq$''}
-\def\rldirset{``$\supseteq$''}
+\def\lrdir{($\Rightarrow$)}
+\def\rldir{($\Leftarrow$)}
+\def\bidir{($\Leftrightarrow$)}
+\def\lrdirset{($\subseteq$)}
+\def\rldirset{($\supseteq$)}
 \def\ttherefore{$\therefore$~~}
 \def\syneq{\mathrel{\equiv}}
 \def\synneq{\mathrel{\not\equiv}}
