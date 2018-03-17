@@ -312,6 +312,7 @@
 \def\fsset#1{\{#1\}}% fixed-size set
 \def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
 \def\tup#1{\left<#1\right>}
+\def\tupp#1{\left(#1\right)}
 \def\paren#1{{\left({#1}\right)}}
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
 \def\bigparen#1{{\mathopen{\big(}{#1}\mathclose{\big)}}}% forced big-size parens
@@ -323,7 +324,8 @@
 \def\setstt#1#2{\set{\,#1 \;\st\; \text{#2}\,}} % textmode in filter
 \def\setlst#1#2{\set{\,#1 \ \;\middle|\;\  #2\,}} % sufficiently long such that
 \def\setlstt#1#2{\set{\,#1 \ \;\middle|\;\  \text{#2}\,}}
-\def\family#1#2{{\set{{#1}}_{#2}}}
+\def\famst#1#2{{\paren{\,{#1} \,\st\, #2\,}}}
+\def\family#1#2{{\paren{{#1}}_{#2}}}
 \def\famil#1#2#3{{\family {{#1}_{#2}} {{#2}\in{#3}}}}
 \def\sequence#1#2{{\set{#1_{#2}}_{#2}}}
 \def\emph#1{{\it #1}}
