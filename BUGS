@@ -13,3 +13,5 @@ Fix \ifnull behaviour (when used from within a theorem/definition title that
 contains math, it breaks.
 
 \beginol and friends misbehave in doublecolumns when near the end of a page.
+
+\text{\emph{..}} in math doesn't show non-ascii letters.
