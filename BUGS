@@ -14,4 +14,4 @@ contains math, it breaks.
 
 \beginol and friends misbehave in doublecolumns when near the end of a page.
 
-\text{\emph{..}} in math doesn't show non-ascii letters.
+\text{\emph{..}} in math doesn't print SOME non-ascii letters.
