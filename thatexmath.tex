@@ -376,6 +376,11 @@
 \let\following=\compose
 \def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
+\def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
+\def\lamp#1#2{\lam{#1}{\paren{#2}}}
+\def\plam#1#2{\paren{\lam{#1}{#2}}}
+\def\plamp#1#2{\paren{\lamp{#1}{#2}}}
+\def\lapp{\nobreak\;\nobreak}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
 \def\inbag{\mathrel{\varepsilon}}
 \def\bagunion{\mathbin{\Cup}}
