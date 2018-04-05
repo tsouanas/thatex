@@ -305,8 +305,10 @@
 \def\refcl#1{\decorateover{=}{#1}}
 \def\to{\mathrel{\rightarrow}}
 \def\from{\mathrel{\leftarrow}}
-\def\toarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrow}}}}
-\def\fromarrow#1{\mathrel{\decorateover{#1}{\mathord{\leftarrow\mkern-8mu-\mkern-8mu-}}}}
+\def\toarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
+\def\tolongarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
+\def\fromarrow#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\mkern-8mu-\mkern-8mu-}}}}
+\def\fromlongarrow#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\mkern-8mu-\mkern-8mu-\mkern-8mu-\mkern-8mu-}}}}
 \def\reltoarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrowtriangle}}}}
 \def\relfromarrow#1{\mathrel{\decorateover{#1}{\mathord{\leftarrowtriangle\mkern-8mu-\mkern-8mu-}}}}
 \let\rtoarrow=\reltoarrow
