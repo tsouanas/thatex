@@ -234,9 +234,13 @@
 \def\stepproof#1{\alignat2 #1 \endalignat}
 \def\ttherefore{$\therefore$~~}
 \def\proofsteptnb#1{&\text{#1}}
+\def\proofstepmnb#1{&{#1}}
 \def\proofsteptby#1#2{&\text{#1}\qqby{#2}}
+\def\proofstepmby#1#2{&{#1}\qqby{#2}}
 \def\thereforetby#1#2{\proofsteptby{\ttherefore#1}{#2}}
+\def\thereforemby#1#2{\proofsteptby{\ttherefore$#1$}{#2}}
 \def\thereforetnb#1{\proofsteptnb{\ttherefore#1}}
+\def\thereforemnb#1{\proofsteptnb{\ttherefore$#1$}}
 \def\thereforet#1{\text{\ttherefore #1}}
 \def\syneq{\mathrel{\equiv}}
 \def\synneq{\mathrel{\not\equiv}}
