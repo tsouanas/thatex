@@ -339,13 +339,22 @@
 \chaptertotal=0
 
 %%{{{ spoilers 
+
 \def\spoiler#1.{% TODO
-\nobreak\vfill
-\nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}
-\nobreak\vfill
-\bigskip
+\nobreak\bigskip\nobreak\bigskip%
+\nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
+\nobreak\bigskip\nobreak\bigskip%
+\goodbreak
+}
+
+\def\spoilerpage#1.{% TODO
+\nobreak\vfill%
+\nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
+\nobreak\vfill%
+\bigskip%
 \break
 }
+
 %%}}}
 
 %%{{{ chapter 
