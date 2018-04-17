@@ -389,6 +389,9 @@
 \let\following=\compose
 \def\incto{\mathrel{\hookrightarrow}}
 \def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
+\def\restosub#1{\mathord{|}_{#1}}
+\def\resfun#1#2{{#1}\resto{#2}}
+\def\resfunsub#1#2{{#1}\restosub{#2}}
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}
