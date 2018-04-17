@@ -15,3 +15,5 @@ contains math, it breaks.
 \beginol and friends misbehave in doublecolumns when near the end of a page.
 
 \text{\emph{..}} in math doesn't print SOME non-ascii letters.
+
+Pagebreak can occur between problem and its hint-status.
