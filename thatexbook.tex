@@ -1076,6 +1076,10 @@
 \def\proofpartstyle#1{{\scshape #1}}
 \def\case#1{\noindent\casestyle{#1}}
 \def\proofpart#1{\noindent\proofpartstyle{#1}}
+\def\crcase#1{\endgraf\case{#1}}
+\def\crproofpart#1{\endgraf\proofpart{#1}}
+\def\crtcase#1{\endgraf\indent\case{#1}}
+\def\crtproofpart#1{\endgraf\indent\proofpart{#1}}
 \def\mistake{\hfill\mistakesymbol}%
 
 %%}}}
