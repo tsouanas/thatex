@@ -17,3 +17,5 @@ contains math, it breaks.
 \text{\emph{..}} in math doesn't print SOME non-ascii letters.
 
 Pagebreak can occur between problem and its hint-status.
+
+Pagebreak can occur right after a section title.
