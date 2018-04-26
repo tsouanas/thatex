@@ -312,10 +312,6 @@
 \def\parto{\mathrel{\rightharpoonup}}
 \def\ndeto{\mathrel{\rightsquigarrow}}
 \def\decorateover#1#2{\mathrel{{\buildrel{#1} \over {#2}}}}
-\def\transcl#1{\decorateover{+}{#1}}
-\def\rtranscl#1{\decorateover{*}{#1}}
-\def\symcl#1{\decorateover{\leftrightarrow}{#1}}
-\def\refcl#1{\decorateover{=}{#1}}
 \def\to{\mathrel{\rightarrow}}
 \def\from{\mathrel{\leftarrow}}
 \def\toarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
@@ -377,6 +373,7 @@
 \let\fcom=\fcompose
 \let\com=\compose
 \def\trel#1{<<#1>>}
+\def\mtrel#1{\text{<<#1>>}}
 \def\eqclass#1#2{[\mathord{#1}\mathord{/}\mathord{#2}]}
 \def\eqclassimp#1{[#1]}
 \def\quoset#1#2{\mathord{#1}\mathord{/}\mathord{#2}}
@@ -430,13 +427,17 @@
 \let\sclosure=\symclosure
 \let\tclosure=\transclosure
 \let\rtclosure=\reftransclosure
-\def\rcl#1{\mathrel{{#1}^{=}}}
-\def\scl#1{\mathrel{{#1}^{\leftrightarrow}}}
-\def\tcl#1{\mathrel{{#1}^{+}}}
-\def\rtcl#1{\mathrel{{#1}^{*}}}
-\def\ccl#1{\mathrel{{#1}^{\circ}}}
-\def\recl#1{\mathrel{{#1}^{\triangleleft}}}
-\def\lecl#1{\mathrel{{#1}^{\triangleright}}}
+\def\rclo#1{\mathrel{{#1}^{=}}}
+\def\sclo#1{\mathrel{{#1}^{\leftrightarrow}}}
+\def\tclo#1{\mathrel{{#1}^{+}}}
+\def\rtclo#1{\mathrel{{#1}^{*}}}
+\def\cclo#1{\mathrel{{#1}^{\circ}}}
+\def\reclo#1{\mathrel{{#1}^{\triangleleft}}}
+\def\leclo#1{\mathrel{{#1}^{\triangleright}}}
+\def\transcl#1{\decorateover{+}{#1}}
+\def\rtranscl#1{\decorateover{*}{#1}}
+\def\symcl#1{\decorateover{\leftrightarrow}{#1}}
+\def\refcl#1{\decorateover{=}{#1}}
 \def\cross{\times}
 \def\chr{\chi}
 \def\app{\nobreak\,\nobreak}
