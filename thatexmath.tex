@@ -269,7 +269,8 @@
 \def\limplied{\mathbin{\leftarrow}}
 \def\liff{\mathbin{\leftrightarrow}}
 \def\unique{{\exists!}}
-\def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\left[\thinspace#3\thinspace\right]}
+\def\quantified#1{\bracket{\thinspace#1\thinspace}}
+\def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
