@@ -128,14 +128,19 @@
 \def\alert#1{{\color{alert}#1}}
 \def\alertb#1{{\color{alertb}#1}}
 \def\faded#1{{\color{faded}#1}}
-\def\quote#1{%
-\smallskip
+\def\quote{%
 \endgraf
+\smallskip
 \advance \leftskip 2\parindent \advance \rightskip 2\parindent%
-#1
+\begingroup
+\noindent
+}
+\def\quotepar{\quote\indent}
+\def\endquote{%
 \endgraf
-\advance \leftskip -2\parindent \advance \rightskip -2\parindent%
+\endgroup
 \smallskip
+\advance \leftskip -2\parindent \advance \rightskip -2\parindent%
 \noindent
 }
 %%}}}
