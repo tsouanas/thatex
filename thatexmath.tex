@@ -67,6 +67,8 @@
 % mathfonts
 \def\mathit#1{\hbox{\text{\it#1}}}
 \def\mathrm#1{\hbox{\text{\rm#1}}}
+\def\mathrmsmall#1{\hbox{\text{\sevenrm#1}}}
+\def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
 \def\mathsf#1{\hbox{\text{\sf#1}}}
 \def\mathsfbf#1{\hbox{\text{\sfbf#1}}}
 \def\mathtt#1{\hbox{\text{\tt#1}}}
@@ -499,7 +501,8 @@
 \DefFun{first}
 \DefFun{second}
 \DefFun{swap}
-\def\relspace#1#2{\namedop{Rel}({#1},{#2})}
+\def\relspace#1{\namedop{Rel}\funparen{#1}}
+\def\reltype#1{\namedop{Rel}\funparen{#1}}
 \def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
 \def\disjunion{\mathbin{\uplus}}
 \def\Disjunion{\biguplus}
