@@ -651,6 +651,20 @@
 \innernewif\ifhideproof%
 \hideprooffalse%
 %%%%
+% preproof 
+\long\def\preproof####1. ####2\endpreproof{%
+\medskip
+\endgraf%
+\bgroup\rm%
+\ifEqStr{####1}{}%
+\else%
+\argumentationheadstyle{####1}. %
+\fi%
+####2%
+\egroup%
+\endgraf%
+}%
+%%%%
 % sketch
 \long\def\sketch####1. ####2\qes{%
 \hideprooftrue%
