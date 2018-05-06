@@ -156,6 +156,9 @@
 \def\permc#1{{\def\quad{\ \,}\permf{#1}}}
 
 % layout/text tools
+\def\leftbrace#1{\left\{#1\right.}
+\def\rightbrace#1{\left.#1\right\}}
+\def\brace#1{\left\{#1\right\}}
 \definecolor{explanationcolor}{cmyk}{0,0,0,.666}
 \def\explanationstyle#1{{\color{explanationcolor} #1}}
 \def\fact#1{~\ensuremath{^{\text{\explanationstyle{(#1)}}}}}
