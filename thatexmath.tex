@@ -622,3 +622,25 @@
 % analysis
 \def\norm#1{\left\Vert#1\right\Vert}
 
+% givens/goals table
+\def\gg\givens#1\goals#2\endgg{%
+{%
+\halign{
+\hfil##\hfil &\strut\vrule \hfil##\hfil\cr
+{\bf Dados} & {\bf Alvos}\cr\noalign{\hrule}
+\vtop{%
+\def\git##1{##1\cr}%
+\def\gim##1{$##1$\cr}%
+\halign{~##~\hfil\cr
+#1
+}}
+&
+\vtop{%
+\def\git##1{##1\cr}%
+\def\gim##1{$##1$\cr}%
+\halign{~##~\hfil\cr
+#2
+}}\cr
+}
+}
+}
