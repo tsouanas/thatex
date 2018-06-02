@@ -573,8 +573,8 @@
 \def\ginvt{\namedfun{inv}}
 \def\dih#1{{{\cal D}_{#1}}}
 \makeatletter
-\def\pmodr#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
-\def\pmodl#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
+\def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
+\def\pmodL#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
 \makeatother
 \let\groupord=\gord
 \def\subgroup{\leq}
@@ -586,6 +586,10 @@
 \def\normalsubgroup{\mathrel{\trianglelefteq}}
 \let\normal=\normalsubgroup
 \let\normsub=\normalsubgroup
+\def\cosetsL#1{{\cal #1}_{\mathrmsmall L}}
+\def\cosetsR#1{{\cal #1}_{\mathrmsmall R}}
+\def\congL{\mathrel{\cong_{\mathrmsmall L}}}
+\def\congR{\mathrel{\cong_{\mathrmsmall R}}}
 \def\Aut{\namedop{Aut}}
 \def\Autp#1{\aut\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
