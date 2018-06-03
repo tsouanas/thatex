@@ -241,6 +241,10 @@
 
 %%{{{ general-style 
 
+\newdimen\hremain   % to hold remaining hspace
+\newdimen\hminsec   % constant of minimum hspace required to start a section
+\hminsec=0ex        % XXX: this should be positive but 0ex seems big enough
+
 %%{{{ page layout 
 
 % top-level strings
@@ -474,7 +478,11 @@
 
 \def\endsection{%
 \egroup%
-\par\vskip 8ex\relax\goodbreak
+\par%
+\hremain=\dimexpr\hsize-\pagetotal\relax%
+\ifdim\hremain<\hminsec\break%
+\else\vskip 8ex\relax\goodbreak%
+\fi
 }
 %%}}}
 
@@ -500,7 +508,11 @@
 }
 
 \def\endsectionoid{%
-\vskip 4ex\relax\goodbreak
+\par%
+\hremain=\dimexpr\hsize-\pagetotal\relax%
+\ifdim\hremain<\hminsec\break%
+\else\vskip 8ex\relax\goodbreak%
+\fi
 }
 
 \def\problems#1. #2\par{%
