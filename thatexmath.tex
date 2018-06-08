@@ -388,8 +388,10 @@
 \def\compose{\mathbin{\circ}}
 \def\fcompose{\mathbin{\circ}}
 \def\rcompose{\mathbin{\circ}}
+\def\dcompose{\mathbin{;}}
 \let\rcom=\rcompose
 \let\fcom=\fcompose
+\let\dcom=\dcompose
 \let\com=\compose
 \def\trel#1{<<#1>>}
 \def\mtrel#1{\text{<<#1>>}}
@@ -571,7 +573,9 @@
 \def\ginv#1{{#1}^{-1}}
 \def\ginvp#1{\ginv{\funparen{#1}}}
 \def\ginvt{\namedfun{inv}}
+\def\sym#1{S_{#1}}
 \def\dih#1{{{\cal D}_{#1}}}
+\def\dihalt#1{{\mathrm{Dih}_{#1}}}
 \makeatletter
 \def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \def\pmodL#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
