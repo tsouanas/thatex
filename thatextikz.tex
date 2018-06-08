@@ -11,6 +11,13 @@
 \def\TIKZPREFIX{tikz/}
 \def\tikzi #1;{\input \TIKZPREFIX#1}
 
+\tikzset{%
+  dots/.style args={#1per #2}{%
+    line cap=round,
+    dash pattern=on 0 off #2/#1
+  }
+}
+
 \def\drawmapsto#1#2;{\draw[|->] (#1) -- (#2);}
 
 \def\rotator#1{%
