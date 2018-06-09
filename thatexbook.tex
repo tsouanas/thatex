@@ -241,9 +241,9 @@
 
 %%{{{ general-style 
 
-\newdimen\hremain   % to hold remaining hspace
-\newdimen\hminsec   % constant of minimum hspace required to start a section
-\hminsec=0ex        % XXX: this should be positive but 0ex seems big enough
+\newdimen\vcur      % to hold current vpos
+\newdimen\vminsec   % constant of minimum vspace required to start a section
+\vminsec=42mm       % free space required to start section(oid)
 
 %%{{{ page layout 
 
@@ -399,7 +399,7 @@
 \def\chapintro#1\par{\noindent #1\endgraf\vskip\chaptertitleskip}
 
 \def\endchapter{%
-\vfill$$\woohoo$$\eject%
+\ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi%
 }
 
 \def\appendix#1. #2\par{%
@@ -478,11 +478,7 @@
 
 \def\endsection{%
 \egroup%
-\par%
-\hremain=\dimexpr\hsize-\pagetotal\relax%
-\ifdim\hremain<\hminsec\break%
-\else\vskip 8ex\relax\goodbreak%
-\fi
+\endsectionoid
 }
 %%}}}
 
@@ -508,10 +504,15 @@
 }
 
 \def\endsectionoid{%
+\vbox{}\vskip 0pt\relax
 \par%
-\hremain=\dimexpr\hsize-\pagetotal\relax%
-\ifdim\hremain<\hminsec\break%
-\else\vskip 8ex\relax\goodbreak%
+\vcur=0pt
+\advance \vcur by \pagetotal
+\advance \vcur by \vminsec
+\ifdim\vcur>\vsize% not enough space to start section(oid)
+\eject%
+\else% enough space to start section(oid)
+\vskip 8ex\relax\goodbreak%
 \fi
 }
 
