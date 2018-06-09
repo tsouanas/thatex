@@ -580,6 +580,7 @@
 \def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \def\pmodL#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
 \makeatother
+\def\gconj#1{\sigma_{#1}}
 \let\groupord=\gord
 \def\subgroup{\leq}
 \def\nsubgroup{\nleq}
@@ -596,6 +597,8 @@
 \def\congR{\mathrel{\cong_{\mathrmsmall R}}}
 \def\Aut{\namedop{Aut}}
 \def\Autp#1{\aut\funparen{#1}}
+\def\Inn{\namedop{Inn}}
+\def\Innp#1{\aut\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
 
