@@ -367,7 +367,9 @@
 \def\famil#1#2#3{{\family {{#1}_{#2}} {{#2}\in{#3}}}}
 \def\sequence#1#2{{\set{#1_{#2}}_{#2}}}
 \def\emph#1{{\it #1}}
-\def\sset#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
+\let\sset=\ssetp
+\def\ssetp#1#2{({#1}\mathrel{;}{#2})}
+\def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
 \def\ssetfont{\cal}
 \def\finsubseteq{\subseteq_{\text{\sixss fin}}}
 \def\finsubset{\subset_{\text{\sixss fin}}}
