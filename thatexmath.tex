@@ -186,6 +186,10 @@
 \def\moverbrace#1#2{\overbrace{#1}^{{#2}}}
 \def\tunderbrace#1#2{\underbrace{#1}_{\text{#2}}}
 \def\munderbrace#1#2{\underbrace{#1}_{{#2}}}
+\let\tobrace=\toverbrace
+\let\mobrace=\moverbrace
+\let\tubrace=\tunderbrace
+\let\mubrace=\munderbrace
 \def\calc#1{\alignat2\relax #1\endalignat}
 \def\stepproof#1{\alignat2\relax #1\endalignat}
 \def\ttherefore{$\therefore$~~}
