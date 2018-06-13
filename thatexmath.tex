@@ -597,11 +597,13 @@
 \def\congL{\mathrel{\cong_{\mathrmsmall L}}}
 \def\congR{\mathrel{\cong_{\mathrmsmall R}}}
 \def\Hom{\namedop{Hom}}
-\def\Aut{\namedop{Aut}}
+\def\Homp#1{\Hom\funparen{#1}}
 \def\End{\namedop{End}}
-\def\Autp#1{\aut\funparen{#1}}
+\def\Endp#1{\End\funparen{#1}}
+\def\Aut{\namedop{Aut}}
+\def\Autp#1{\Aut\funparen{#1}}
 \def\Inn{\namedop{Inn}}
-\def\Innp#1{\aut\funparen{#1}}
+\def\Innp#1{\Inn\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
 
