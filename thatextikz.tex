@@ -8,6 +8,10 @@
 
 \message{[ThaTeX-tikz]}
 
+\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{shapes.misc}
+%\usetikzlibrary{positioning}
+
 \def\TIKZPREFIX{tikz/}
 \def\tikzi #1;{\input \TIKZPREFIX#1}
 
@@ -19,6 +23,11 @@
 }
 
 \def\drawmapsto#1#2;{\draw[|->] (#1) -- (#2);}
+
+\def\drawsnake#1#2;{%
+\draw [->,decorate,decoration={snake,amplitude=.4mm,segment length=2mm,post length=1mm}]
+(#1) -- (#2);
+}
 
 \def\rotator#1{%
 \tikz [x=0.12cm,y=0.32cm,->,rotate=#1] \draw (0,0) arc (-150:150:1 and 1);%
