@@ -551,9 +551,33 @@
 \def\oftype{\mathrel{:}}
 \let\is=\oftype
 \def\rule#1{{\scshape #1}}
-\def\UnaryInfBy#1#2{%
-\RightLabel{\rule{#1}}
-\UnaryInfC{#2}
+\def\Assumption#1{\AxiomC{#1}}
+\def\InfFromBy#1#2#3{
+% write \RightLabel{#2} only for non-0 case
+\ifcase#1
+\AxiomC{}
+\fi
+% write \RightLabel{#2} in all cases
+\RightLabel{#2}
+\ifcase#1
+% 0
+\UnaryInfC{#3}
+\or
+% 1
+\UnaryInfC{#3}
+\or
+% 2
+\BinaryInfC{#3}
+\or
+% 3
+\TrinaryInfC{#3}
+\or
+% 4
+\QuaternaryInfC{#3}
+\or
+% 5
+\QuinaryInfC{#3}
+\fi
 }
 
 % order theory
