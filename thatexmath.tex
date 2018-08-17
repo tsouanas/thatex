@@ -71,6 +71,7 @@
 \def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
 \def\mathsf#1{\hbox{\text{\sf#1}}}
 \def\mathsfbf#1{\hbox{\text{\sfbf#1}}}
+\def\mathsc#1{\hbox{\text{\scshape #1}}}
 \def\mathtt#1{\hbox{\text{\tt#1}}}
 \def\mathbf#1{\hbox{\text{\bf#1}}}
 \def\txt#1{\text{\tt #1}}
@@ -183,9 +184,9 @@
 \def\qqtext#1{\qquad\text{#1}\qquad}
 \def\qqqtext#1{\qqquad\text{#1}\qqquad}
 \def\qqqqtext#1{\qqqquad\text{#1}\qqqquad}
-\def\toverbrace#1#2{\overbrace{#1}^{\text{#2}}}
+\def\toverbrace#1#2{\overbrace{#1}^{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\moverbrace#1#2{\overbrace{#1}^{{#2}}}
-\def\tunderbrace#1#2{\underbrace{#1}_{\text{#2}}}
+\def\tunderbrace#1#2{\underbrace{#1}_{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\munderbrace#1#2{\underbrace{#1}_{{#2}}}
 \let\tobrace=\toverbrace
 \let\mobrace=\moverbrace
@@ -309,7 +310,7 @@
 \def\folpreds{{\mathrm{Pred}}}
 \def\folterms{{\cal T}}
 \def\folarity{{\mathbf{a}}}
-\def\folsym#1{\mathsf{#1}}
+\def\lsym#1{\mathsf{#1}}
 
 % booleans
 \def\True{\mathsf{True}}
@@ -547,6 +548,13 @@
 % types
 \def\type#1{{\namedtype{#1}}}
 \DefTyp{Nat}
+\def\oftype{\mathrel{:}}
+\let\is=\oftype
+\def\rule#1{{\scshape #1}}
+\def\UnaryInfBy#1#2{%
+\RightLabel{\rule{#1}}
+\UnaryInfC{#2}
+}
 
 % order theory
 \def\smallcovby{\mathrel{-\mkern-8mu\Yleft}}
