@@ -100,13 +100,19 @@
 %%}}}
 
 %%{{{ ThaTeX lists
-\let\beginol=\orderedlist
-\let\endol=\endorderedlist
-\let\beginul=\unorderedlist
-\let\endul=\endunorderedlist
+\def\beginol{\orderedlist}
+\def\endol{\endorderedlist\noindent}
+\def\endolp{\endorderedlist\endgraf}
+\def\beginul{\unorderedlist}
+\def\endul{\endunorderedlist\noindent}
+\def\endulp{\endunorderedlist\endgraf}
 \def\beginil{\begingroup\abovelistskip} % begin plain \item-list
 \def\endil{\endgroup\belowlistskip\noindent}
+\def\endilp{\endgroup\belowlistskip\endgraf}
 \def\endilnoskip{\endgroup}
+%\def\di{\item{--}}
+%\def\bi{\item{$\bullet$}}
+%\def\ci{\item{$\circ$}}
 %%}}}
 
 %%{{{ ThaTeX draft 
