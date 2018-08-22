@@ -261,25 +261,32 @@
 \def\asseq{\mathrel{:=}}
 \let\leteq=\asseq
 \let\eqlet=\eqass
-\def\mland{{\mathbin{\;\;\text{\rm \andword}\;\;}}}
-\def\mlor{{\mathbin{\;\;\text{\rm \orword}\;\;}}}
+\def\mland{{\mathbin{\;\;\text{\rm \andword}\;\;}}} % metalang and
+\def\mlor{{\mathbin{\;\;\text{\rm \orword}\;\;}}}   % metalang or
 \def\nimplies{\smartnot\implies}
 \def\lrdir{($\Rightarrow$)}
 \def\rldir{($\Leftarrow$)}
 \def\bidir{($\Leftrightarrow$)}
 \def\lrdirset{($\subseteq$)}
 \def\rldirset{($\supseteq$)}
-\def\syneq{\mathrel{\equiv}}
+\def\syneq{\mathrel{\equiv}}        % syntactic
 \def\synneq{\mathrel{\not\equiv}}
+\def\inteq{\mathrel{\equiv}}        % intensional
 \def\semeq{\mathrel{\eqcirc}}
 \def\semneq{\mathrel{\not\eqcirc}}
+\let\abbreq=\syneq
+\let\sugareq=\syneq
+\def\abbrdefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\abbreq}}}}
+\def\sugardefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\sugareq}}}}
+\def\abbrdefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\Lleftarrow\mkern-3mu\Rrightarrow}}\;}}
+\def\intiff{\;\mathrel{\Lleftarrow\mkern-3mu\Rrightarrow}\;}
+\let\sugdefiff=\abbrdefiff
+\let\sugariff=\intiff
+\def\eqin#1{\mathrel{=_{#1}}}
+\let\eqas=\eqin
 \def\leadsto{\mathrel{\rightsquigarrow}}
 \def\leadstoby#1{\decorateover{#1}{\leadsto}}
-\def\abbreq{\mathrel{{\buildrel{\text{\sixss def}} \over {\equiv}}}}
-\let\sugareq=\abbreq
-\def\abbriff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\Lleftarrow\mkern-3mu\Rrightarrow}}\;}}
-\let\sugariff=\abbriff
-\def\eqin#1{\mathrel{=_{#1}}}
+
 
 % grammars
 \def\bnf#1{\left<\mathit{#1}\,\right>}
