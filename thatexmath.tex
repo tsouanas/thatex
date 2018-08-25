@@ -320,6 +320,24 @@
 \def\folarity{{\mathbf{a}}}
 \def\lsym#1{\mathsf{#1}}
 
+% metalang formula-like notations
+\def\mexists{\exists}
+\def\mforall{\forall}
+\def\munique{\unique}
+\def\mlimplies{\implies}
+\def\mliff{\iff}
+\def\mlimplied{\impliedby}
+\def\mlforall
+\def\mlquantified#1{\bracket{\thinspace#1\thinspace}}
+\def\mlquantifierabbr#1#2#3{\left(\/#1 #2\right)\!\mlquantified{#3}}
+\def\mlforall{\mlquantifierabbr{\forall}}
+\def\mlexists{\mlquantifierabbr{\exists}}
+\def\mlunique{\mlquantifierabbr{\unique}}
+\def\mlunique{\mlquantifierabbr{\unique}}
+\def\mpexists#1{\paren{\mexists#1}}
+\def\mpforall#1{\paren{\mforall#1}}
+\def\mpunique#1{\paren{\munique#1}}
+
 % booleans
 \def\True{\mathsf{True}}
 \def\False{\mathsf{False}}
