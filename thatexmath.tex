@@ -353,8 +353,12 @@
 \let\Inter=\Intersection
 \def\union{\cup}
 \def\Union{\bigcup}
-\def\Unionl{\Union\nolimits}
-\def\Interl{\Inter\nolimits}
+\def\Unionl{\Union\nolimits}% same line
+\def\Interl{\Inter\nolimits}% same line
+\let\liminflimits=\liminf
+\let\limsuplimits=\limsup
+\edef\liminf{\liminf\nolimits}
+\edef\limsup{\limsup\nolimits}
 \let\minus=\setminus
 \def\Product{\prod}
 \let\Prod=\Product
