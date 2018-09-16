@@ -139,7 +139,10 @@
 \def\cbrt#1{{\root3\of{#1}}}
 \def\fac#1{{#1}!}
 \def\facp#1{\fac{\paren{#1}}}
-\def\system#1{\left\{\aligned#1\endaligned\right\}}
+\def\system#1{\aligned#1\endaligned}
+\def\lsystem#1{\left\{\system{#1}\right.}
+\def\rsystem#1{\left.\system{#1}\right\}}
+\def\bsystem#1{\left\{\system{#1}\right\}}
 
 % matrices
 \def\matrixp#1{\pmatrix#1\endpmatrix}
