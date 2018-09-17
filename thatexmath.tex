@@ -474,7 +474,14 @@
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}
 \def\plam#1#2{\paren{\lam{#1}{#2}}}
 \def\plamp#1#2{\paren{\lamp{#1}{#2}}}
-\def\lapp{\nobreak\;\nobreak}
+\def\lapp{\nobreak\;\nobreak}% lambda term application
+\def\fapp{\nobreak~\nobreak}% function application
+\def\lappp#1{\lapp\paren{#1}}% parenthesized lapp
+\def\fappp#1{\fapp\paren{#1}}% parenthesized fapp
+\let\fa=\fapp
+\let\fap=\fappp
+\let\la=\lapp
+\let\lap=\lappp
 \def\descrsym{\iota}
 \def\descr#1#2{\descrsym\,{#1}\,.\,{#2}}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
