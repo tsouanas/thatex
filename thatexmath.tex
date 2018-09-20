@@ -64,7 +64,7 @@
 
 %%}}}
 
-% mathfonts
+%%{{{ mathfonts 
 \def\mathit#1{\hbox{\text{\it#1}}}
 \def\mathrm#1{\hbox{\text{\rm#1}}}
 \def\mathrmsmall#1{\hbox{\text{\sevenrm#1}}}
@@ -76,17 +76,20 @@
 \def\mathbf#1{\hbox{\text{\bf#1}}}
 \def\txt#1{\text{\tt #1}}
 \def\textrm#1{\text{\rm#1}}
-\def\namedpred#1{\operatorname{#1}\nolimits}
-\def\namedfun#1{\mathord{\mathit{#1}}}
+\def\namedrel#1{\operatorname{#1}\nolimits}
+\def\namedfun#1{\mathord{\mathit{#1}}}% for functions
+\def\namedfpf#1{\mathord{\mathit{#1}}}% for functional programming functions
 \def\namedtype#1{\mathord{\mathsf{#1}}}
 \def\namedop#1{\operatorname{#1}}
 \def\cal{\Cal}
+%%}}}
 
-% funky symbols
+%%{{{ funky symbols 
 \def\woohoo{\mathord{\ddot\smile}}
 \def\boohoo{\mathord{\ddot\frown}}
+%%}}}
 
-% standard sets
+%%{{{ standard sets 
 \def\nats{{\bbb N}}
 \def\rats{{\bbb Q}}
 \def\algs{{\bbb A}}
@@ -94,8 +97,9 @@
 \def\reals{{\bbb R}}
 \def\complex{{\bbb C}}
 \def\bools{{\bbb B}}
+%%}}}
 
-% alternative font for other uses (for example implementations)
+%%{{{ alternative font for other uses (for example implementations) 
 \def\Nats{{\mathord{\mathbf N}}}
 \def\Rats{{\mathord{\mathbf Q}}}
 \def\Ints{{\mathord{\mathbf Z}}}
@@ -103,16 +107,38 @@
 \def\Complex{{\mathord{\mathbf C}}} 
 \def\Zero{{\mathsf 0}}%
 \def\Succ{{\mathsf S}}%
+%%}}}
 
-% metadefs
-\def\DefPred#1{\expandafter\def\csname #1\endcsname{{\namedpred{#1}}}}
-\def\DefFun#1{\expandafter\def\csname #1\endcsname{{\namedfun{#1}}}}
-\def\DefTyp#1{\expandafter\def\csname #1\endcsname{{\namedtype{#1}}}}
-\def\DefPredicate#1#2{\def#1{{\namedpred{#2}}}}
-\def\DefFunction#1#2{\def#1{{\namedfun{#2}}}}
-\def\DefType#1#2{\def#1{{\namedtype{#2}}}}
+%%{{{ metadefs 
+% \DefPar assumes that its argument is a defined macro of arity 0
+% and it creates its parenthesized version, of arity 1
+% Example:
+% \DefPar succ
+% assumes the existence of \succ of arity 0 and it defines \succP of arity 1
+\def\DefPar#1 {\expandafter\def\csname #1P\endcsname##1{\csname #1\endcsname\funparen{##1}}}
+% \DefApp is similar but defines a space-as-application version
+\def\DefApp#1 {\expandafter\def\csname #1A\endcsname##1{\csname #1\endcsname\fa{##1}}}
+% \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also take cares
+% the definition of the "parenthesized" version of it if it makes sense
+\def\DefREL#1 #2  {\expandafter\def\csname #1\endcsname{{\namedrel{#2}}}\DefPar #1 }
+\def\DefFUN#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfun{#2}}}\DefPar #1 \DefApp #1 }
+\def\DefFPF#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
+\def\DefOP#1 #2   {\expandafter\def\csname #1\endcsname{{\namedop{#2}}}\DefPar  #1 }
+\def\DefTYPE#1 #2 {\expandafter\def\csname #1\endcsname{{\namedtype{#2}}}}
+% Use plain \DefThing if the command name coincides with the printed name
+\def\DefRel#1  {\DefREL #1 #1 }
+\def\DefFun#1  {\DefFUN #1 #1 }
+\def\DefFpf#1  {\DefFPF #1 #1 }
+\def\DefOp#1   {\DefOP #1 #1 }
+\def\DefType#1 {\DefTYPE #1 #1 }
+% WARNING: use the above macros without % at the end, because it needs
+% (and eats) the whitespace.  For example:
+% \DefFUN suc succ
+% \DefFun fib
+% These will create the macros: \suc, \sucP, \fib, \fibP
+%%}}}
 
-% elementary math
+%%{{{ elementary math 
 \def\abs#1{\left|#1\right|}
 \def\sizeof#1{\left|#1\right|}
 \def\frac#1#2{{#1\over#2}}
@@ -143,16 +169,19 @@
 \def\lsystem#1{\left\{\system{#1}\right.}
 \def\rsystem#1{\left.\system{#1}\right\}}
 \def\bsystem#1{\left\{\system{#1}\right\}}
+%%}}}
 
-% matrices
+%%{{{ matrices 
 \def\matrixp#1{\pmatrix#1\endpmatrix}
+%%}}}
 
-% misc symbols
+%%{{{ misc symbols 
 \let\knuthphi=\phi
 \let\phi=\varphi
 \def\caret{\hat{}}
+%%}}}
 
-% combinatorics
+%%{{{ combinatorics 
 \def\totperm#1{\namedfun{Perm}(#1)}
 \def\perm#1#2{P(#1,#2)}
 \def\comb#1#2{C(#1,#2)}
@@ -163,8 +192,9 @@
 \def\bitrans{\leftrightsquigarrow}
 \def\permf#1{\matrixp{#1}}
 \def\permc#1{{\def\quad{\ \,}\permf{#1}}}
+%%}}}
 
-% layout/text tools
+%%{{{ layout/text tools 
 \def\leftbrace#1{\left\{#1\right.}
 \def\rightbrace#1{\left.#1\right\}}
 \let\knuthbrace=\brace
@@ -208,19 +238,22 @@
 \def\thereforetnb#1{\proofsteptnb{\ttherefore#1}}
 \def\thereforemnb#1{\proofsteptnb{\ttherefore$#1$}}
 \def\thereforet#1{\text{\ttherefore #1}}
+%%}}}
 
-% generic TeX symbol machinery
+%%{{{ generic TeX symbol machinery 
 \def\smartnot{\mathpalette\NoT}
 \def\NoT#1#2{\mathrel{\ooalign{\hfil$#1{#2}$\hfil\cr\hfil$#1/$\hfil}}}
 \def\stackrel#1#2{{\buildrel{#1} \over {#2}}}
+%%}}}
 
-% generic tools
+%%{{{ generic tools 
 \def\ensuremath#1{\ifmmode#1\else$#1$\fi}
 %\def\eqvdots{\mathmakebox[\widthof{${}={}$}][c]{\vdots}}
 \def\eqvdots{\mathrel{\,\,\kern-.05em\mathord{\vdots}\,}}
 \def\eqtype{\mathrel{\,\,\kern-.05em:\,}}
+%%}}}
 
-% number theory
+%%{{{ number theory 
 \def\divides{\mathrel{\mid}}
 \def\divideseqwidth{\;\mathrel{\mid}\;}
 \let\knuthcong=\cong
@@ -237,11 +270,12 @@
 \def\lcm#1#2{\left[#1,#2\right]}
 \def\totsym{\varphi}
 \def\tot#1{\mathopen{\totsym}\left({#1}\right)\mathclose{}}
-\DefPred{Prime}
-\DefPred{Even}
-\DefPred{Odd}
+\DefRel Prime
+\DefRel Even
+\DefRel Odd
+%%}}}
 
-% logic metalang
+%%{{{ logic metalang 
 %\def\iffdf{\mathrel{\overset\triangle\iff}}
 \def\iffsymbol{\Longleftrightarrow}
 \def\impliessymbol{\Longrightarrow}
@@ -292,15 +326,16 @@
 \let\eqas=\eqin
 \def\leadsto{\mathrel{\rightsquigarrow}}
 \def\leadstoby#1{\decorateover{#1}{\leadsto}}
+%%}}}
 
-
-% grammars
+%%{{{ grammars 
 \def\bnf#1{\left<\mathit{#1}\,\right>}
 \def\bnfeq{\mathrel{\,::=\,}}
 \def\bnfor{\mathrel{\,\mid\,}}
 \def\bnfOR{\mathrel{\,\phantom{::}\,|\,\,\,}}
+%%}}}
 
-% logic formulae
+%%{{{ logic formulae 
 \def\univ{U}
 \def\limplies{\mathbin{\rightarrow}}
 \def\limplied{\mathbin{\leftarrow}}
@@ -324,8 +359,9 @@
 \def\folterms{{\cal T}}
 \def\folarity{{\mathbf{a}}}
 \def\lsym#1{\mathsf{#1}}
+%%}}}
 
-% metalang formula-like notations
+%%{{{ metalang formula-like notations 
 \def\mexists{\exists}
 \def\mforall{\forall}
 \def\munique{\unique}
@@ -342,12 +378,14 @@
 \def\mpexists#1{\paren{\mexists#1}}
 \def\mpforall#1{\paren{\mforall#1}}
 \def\mpunique#1{\paren{\munique#1}}
+%%}}}
 
-% booleans
+%%{{{ booleans 
 \def\True{\mathsf{True}}
 \def\False{\mathsf{False}}
+%%}}}
 
-% sets, relations, and functions
+%%{{{ sets, relations, and functions 
 \def\notni{\not\ni}
 \def\nleq{\mathrel{\not\leq}}
 \def\ngeq{\mathrel{\not\geq}}
@@ -377,6 +415,7 @@
 \def\decorateover#1#2{\mathrel{{\buildrel{#1} \over {#2}}}}
 \def\to{\mathrel{\rightarrow}}
 \def\from{\mathrel{\leftarrow}}
+\def\longto{\mathrel{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}
 \def\toarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
 \def\tolongarrow#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
 \def\fromarrow#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\mkern-8mu-\mkern-8mu-}}}}
@@ -394,13 +433,19 @@
 \def\tupa#1{\left\langle#1\right\rangle}
 \def\tupp#1{\left(#1\right)}
 \let\tup=\tupa
-\def\proj#1{\pi_{#1}}% projections from implicit size
-\def\projfrom#1#2{\pi^{#1}_{#2}}% projections from denoted size
+\def\proj#1{\pi_{#1}}% projections of implicit arity (pi-notation)
+\def\projfrom#1#2{\pi^{#1}_{#2}}% projections of denoted arity (pi-notation)
+\def\tproj#1{\namedfun{proj}_{#1}}% projections of implicit arity (proj-notation)
+\def\tprojfrom#1#2{\namedfun{proj}^{#1}_{#2}}% projections of denoted arity (proj-notation)
 \def\pproj#1#2{\paren{#2}_{#1}}% parenthesized projection via subscript
-\def\fst{\namedfun{fst}}
-\def\snd{\namedfun{snd}}
-\def\outl{\namedfun{outl}}
-\def\outr{\namedfun{outr}}
+\DefFun fst
+\DefFun snd
+\DefFun outl
+\DefFun outr
+\DefFun inl
+\DefFun inr
+\DefFun curry
+\DefFun uncurry
 \def\paren#1{{\left({#1}\right)}}
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
 \def\bigparen#1{{\mathopen{\big(}{#1}\mathclose{\big)}}}% forced big-size parens
@@ -526,14 +571,16 @@
 \def\cross{\times}
 \def\chr{\chi}
 \def\app{\nobreak\,\nobreak}
+%%}}}
 
-% lambda calculus
+%%{{{ lambda calculus 
 \def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\Lmac#1{\underline{\mathtt{#1}}}
 \def\Lfinto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
 \def\Lnum#1{{\underline{#1}}}
+%%}}}
 
-% combinatory logic
+%%{{{ combinatory logic 
 \def\C#1{{\mathord{\mathsfbf{#1}}}}
 \def\Cto{\mathrel{\triangleright}}
 \def\cI{{\C I}}
@@ -546,8 +593,9 @@
 \def\cR{{\C R}}
 \def\cV{{\C V}}
 \def\cBp{{{\C B}'}}
+%%}}}
 
-% set theory
+%%{{{ set theory 
 \def\cantorcard#1{\overline{\overline{#1}}}
 \def\cantorset{{\frak C}}
 \def\continuum{\euf{c}}
@@ -568,20 +616,20 @@
 \def\classt#1#2{\pmb{\{}\;{#1}\;\st \;{\text{#2}}\;\pmb{\}}}
 \def\classimg#1#2{{#1}{\pmb[}\,{#2}\,{\pmb]}}
 \def\universet{{\cal U}}
-\DefPred{Eq}
-\DefPred{Set}
-\DefPred{Singleton}
-\DefPred{Doubleton}
-\DefPred{Empty}
-\DefPred{Universal}
-\DefPred{Set}
-\DefPred{Pair}
-\DefPred{Function}
-\DefPred{Relation}
-\DefPred{Infinite}
-\DefFun{first}
-\DefFun{second}
-\DefFun{swap}
+\DefRel Eq
+\DefRel Set
+\DefRel Singleton
+\DefRel Doubleton
+\DefRel Empty
+\DefRel Universal
+\DefRel Set
+\DefRel Pair
+\DefRel Function
+\DefRel Relation
+\DefRel Infinite
+\DefFun first
+\DefFun second
+\DefFun swap
 \def\relspace#1{\namedop{Rel}\funparen{#1}}
 \def\reltype#1{\namedop{Rel}\funparen{#1}}
 \def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
@@ -594,15 +642,17 @@
 \def\kleenestarp#1{\paren{#1}^\star}
 \let\kstar=\kleenestar
 \let\kstarp=\kleenestarp
+%%}}}
 
-% types
+%%{{{ types 
 \def\type#1{{\namedtype{#1}}}
-\DefTyp{Nat}
+\DefType Nat
 \def\oftype{\mathrel{:}}
 \let\is=\oftype
 \def\rule#1{{\scshape #1}}
+%%}}}
 
-% order theory
+%%{{{ order theory 
 \def\smallcovby{\mathrel{-\mkern-8mu\Yleft}}
 \def\covby{\mathrel{-\mkern-9mu<}}
 \def\wellbelow{\mathrel{\ll}}
@@ -629,8 +679,9 @@
 \def\fixpoints{\namedop{Fix}}
 \def\lfp{\namedop{lfp}}
 \def\gfp{\namedop{gfp}}
+%%}}}
 
-% group theory
+%%{{{ group theory 
 \def\quogroup#1#2{\quoset#1#2}
 \let\quogrp=\quogroup
 \def\gord#1{\mathord{\it o}\funparen{#1}}
@@ -663,8 +714,11 @@
 \def\cosetsR#1{{\cal #1}_{\mathrmsmall R}}
 \def\congL{\mathrel{\cong_{\mathrmsmall L}}}
 \def\congR{\mathrel{\cong_{\mathrmsmall R}}}
-\def\Hom{\namedop{Hom}}
-\def\Homp#1{\Hom\funparen{#1}}
+\DefOp Hom
+\DefOp End
+\DefOp Aut
+\DefOp Inn
+\DefOp Out
 \def\End{\namedop{End}}
 \def\Endp#1{\End\funparen{#1}}
 \def\Aut{\namedop{Aut}}
@@ -675,14 +729,16 @@
 \def\Outp#1{\Out\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
+%%}}}
 
-% structured sets
+%%{{{ structured sets 
 \def\isomorphicto{\mathrel{\knuthcong}}
 \let\isomorphic=\isomorphicto
 \let\isoto=\isomorphic
 \let\iso=\isoto
+%%}}}
 
-% placeholder hole
+%%{{{ placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
 \def\hole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
 \def\dhole{{\mathord{-}}}
@@ -693,27 +749,34 @@
 \def\askhole{{\lthole?\lthole}}
 \def\namedhole#1{\text{\thole$#1$\thole}}
 \def\holed#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
+%%}}}
 
-% strings
+%%{{{ strings 
 \def\concat{\mathbin{+\mkern-8mu+}}
+%%}}}
 
-% algorithm styling
+%%{{{ algorithm styling 
 \def\algorithmstyle#1{\text{{\scshape #1}}}
+%%}}}
 
-% code
+%%{{{ code 
 \def\code#1{\mathtt{#1}}
+%%}}}
 
-% numerical
+%%{{{ numerical 
 \def\digit#1{\text{\sf #1}}
 \def\numeral#1{\underline{\text{\sf #1}}}
+%%}}}
 
-% complex numbers
+%%{{{ complex numbers 
 \def\modulus#1{\left|#1\right|}
+%%}}}
 
-% analysis
+%%{{{ analysis 
 \def\norm#1{\left\Vert#1\right\Vert}
+%%}}}
 
-% givens/goals table
+%%{{{ givens/goals table 
 \def\gg\givens#1\goals#2\endgg{%
 {%
 \halign{
@@ -735,3 +798,5 @@
 }
 }
 }
+%%}}}
+
