@@ -501,8 +501,8 @@
 \def\eqclassalt#1#2{[\mathord{#1}\mathord{/}\mathord{#2}]}
 \def\eqclassimp#1{[#1]}
 \def\quoset#1#2{\mathord{#1}\mathord{/}\mathord{#2}}
-\def\graph{\namedop{graph}}
-\def\range{\namedop{range}}
+\DefOp graph
+\DefOp range
 \def\funimg#1#2{#1\bracket{#2}}
 \def\funpreimg#1#2{#1^{-1}\bracket{#2}}
 \let\img=\funimg
@@ -721,14 +721,6 @@
 \DefOp Aut
 \DefOp Inn
 \DefOp Out
-\def\End{\namedop{End}}
-\def\Endp#1{\End\funparen{#1}}
-\def\Aut{\namedop{Aut}}
-\def\Autp#1{\Aut\funparen{#1}}
-\def\Inn{\namedop{Inn}}
-\def\Innp#1{\Inn\funparen{#1}}
-\def\Out{\namedop{Out}}
-\def\Outp#1{\Out\funparen{#1}}
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
 %%}}}
