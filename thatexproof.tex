@@ -39,3 +39,12 @@
 #1
 \DisplayProof
 }
+\def\Proofm#1{
+\def\A##1{\Assumption{$##1$}}
+\def\Inf{\InfFromBy}
+\def\I##1##2 ##3##4{
+\InfFromBy##1{##3}{$##4$}
+}
+#1
+\DisplayProof
+}
