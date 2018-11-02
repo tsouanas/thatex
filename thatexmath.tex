@@ -265,7 +265,7 @@
 \def\cong{\equiv}
 \undefine\ncong
 \def\ncong{\mathrel{\not\equiv}}
-\def\congmod#1#2{#1\quad(\mod {#1})}
+\def\congmod#1#2{#2 \pmod {#1})}
 \def\modulo#1{\left(\mod{#1}\right)}
 \def\ndivides{\mathrel{\nmid}}
 \def\gengcd#1{\mathopen{\text{\rm gcd}(}#1\mathclose{)}}
@@ -718,10 +718,10 @@
 \def\normalsubgroup{\mathrel{\trianglelefteq}}
 \let\normal=\normalsubgroup
 \let\normsub=\normalsubgroup
-\def\cosetsL#1{{\cal #1}_{\mathrmsmall L}}
-\def\cosetsR#1{{\cal #1}_{\mathrmsmall R}}
-\def\congL{\mathrel{\cong_{\mathrmsmall L}}}
-\def\congR{\mathrel{\cong_{\mathrmsmall R}}}
+\def\cosetsL#1{{\cal L}_{#1}}
+\def\cosetsR#1{{\cal R}_{#1}}
+\def\congL#1{\mathrel{{}_{#1}\cong}}
+\def\congR#1{\mathrel{\cong_{#1}}}
 \DefOp Hom
 \DefOp End
 \DefOp Aut
