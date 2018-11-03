@@ -703,8 +703,8 @@
 \def\dih#1{{{\cal D}_{#1}}}
 \def\dihalt#1{{\mathrm{Dih}_{#1}}}
 \makeatletter
-\def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \def\pmodL#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{L}}\,\,#1)}
+\def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \makeatother
 \def\gconj#1{\sigma_{#1}}
 \def\gcl#1{\namedop{Cls}\funparen{#1}}
@@ -742,6 +742,9 @@
 \let\cizerin=\centizerin
 \let\nizerin=\normizerin
 \def\gcenter#1{\cizer{#1}}
+\def\actorL#1{\mathord{\paren{#1\uhole}}}% Left
+\def\actorR#1{\mathord{\paren{\uhole#1}}}% Right
+\def\actorS#1#2{\mathord{\paren{#1\uhole#2}}}% Stereo
 %%}}}
 
 %%{{{ structured sets 
@@ -756,6 +759,7 @@
 \def\hole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
 \def\dhole{{\mathord{-}}}
 \def\bhole{{\mathord{\bullet}}}
+\def\uhole{{\mathord{\_}}}
 \def\thole{\thinspace\vrule height 0.0pt depth 0.4pt width 1em\thinspace}
 \def\lthole{\thinspace\vrule height 0.0pt depth 0.4pt width 2em\thinspace}
 \def\xlthole{\thinspace\vrule height 0.0pt depth 0.4pt width 4em\thinspace}
