@@ -21,3 +21,6 @@ Pagebreak can occur between problem and its hint-status.
 Pagebreak can occur right after a section title.
 
 \footnote won't be printed when in hint.
+
+If a section ends at the very end of a page, next section might begin with
+some vertical space, while it shouldn't.
