@@ -832,5 +832,40 @@
 }
 }
 }
+
+\def\proofrepl#1\givens#2\goals#3\endproofrepl{%
+{%
+\endgraf\bigskip\noindent
+\hbox to \hsize{
+\vtop{
+\halign to .333\hsize{##\hfil\cr
+\proofstyle{\proofname.}\cr
+#1
+}
+}
+\hfill
+\vtop{
+\halign{
+\hfil##\hfil &\strut\vrule \hfil##\hfil\cr
+{\bf Dados} & {\bf Alvos}\cr\noalign{\hrule}
+\vtop{%
+\def\git##1{##1\cr}%
+\def\gim##1{$##1$\cr}%
+\halign{~##~\hfil\cr
+#2
+}}
+&
+\vtop{%
+\def\git##1{##1\cr}%
+\def\gim##1{$##1$\cr}%
+\halign{~##~\hfil\cr
+#3
+}}\cr
+}
+}
+}
+}
+}
+
 %%}}}
 
