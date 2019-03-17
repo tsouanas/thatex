@@ -86,8 +86,8 @@
 %%}}}
 
 %%{{{ funky symbols 
-\def\woohoo{\mathord{\ddot\smile}}
-\def\boohoo{\mathord{\ddot\frown}}
+\def\woohoo{{\ddot\smile}}
+\def\boohoo{{\ddot\frown}}
 %%}}}
 
 %%{{{ standard sets 
@@ -138,6 +138,7 @@
 % \DefFUN suc succ
 % \DefFun fib
 % These will create the macros: \suc, \sucP, \fib, \fibP
+% TODO: create \KnuthSave macro
 %%}}}
 
 %%{{{ elementary math 
@@ -319,12 +320,13 @@
 \let\eqlet=\eqass
 \def\mland{{\mathbin{\;\;\text{\rm \andword}\;\;}}} % metalang and
 \def\mlor{{\mathbin{\;\;\text{\rm \orword}\;\;}}}   % metalang or
-\def\nimplies{\smartnot\implies}
+\def\notimplies{\smartnot\implies}
+\let\nimplies=\notimplies
 \def\lrdir{($\Rightarrow$)}
 \def\rldir{($\Leftarrow$)}
 \def\bidir{($\Leftrightarrow$)}
-\def\lrdirset{($\subseteq$)}
-\def\rldirset{($\supseteq$)}
+\def\lrdirset{($\subset$)}
+\def\rldirset{($\supset$)}
 \def\syneq{\mathrel{\equiv}}        % syntactic
 \def\synasseq{\mathrel{:\equiv}}
 \def\synneq{\mathrel{\smartnot{\syneq}}}
@@ -334,13 +336,17 @@
 \def\semneq{\mathrel{\not\eqcirc}}
 \let\abbreq=\syneq
 \let\sugareq=\syneq
+\def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
+\def\tripledefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}} % symbol
 \def\abbrdefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\abbreq}}}}
 \def\sugardefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\sugareq}}}}
-\def\abbrdefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\Lleftarrow\mkern-3mu\Rrightarrow}}\;}}
-\def\intiff{\;\mathrel{\Lleftarrow\mkern-3mu\Rrightarrow}\;}
-\let\sugdefiff=\abbrdefiff
-\let\sugariff=\intiff
-\let\abbriff=\intiff
+\def\sugardefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}}
+\def\intiff{\;\mathrel{\tripleiff}\;}
+\def\sugariff{\intiff}
+\let\sugiff=\sugariff
+\let\sugdefiff=\sugardefiff
+\let\abbriff=\sugariff
+\let\abbrdefiff=\sugdefiff
 \def\eqin#1{\mathrel{=_{#1}}}
 \let\eqas=\eqin
 \def\leadsto{\mathrel{\rightsquigarrow}}
@@ -409,7 +415,32 @@
 %%}}}
 
 %%{{{ sets, relations, and functions 
-\def\notni{\not\ni}
+\let\knuthsubset=\subset
+\let\knuthsupset=\supset
+\let\knuthsubseteq=\subseteq
+\let\knuthsubsetneq=\subsetneq
+\let\knuthsupseteq=\supseteq
+\let\knuthsupsetneq=\supsetneq
+\let\knuthnsubseteq=\nsubseteq
+\let\knuthnsupseteq=\nsupseteq
+\let\subset=\UNDEFINED
+\let\subseteq=\UNDEFINED
+\let\subsetneq=\UNDEFINED
+\def\subset{\knuthsubseteq}
+\def\supset{\knuthsupseteq}
+\def\propersubset{\knuthsubsetneq}
+\def\propersupset{\knuthsupsetneq}
+\let\proper=\propersubset
+\let\psubset=\propersubset
+\let\psupset=\propersupset
+\let\subsetneq=\propersubset
+\let\contains=\supset
+\let\containd=\supset       % contain'd
+\let\pcontains=\psupset
+\let\pcontaind=\psubset
+\def\nsubset{\smartnot\subset}
+\def\nsupset{\smartnot\supset}
+\def\notni{\smartnot\ni}
 \def\nleq{\mathrel{\not\leq}}
 \def\ngeq{\mathrel{\not\geq}}
 \def\intersection{\cap}
@@ -494,8 +525,8 @@
 \def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
 \let\sset=\ssetp
 \def\ssetfont{\cal}
-\def\finsubseteq{\subseteq_{\text{\sixss fin}}}
 \def\finsubset{\subset_{\text{\sixss fin}}}
+\def\finpsubset{\psubset_{\text{\sixss fin}}}
 \def\pset{{\wp}}
 \def\psetfin{{\wp_{\text{\rm f}}}}
 \let\powerset=\pset
