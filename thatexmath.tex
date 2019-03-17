@@ -327,8 +327,9 @@
 \def\rldirset{($\supseteq$)}
 \def\syneq{\mathrel{\equiv}}        % syntactic
 \def\synasseq{\mathrel{:\equiv}}
-\def\synneq{\mathrel{\not\equiv}}
+\def\synneq{\mathrel{\smartnot{\syneq}}}
 \def\inteq{\mathrel{\equiv}}        % intensional
+\def\intneq{\mathrel{\smartnot{\inteq}}}
 \def\semeq{\mathrel{\eqcirc}}
 \def\semneq{\mathrel{\not\eqcirc}}
 \let\abbreq=\syneq
