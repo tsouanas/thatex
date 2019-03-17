@@ -226,12 +226,16 @@
 \def\qqqqtext#1{\qqqquad\text{#1}\qqqquad}
 \def\toverbrace#1#2{\overbrace{#1}^{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\moverbrace#1#2{\overbrace{#1}^{{#2}}}
+\def\moverbraceleg#1#2{\moverbrace {#1} {\dsize #2}}% legible version
 \def\tunderbrace#1#2{\underbrace{#1}_{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\munderbrace#1#2{\underbrace{#1}_{{#2}}}
+\def\munderbraceleg#1#2{\munderbrace {#1} {\dsize #2}}% legible version
 \let\tobrace=\toverbrace
 \let\mobrace=\moverbrace
 \let\tubrace=\tunderbrace
 \let\mubrace=\munderbrace
+\let\mobraceleg=\moverbraceleg
+\let\mubraceleg=\munderbraceleg
 \def\compute#1\endcompute{$$\alignat2\relax #1\endalignat$$}
 \def\computed#1\endcomputed{\alignedat2\relax #1\endalignedat}
 \def\stepproof#1{\alignat2\relax #1\endalignat}
