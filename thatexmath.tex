@@ -289,6 +289,7 @@
 \def\impliessymbol{\Longrightarrow}
 \def\impliedbysymbol{\Longleftarrow}
 \def\defiff{\mathrel{{\buildrel{\text{\sixss def}} \over {\iff}}}}
+\def\alertdefiff{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {\iff}}}}
 \def\defiffsymbol{\mathop{\buildrel{\text{\sixss def}} \over {\Longleftrightarrow}}}
 \def\impliesbecause#1{\mathrel{{\buildrel{\text{\explanationstyle{\sixrm #1}}} \over {\implies}}}}
 \def\pseudodefiff{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {\iff}}}}
@@ -299,6 +300,7 @@
 \def\assiff{\mathrel{\;:\Longleftrightarrow \;}}
 \let\letiff=\assiff
 \def\defeq{\mathrel{{\buildrel{\text{\sixss def}} \over {=}}}}
+\def\alertdefeq{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {=}}}}
 \def\pseudodefeq{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {=}}}}
 \def\pseudoeq{\mathrel{\textrm{``$\mathord{=}$''}}}
 \def\dotseq{\mathrel{{\buildrel{{...}} \over {=}}}}
@@ -479,10 +481,9 @@
 \def\famst#1#2{{\paren{\,{#1} \,\st\, #2\,}}}
 \def\family#1#2{{\paren{{#1}}_{#2}}}
 \def\famil#1#2#3{{\family {{#1}_{#2}} {{#2}\in{#3}}}}
-\def\sequence#1#2{{\set{#1_{#2}}_{#2}}}
-\def\upsequence#1#2{{\set{#1^{#2}}_{#2}}}
-\let\seqn=\sequence
-\let\upseqn=\upsequence
+\def\faml#1#2{{\family {{#1}_{#2}} {{#2}}}}
+\def\sequence#1#2{{\set{#1}_{#2}}}
+\def\seqn#1#2{\sequence {{#1}_{#2}} {#2}}
 \def\emph#1{{\it #1}}
 \def\ssetp#1#2{({#1}\mathrel{;}{#2})}
 \def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
