@@ -574,6 +574,7 @@
 \def\ifthenelse#1#2#3{\mathbf{if}~#1~\mathbf{then}~#2~\mathbf{else}~#3}
 \def\pifthenelse#1#2#3{\paren{\ifthenelse{#1}{#2}{#3}}}
 \def\IF#1\THEN#2\ELSE#3\FI{\ifthenelse{#1}{#2}{#3}}
+\def\PIF#1\THEN#2\ELSE#3\FIP{\pifthenelse{#1}{#2}{#3}}
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
