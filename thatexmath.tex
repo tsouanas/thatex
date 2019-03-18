@@ -573,7 +573,7 @@
 \def\ton#1{\rel{\to^{#1}}}
 \def\ifthenelse#1#2#3{\mathbf{if}~#1~\mathbf{then}~#2~\mathbf{else}~#3}
 \def\pifthenelse#1#2#3{\paren{\ifthenelse{#1}{#2}{#3}}}
-\def\IF #1 \THEN #2 \ELSE #3 \FI{\ifthenelse{#1}{#2}{#3}}
+\def\IF#1\THEN#2\ELSE#3\FI{\ifthenelse{#1}{#2}{#3}}
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
@@ -630,7 +630,7 @@
 \def\symcl#1{\decorateover{\leftrightarrow}{#1}}
 \def\refcl#1{\decorateover{=}{#1}}
 \def\cross{\times}
-\def\chr#1{\chi_A}
+\def\chr#1{\chi_{#1}}
 \def\chrdom#1#2{\chr{#2}^{#1}}
 \def\app{\nobreak\,\nobreak}
 %%}}}
