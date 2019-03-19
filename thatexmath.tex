@@ -643,11 +643,18 @@
 \def\Lmac#1{\underline{\mathtt{#1}}}
 \def\Lfinto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
 \def\Lnum#1{{\underline{#1}}}
-\def\lamstep{\mathrel{\triangleright}}
-\def\lamstep{\mathrel{\triangleright}}
-\def\betastep{\mathrel{\triangleright_\beta}}
-\def\etastep{\mathrel{\triangleright_\eta}}
-\def\alphastep{\mathrel{\triangleright_\alpha}}
+\def\lamstep{\mathrel{\;\triangleright_{\kern-.4em}{}_{\phantom{\beta}}\;}}
+\def\invstep{\phantom{\lamstep}}
+\def\betastep{\mathrel{\;\triangleright_{\kern-.4em{}_\beta}\;}}
+\def\etastep{\mathrel{\;\triangleright_{\kern-.4em{}_\eta}\;}}
+\def\alphastep{\mathrel{\;\triangleright_{\kern-.4em{}_\alpha}\;}}
+\let\lstep=\lamstep
+\let\istep=\invstep
+\let\bstep=\betastep
+\let\estep=\etastep
+\let\astep=\alphastep
+\def\lameq{\mathrel{\,=\,}}
+\def\isteq{\istep\lameq}% istep-indent equals
 \def\markredex#1{\underline{#1}}
 %%}}}
 
