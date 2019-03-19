@@ -501,6 +501,7 @@
 \DefFun curry
 \DefFun uncurry
 \def\paren#1{{\left({#1}\right)}}
+\def\nparen#1{{(\left.{#1}\right.)}}% forced normal-size parens
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
 \def\bigparen#1{{\mathopen{\big(}{#1}\mathclose{\big)}}}% forced big-size parens
 \def\Bigparen#1{{\mathopen{\Big(}{#1}\mathclose{\Big)}}}% forced Big-size parens
@@ -579,9 +580,9 @@
 \def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
 \def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
-\def\plam#1#2{\paren{\lam{#1}{#2}}}% parenthesize whole term
-\def\plamt#1#2{\paren{\lamt{#1}{#2}}}
-\def\plamp#1#2{\paren{\lamp{#1}{#2}}}
+\def\plam#1#2{\nparen{\lam{#1}{#2}}}% parenthesize whole term
+\def\plamt#1#2{\nparen{\lamt{#1}{#2}}}
+\def\plamp#1#2{\nparen{\lamp{#1}{#2}}}
 \def\lapp{\nobreak\;\nobreak}% lambda term application
 \def\fapp{\nobreak~\nobreak}% function application
 \def\lappp#1{\lapp\paren{#1}}% parenthesized lapp
