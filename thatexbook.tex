@@ -1099,7 +1099,7 @@
 
 %%{{{ sourcecode listing 
 \def\printlistinglineno{\llap{\explanationstyle{\rm\the\lineno}}\quad}
-\def\sourcecode#1;{{\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}}
+\def\sourcecode#1; {\endgraf\bigskip{\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}\bigskip\endgraf\noindent}
 %%}}}
 
 %%{{{ argumentations 
