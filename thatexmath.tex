@@ -634,6 +634,11 @@
 \def\symcl#1{\decorateover{\leftrightarrow}{#1}}
 \def\refcl#1{\decorateover{=}{#1}}
 \def\cross{\times}
+\def\fpair#1#2{\mathord{\tup{#1,#2}}}
+\def\fcross#1#2{\mathord{#1\cross#2}}
+\def\pfcross#1#2{\mathord{\paren{#1\cross#2}}}
+\def\diag{\Delta} % diagonal
+\def\diagdom#1{\diag_{#1}}
 \def\chr#1{\chi_{#1}}
 \def\chrdom#1#2{\chr{#2}^{#1}}
 \def\kon#1{\mathrm{k}_{#1}}
