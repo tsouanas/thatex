@@ -35,6 +35,12 @@
 \let\color\eplaincolor
 \let\definecolor\eplaindefinecolor
 
+% protect and restore original repeat
+\let\knuthrepeat=\repeat
+\input repeat
+\let\Repeat=\repeat
+\let\repeat=\knuthrepeat
+
 %%}}}
 
 %%{{{ ThaTeX hyperlinks 
@@ -71,6 +77,7 @@
 % \eolfill ensures the next thing is placed at the end of the same or the next line
 \def\eolfill{\ifhmode\unskip\nobreak\fi\hbox{}\hfill\hbox{}\nobreak}%XXX 
 \def\CR{\newline}
+\def\nrepeat#1#2{\Repeat \for{i} \from{1} \to{#1} \do{#2}}
 %%}}}
 
 %%{{{ ThaTeX numerals 
