@@ -9,5 +9,3 @@ Reimplement double/triplecolumns because eplain's doesn't play well with li-list
 Chapter contexts need to be repeated for each \solution and \hint they appear in.
 
 Proof status macros.
-
-\sourcecode displays extra new line.

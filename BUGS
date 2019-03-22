@@ -24,3 +24,7 @@ Pagebreak can occur right after a section title.
 
 If a section ends at the very end of a page, next section might begin with
 some vertical space, while it shouldn't.
+
+\sourcecode displays extra new line.
+
+\sourcecode can't display some unicode characters, like \nats, etc.
