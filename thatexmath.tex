@@ -484,7 +484,11 @@
 \let\rfromarrow=\relfromarrow
 \let\ftoarrow=\toarrow
 \let\ffromarrow=\fromarrow
-\def\mapstoarrow#1{\mathrel{\decorateover{#1}{\longmapsto}}}
+\let\longmapsto=\knuthlongmapsto % save original longmapsto
+\def\longmapsto{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsto] \| {} \endcd}}
+\def\longmapsfrom{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsfrom] \| {} \endcd}}
+\def\mapstoarrow#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsto, "#1"] \| {} \endcd}}
+\def\mapsfromarrow#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsfrom, "#1"] \| {} \endcd}}
 \def\set#1{\left\{#1\right\}}
 \def\fsset#1{\{#1\}}% fixed-size set
 \def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
