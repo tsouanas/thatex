@@ -479,12 +479,13 @@
 \def\to{\mathrel{\rightarrow}}
 \def\from{\mathrel{\leftarrow}}
 \def\longto{\mathrel{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}
+\def\longfrom{\mathrel{\mathord{\longleftarrow-\mkern-8mu-\mkern-8mu}}}
 \def\toby#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
-\def\tolongby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{4}{-\mkern-8mu}\longrightarrow}}}}
-\def\toxlongarrow#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{12}{-\mkern-8mu}\longrightarrow}}}}
+\def\longtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{4}{-\mkern-8mu}\longrightarrow}}}}
+\def\xlongtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{12}{-\mkern-8mu}\longrightarrow}}}}
 \def\fromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\mkern-8mu-\mkern-8mu-}}}}
-\def\fromlongby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{4}{\mkern-8mu-}}}}}
-\def\fromxlongarrow#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{12}{\mkern-8mu-}}}}}
+\def\longfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{4}{\mkern-8mu-}}}}}
+\def\xlongfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{12}{\mkern-8mu-}}}}}
 \def\reltoby#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrowtriangle}}}}
 \def\relfromby#1{\mathrel{\decorateover{#1}{\mathord{\leftarrowtriangle\mkern-8mu-\mkern-8mu-}}}}
 \let\rtoby=\reltoby
@@ -496,6 +497,9 @@
 \def\longmapsfrom{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsfrom] \| {} \endcd}}
 \def\mapstoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsto, "#1"] \| {} \endcd}}
 \def\mapsfromby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsfrom, "#1"] \| {} \endcd}}
+\def\bijtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, tail, two heads, "#1"] \| {} \endcd}}
+\def\injtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, tail, "#1"] \| {} \endcd}}
+\def\surtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, two heads, "#1"] \| {} \endcd}}
 \def\set#1{\left\{#1\right\}}
 \def\fsset#1{\{#1\}}% fixed-size set
 \def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
