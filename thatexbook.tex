@@ -698,7 +698,7 @@
 \fi%
 \bgroup\rm%
 ####2%
-\ifhmode\phantom.\fi\eolfill\qessymbol% XXX: nolinebreak bad workaround
+\XXXeolfill\qessymbol% XXX: nolinebreak bad workaround
 \egroup%
 }%
 %%%%
@@ -917,7 +917,7 @@
 \bgroup%
 % hints
 \def\printhintstatus{%
-\eolfill%
+\XXXeolfill%
 \ifnum\hintno>0%
 \hintstatusstyle{%
 \ifprint
@@ -981,7 +981,7 @@
 {##1}
 }%
 #2%
-\eolfill$\qexsymbol$\par\egroup\medbreak
+\XXXeolfill$\qexsymbol$\par\egroup\medbreak
 }% /example-scope
 }
 %%}}}
@@ -1012,7 +1012,7 @@
 {##1}
 }%
 #2%
-\eolfill$\qexsymbol$\par\egroup\medbreak
+\XXXeolfill$\qexsymbol$\par\egroup\medbreak
 }% /nonexample-scope
 }
 %%}}}
@@ -1064,7 +1064,7 @@
 \bgroup%
 % hints
 \def\printhintstatus{%
-\eolfill%
+\XXXeolfill%
 \ifnum\hintno>0%
 \hintstatusstyle{%
 \ifprint%
