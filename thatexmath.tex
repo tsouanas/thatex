@@ -72,6 +72,7 @@
 \def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
 \def\mathsf#1{\hbox{\text{\sf#1}}}
 \def\mathsfbf#1{\hbox{\text{\sfbf#1}}}
+\def\mathsfmbf#1{\hbox{\text{\sfmbf#1}}}
 \def\mathsc#1{\hbox{\text{\scshape #1}}}
 \def\mathtt#1{\hbox{\text{\tt#1}}}
 \def\mathbf#1{\hbox{\text{\bf#1}}}
@@ -120,8 +121,8 @@
 \def\DefPar#1 {\expandafter\def\csname #1P\endcsname##1{\csname #1\endcsname\funparen{##1}}}
 % \DefApp is similar but defines a space-as-application version
 \def\DefApp#1 {\expandafter\def\csname #1A\endcsname##1{\csname #1\endcsname\fa{##1}}}
-% \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also take cares
-% the definition of the "parenthesized" version of it if it makes sense
+% \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
+% of the definition of the "parenthesized" version of it if it makes sense
 \def\DefREL#1 #2  {\expandafter\def\csname #1\endcsname{{\namedrel{#2}}}\DefPar #1 }
 \def\DefFUN#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfun{#2}}}\DefPar #1 \DefApp #1 }
 \def\DefFPF#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
@@ -512,6 +513,7 @@
 \DefFun outr
 \DefFun inl
 \DefFun inr
+\let\knuthsucc=\succ% save original math symbol
 \DefFun succ
 \DefFun curry
 \DefFun uncurry
@@ -536,7 +538,6 @@
 \def\faml#1#2{{\family {{#1}_{#2}} {{#2}}}}
 \def\sequence#1#2{{\set{#1}_{#2}}}
 \def\seqn#1#2{\sequence {{#1}_{#2}} {#2}}
-\def\emph#1{{\it #1}}
 \def\ssetp#1#2{({#1}\mathrel{;}{#2})}
 \def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
 \let\sset=\ssetp
@@ -681,7 +682,7 @@
 %%}}}
 
 %%{{{ combinatory logic 
-\def\C#1{{\mathord{\mathsfbf{#1}}}}
+\def\C#1{{\mathord{\mathsfmbf{#1}}}}
 \def\Cto{\mathrel{\triangleright}}
 \def\cI{{\C I}}
 \def\cK{{\C K}}

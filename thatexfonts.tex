@@ -17,7 +17,7 @@
 \setfonts[/11pt]
 \setfonts[CMRoman/]
 %\def\sffamily{\setfonts[CMSans/]}
-\def\small{\setfonts[/mag.9]}
+\def\smallish{\setfonts[/mag.9]}
 \def\smaller{\setfonts[/mag.8]}
 \def\smallest{\setfonts[/mag.7]}
 \def\larger{\setfonts[/mag1.2]}
@@ -110,16 +110,28 @@
 \font\fivess="[cmunss]:mapping=tex-text"        at 5pt
 
 % ssbf
-\font\sixteenssbf="[cmunbsr]:mapping=tex-text"  at 16pt
-\font\fourteenssbf="[cmunbsr]:mapping=tex-text" at 14pt
-\font\twelvessbf="[cmunbsr]:mapping=tex-text"   at 12pt
-\font\elevenssbf="[cmunbsr]:mapping=tex-text"   at 11pt
-\font\tenssbf="[cmunbsr]:mapping=tex-text"      at 10pt
-\font\ninessbf="[cmunbsr]:mapping=tex-text"     at 9pt
-\font\eightssbf="[cmunbsr]:mapping=tex-text"    at 8pt
-\font\sevenssbf="[cmunbsr]:mapping=tex-text"    at 7pt
-\font\sixssbf="[cmunbsr]:mapping=tex-text"      at 6pt
-\font\fivessbf="[cmunbsr]:mapping=tex-text"     at 5pt
+\font\sixteenssbf="[cmunsx]:mapping=tex-text"  at 16pt
+\font\fourteenssbf="[cmunsx]:mapping=tex-text" at 14pt
+\font\twelvessbf="[cmunsx]:mapping=tex-text"   at 12pt
+\font\elevenssbf="[cmunsx]:mapping=tex-text"   at 11pt
+\font\tenssbf="[cmunsx]:mapping=tex-text"      at 10pt
+\font\ninessbf="[cmunsx]:mapping=tex-text"     at 9pt
+\font\eightssbf="[cmunsx]:mapping=tex-text"    at 8pt
+\font\sevenssbf="[cmunsx]:mapping=tex-text"    at 7pt
+\font\sixssbf="[cmunsx]:mapping=tex-text"      at 6pt
+\font\fivessbf="[cmunsx]:mapping=tex-text"     at 5pt
+
+% nbsr (bright sans-serif medium bold)
+\font\sixteenssmbf="[cmunbsr]:mapping=tex-text"  at 16pt
+\font\fourteenssmbf="[cmunbsr]:mapping=tex-text" at 14pt
+\font\twelvessmbf="[cmunbsr]:mapping=tex-text"   at 12pt
+\font\elevenssmbf="[cmunbsr]:mapping=tex-text"   at 11pt
+\font\tenssmbf="[cmunbsr]:mapping=tex-text"      at 10pt
+\font\ninessmbf="[cmunbsr]:mapping=tex-text"     at 9pt
+\font\eightssmbf="[cmunbsr]:mapping=tex-text"    at 8pt
+\font\sevenssmbf="[cmunbsr]:mapping=tex-text"    at 7pt
+\font\sixssmbf="[cmunbsr]:mapping=tex-text"      at 6pt
+\font\fivessmbf="[cmunbsr]:mapping=tex-text"     at 5pt
 
 % sl
 \font\twelvesl="[cmunsl]:mapping=tex-text"      at 12pt
@@ -144,7 +156,7 @@
 
 %%}}}
 
-% default to \tenrm
+%%{{{ XXX: sizeROMAN commands 
 
 \def\sizev{
 \let\rm=\fiverm
@@ -152,11 +164,16 @@
 \let\it=\fiveit
 \let\sfdc=\fivessdc
 \let\sfbf=\fivessbf
+\let\sfmbf=\fivessmbf
 \let\sf=\fivess
 \let\sl=\fivesl
 \let\tt=\fivett
+\let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizev
+\let\SMALL=\sizev
+\let\Small=\sizev
 \let\small=\sizev
-\let\smaller=\sizev
 \let\large=\sizevi
 \let\Large=\sizevii
 \let\LARGE=\sizeviii
@@ -165,27 +182,123 @@
 \let\HUGE=\sizexi
 }
 
+\def\sizevi{
+\let\rm=\sixrm
+\let\bf=\sixbf
+\let\it=\sixit
+\let\sfdc=\sixssdc
+\let\sfbf=\sixssbf
+\let\sfmbf=\sixssmbf
+\let\sf=\sixss
+\let\sl=\sixsl
+\let\tt=\sixtt
+\let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizev
+\let\SMALL=\sizev
+\let\Small=\sizev
+\let\small=\sizev
+\let\large=\sizevii
+\let\Large=\sizeviii
+\let\LARGE=\sizeix
+\let\huge=\sizex
+\let\Huge=\sizexi
+\let\HUGE=\sizexii
+}
+
+\def\sizevii{
+\let\rm=\sevenrm
+\let\bf=\sevenbf
+\let\it=\sevenit
+\let\sfdc=\sevenssdc
+\let\sfbf=\sevenssbf
+\let\sfmbf=\sevenssmbf
+\let\sf=\sevenss
+\let\sl=\sevensl
+\let\tt=\seventt
+\let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizev
+\let\SMALL=\sizev
+\let\Small=\sizev
+\let\small=\sizevi
+\let\large=\sizeviii
+\let\Large=\sizeix
+\let\LARGE=\sizex
+\let\huge=\sizexi
+\let\Huge=\sizexii
+\let\HUGE=\sizexiii
+}
+
+\def\sizeviii{
+\let\rm=\eightrm
+\let\bf=\eightbf
+\let\it=\eightit
+\let\sfdc=\eightssdc
+\let\sfbf=\eightssbf
+\let\sfmbf=\eightssmbf
+\let\sf=\eightss
+\let\sl=\eightsl
+\let\tt=\eighttt
+\let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizev
+\let\Small=\sizevi
+\let\small=\sizevii
+\let\large=\sizeix
+\let\Large=\sizex
+\let\LARGE=\sizexi
+\let\huge=\sizexii
+\let\Huge=\sizexiii
+\let\HUGE=\sizexiv
+}
+
+\def\sizeix{
+\let\rm=\ninerm
+\let\bf=\ninebf
+\let\it=\nineit
+\let\sfdc=\ninessdc
+\let\sfbf=\ninessbf
+\let\sfmbf=\ninessmbf
+\let\sf=\niness
+\let\sl=\ninesl
+\let\tt=\ninett
+\let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizev
+\let\SMALL=\sizevi
+\let\Small=\sizevii
+\let\small=\sizeviii
+\let\large=\sizex
+\let\Large=\sizexi
+\let\LARGE=\sizexii
+\let\huge=\sizexv
+\let\Huge=\sizexx
+\let\HUGE=\sizexx
+}
+
 \def\sizex{
 \let\rm=\tenrm
 \let\bf=\tenbf
 \let\it=\tenit
 \let\sfdc=\tenssdc
 \let\sfbf=\tenssbf
+\let\sfmbf=\tenssmbf
 \let\sf=\tenss
 \let\sl=\tensl
 \let\tt=\tentt
-\let\small=\sizev
-\let\Small=\sizev
-\let\SMALL=\sizev
-\let\tiny=\sizev
-\let\Tiny=\sizev
 \let\TINY=\sizev
+\let\Tiny=\sizev
+\let\tiny=\sizevi
+\let\SMALL=\sizevii
+\let\Small=\sizeviii
+\let\small=\sizeix
 \let\large=\sizexi
 \let\Large=\sizexii
 \let\LARGE=\sizexiv
 \let\huge=\sizexvi
 \let\Huge=\sizexx
-\let\HUGE=\sizexiv
+\let\HUGE=\sizexx
 }
 
 \def\sizexi{
@@ -194,20 +307,23 @@
 \let\it=\elevenit
 \let\sfdc=\elevenssdc
 \let\sfbf=\elevenssbf
+\let\sfmbf=\elevenssmbf
 \let\sf=\elevenss
 \let\sl=\elevensl
 \let\tt=\eleventt
-\let\small=\sizev
-\let\Small=\sizev
-\let\SMALL=\sizev
-\let\tiny=\sizev
-\let\Tiny=\sizev
 \let\TINY=\sizev
-\let\large=\sizexi
-\let\Large=\sizexii
+\let\Tiny=\sizev
+\let\tiny=\sizevi
+\let\SMALL=\sizexvii
+\let\Small=\sizeviii
+\let\small=\sizeix
+\let\large=\sizexii
+\let\Large=\sizexiii
 \let\LARGE=\sizexiv
-\let\huge=\sizexvi
-\let\Huge=\sizexx
-\let\HUGE=\sizexiv
+\let\huge=\sizexv
+\let\Huge=\sizexvi
+\let\HUGE=\sizexx
 }
+
+%%}}}
 

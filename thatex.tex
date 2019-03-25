@@ -78,6 +78,7 @@
 \def\eolfill{\ifhmode\unskip\nobreak\fi\hbox{}\hfill\hbox{}\nobreak}%XXX 
 \def\CR{\newline}
 \def\nrepeat#1#2{\Repeat \for{i} \from{1} \to{#1} \do{#2}}
+\def\colorboxfb#1#2#3{\colorbox{#2}{\color{#1}#3}}% colorbox fg in bg
 %%}}}
 
 %%{{{ ThaTeX numerals 
@@ -103,7 +104,6 @@
 \twodigitfmt{\the\hours}:\twodigitfmt{\the\minutes}
 }
 \let\numfootnote=\numberedfootnote\relax
-\everyfootnote={\ninerm}
 %%}}}
 
 %%{{{ ThaTeX lists
@@ -121,8 +121,8 @@
 
 %%{{{ ThaTeX draft 
 \definecolor{todocolor}{rgb}{.0,.5,.75}
-\def\TODO#1\par{{}\par\noindent {\color{todocolor}{$\blacktriangleright$}\sf\enspace#1}}
-\def\TODOthis#1{{}\endgraf\noindent {\color{todocolor}{$\blacktriangleright$}\sf\enspace#1}\endgraf}
+\definecolor{todocolorinv}{rgb}{1,1,1}
+\def\TODO#1\par{{}\endgraf\noindent {\llap{\colorboxfb{todocolorinv}{todocolor}{\sfmbf~~TODO~~}\enspace}{\color{todocolor}\sf #1}}\par}
 %%}}}
 
 %%{{{ ThaTeX text 
