@@ -256,6 +256,14 @@
 \def\smartnot{\mathpalette\NoT}
 \def\NoT#1#2{\mathrel{\ooalign{\hfil$#1{#2}$\hfil\cr\hfil$#1/$\hfil}}}
 \def\stackrel#1#2{{\buildrel{#1} \over {#2}}}
+% aperlis *laps
+\def\clap#1{\hbox to 0pt{\hss#1\hss}}
+\def\mathllap{\mathpalette\mathllapinternal}
+\def\mathrlap{\mathpalette\mathrlapinternal}
+\def\mathclap{\mathpalette\mathclapinternal}
+\def\mathllapinternal#1#2{\llap{$\mathsurround=0pt#1{#2}$}}
+\def\mathrlapinternal#1#2{\rlap{$\mathsurround=0pt#1{#2}$}}
+\def\mathclapinternal#1#2{\clap{$\mathsurround=0pt#1{#2}$}}
 %%}}}
 
 %%{{{ generic tools 
