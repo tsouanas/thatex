@@ -826,6 +826,10 @@
 \immediate\openout\fullproofsfile=\jobname.proofs
 \immediate\openout\symbolsfile=\jobname.symbols
 
+% stylistic
+\definecolor{hintstatuscolor}{cmyk}{0,0,0,.666}
+\def\hintstatusstyle#1{{\sixrm\color{hintstatuscolor} (#1)}}
+
 \def\writesymbol#1#2#3#4#5#6#7{%
 % #1: chapterno
 % #2: notetag (3.2)
