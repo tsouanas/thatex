@@ -618,7 +618,9 @@
 \def\plamt#1#2{\nparen{\lamt{#1}{#2}}}
 \def\plamp#1#2{\nparen{\lamp{#1}{#2}}}
 \def\lapp{\nobreak\;\nobreak}% lambda term application
-\def\fapp{\nobreak~\nobreak}% function application
+\def\fapp{\nobreak\;\nobreak}% function application
+\def\at{\mathbin{\@}}% function application explicit infix
+\let\fat=\at
 \def\lappp#1{\lapp\paren{#1}}% parenthesized arg lapp
 \def\fappp#1{\fapp\paren{#1}}% parenthesized arg fapp
 \let\fa=\fapp
@@ -678,6 +680,7 @@
 \def\kondom#1#2{\kon{#2}^{#1}}
 \def\inc{\imath}
 \def\incofin#1#2{\inc_{#1\incto#2}}
+\def\applydc#1#2{\apply_{#1,#2}}
 \def\app{\nobreak\,\nobreak}
 %%}}}
 
