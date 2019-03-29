@@ -538,6 +538,7 @@
 \DefFun curry
 \DefFun uncurry
 \DefFun apply
+\DefFun compose
 \def\paren#1{{\left({#1}\right)}}
 \def\nparen#1{{(\left.{#1}\right.)}}% forced normal-size parens
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
@@ -682,8 +683,9 @@
 \def\kon#1{\mathrm{k}_{#1}}
 \def\kondom#1#2{\kon{#2}^{#1}}
 \def\inc{\imath}
-\def\incofin#1#2{\inc_{#1\incto#2}}
-\def\applydc#1#2{\apply_{#1,#2}}
+\def\incofin#1#2{\inc_{{#1}\incto{#2}}}
+\def\applydc#1#2{\apply_{{#1}\to{#2}}}
+\def\composeftt#1#2#3{\compose_{{#1}\to{#2}\to{#3}}}% from-to-to
 \def\app{\nobreak\,\nobreak}
 %%}}}
 
