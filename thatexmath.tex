@@ -606,6 +606,7 @@
 \let\of=\fcompose
 \let\following=\compose
 \def\incto{\mathrel{\hookrightarrow}}
+\def\subsetto{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, hook, "\mathord{\subset}"] \| {} \endcd}}
 \def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
 \def\restosub#1{\mathord{|}_{#1}}
 \def\resfun#1#2{{#1}\resto{#2}}
@@ -870,10 +871,11 @@
 %%}}}
 
 %%{{{ structured sets 
-\def\isomorphicto{\mathrel{\knuthcong}}
-\let\isomorphic=\isomorphicto
-\let\isoto=\isomorphic
-\let\iso=\isoto
+\def\isomorphic{\mathrel{\knuthcong}}
+\def\isomorphismto{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, "\mathord{\isomorphic}"] \| {} \endcd}}
+\let\iso=\isomorphic
+\let\isomorphism=\isomorphismto
+\let\isoto=\isomorphismto
 %%}}}
 
 %%{{{ placeholder hole 
