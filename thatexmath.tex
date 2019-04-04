@@ -82,6 +82,7 @@
 \def\namedfun#1{\mathord{\mathit{#1}}}% for functions
 \def\namedfpf#1{\mathord{\mathit{#1}}}% for functional programming functions
 \def\namedtype#1{\mathord{\mathsf{#1}}}
+\def\namedcat#1{\mathord{\mathsfmbf{#1}}}
 \def\namedop#1{\operatorname{#1}}
 \def\cal{\Cal}
 %%}}}
@@ -128,12 +129,14 @@
 \def\DefFPF#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
 \def\DefOP#1 #2   {\expandafter\def\csname #1\endcsname{{\namedop{#2}}}\DefPar  #1 }
 \def\DefTYPE#1 #2 {\expandafter\def\csname #1\endcsname{{\namedtype{#2}}}}
+\def\DefCAT#1 #2  {\expandafter\def\csname #1\endcsname{{\namedcat{#2}}}}
 % Use plain \DefThing if the command name coincides with the printed name
 \def\DefRel#1  {\DefREL #1 #1 }
 \def\DefFun#1  {\DefFUN #1 #1 }
 \def\DefFpf#1  {\DefFPF #1 #1 }
 \def\DefOp#1   {\DefOP #1 #1 }
 \def\DefType#1 {\DefTYPE #1 #1 }
+\def\DefCat#1  {\DefCAT #1 #1 }
 % WARNING: use the above macros without % at the end, because it needs
 % (and eats) the whitespace.  For example:
 % \DefFUN suc succ
@@ -575,12 +578,13 @@
 \def\id{\mathrm{id}}
 \def\idof#1{\mathord{\id}_{#1}}
 \let\iddom=\idof
-\def\idone#1{\mathord{1_{#1}}}
+\def\idone{\mathord{1}}
+\def\idoneof#1{\mathord{{\idone}_{#1}}}
 %\def\cod{\mathop{\rm cod}\nolimits}
 %\def\coim{\mathop{\rm coim}\nolimits}
 \def\coim{\namedop{coim}}
-\def\dom{\namedop{dom}}
-\def\cod{\namedop{cod}}
+\DefOp dom
+\DefOp cod
 \def\compose{\mathbin{\circ}}
 \def\fcompose{\mathbin{\circ}}
 \def\rcompose{\mathbin{\diamond}}
@@ -779,6 +783,23 @@
 \def\oftype{\mathrel{:}}
 \let\is=\oftype
 \def\rule#1{{\scshape #1}}
+%%}}}
+
+%%{{{ category theory 
+\def\cat#1{{\mathsfmbf {#1}}}
+\def\one{{\mathit 1}}
+\def\oneof#1{{\one_{#1}}}
+\DefOp Obj
+\DefOp Arr
+\DefOp Hom
+\DefOp src
+\DefOp tgt
+\DefCat Set
+\DefCat Group
+\DefCat Ring
+\DefCat Lattice
+\DefCat PointedSet
+\DefCat Poset
 %%}}}
 
 %%{{{ order theory 
