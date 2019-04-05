@@ -146,10 +146,16 @@
 %%}}}
 
 %%{{{ elementary math 
-\let\Sum=\sum
-\let\Prod=\prod
-\let\Coprod=\coprod
-\let\Copr=\Coprod
+\let\knuthsum=\sum
+\let\knuthprod=\prod
+\let\Sum=\knuthsum
+\let\Product=\knuthprod
+\let\Prod=\Product
+\let\Pro=\Product
+\let\Coproduct=\coprod
+\let\Coprod=\Coproduct
+\let\Copr=\Coproduct
+\let\Cop=\Coproduct
 \let\sum\relax
 \def\prod{\mathbin{\Pi}}
 \def\coprod{\amalg}
@@ -490,8 +496,6 @@
 \edef\liminf{\liminf\nolimits}
 \edef\limsup{\limsup\nolimits}
 \let\minus=\setminus
-\def\Product{\prod}
-\let\Prod=\Product
 \def\symdiff{\mathbin{\triangle}}
 \def\surjto{\mathrel{\rightarrow\mkern-15mu\rightarrow}}
 \let\surto=\surjto
@@ -774,7 +778,7 @@
 \def\reltype#1{\namedop{Rel}\funparen{#1}}
 \def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
 \def\disjunion{\mathbin{\uplus}}
-\def\Disjunion{\biguplus}
+\def\Disjunion{\mathop{\biguplus}}
 \let\dunion=\disjunion
 \let\Dunion=\Disjunion
 \def\setsucc#1{{#1}{}^+}
