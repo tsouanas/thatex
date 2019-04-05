@@ -146,6 +146,13 @@
 %%}}}
 
 %%{{{ elementary math 
+\let\Sum=\sum
+\let\Prod=\prod
+\let\Coprod=\coprod
+\let\Copr=\Coprod
+\let\sum\relax
+\def\prod{\mathbin{\Pi}}
+\def\coprod{\amalg}
 \def\abs#1{\left|#1\right|}
 \def\bigabs#1{\mathopen{\big|}{#1}\mathclose{\big|}}
 \def\sizeof#1{\left|#1\right|}
