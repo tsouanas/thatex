@@ -607,6 +607,10 @@
 \let\com=\compose
 \def\trel#1{<<#1>>}
 \def\mtrel#1{\text{<<#1>>}}
+\def\relspace#1{\namedop{Rel}\funparen{#1}}
+\def\reltype#1{\namedop{Rel}\funparen{#1}}
+\def\eqrelspace#1{\namedop{EqRel}\funparen{#1}}
+\def\eqreltype#1{\namedop{EqRel}\funparen{#1}}
 \def\eqclass#1#2{\bracket{{#1}}_{#2}}
 \def\eqclassalt#1#2{[\mathord{#1}\mathord{/}\mathord{#2}]}
 \def\eqclassimp#1{[#1]}
@@ -775,8 +779,6 @@
 \DefRel Infinite
 \DefFun first
 \DefFun second
-\def\relspace#1{\namedop{Rel}\funparen{#1}}
-\def\reltype#1{\namedop{Rel}\funparen{#1}}
 \def\kurpair#1#2{\set{\set{#1}, \set{{#1}, {#2}}}}
 \def\disjunion{\mathbin{\uplus}}
 \def\Disjunion{\mathop{\biguplus}}
