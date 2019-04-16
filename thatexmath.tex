@@ -296,9 +296,15 @@
 \def\eqvdots{\mathrel{\,\,\kern-.05em\mathord{\vdots}\,}}
 \def\eqtype{\mathrel{\,\,\kern-.05em:\,}}
 \def\treedots{\mathord{\ddots\kern-0.333em\vdots\kern-0.333em\iddots}}
-\def\labelize#1#2{{#2}_{\textrm{#1}}}
-\def\labL#1{\labelize L {#1}}
-\def\labR#1{\labelize R {#1}}
+\def\dlabelize#1#2{{#2}_{\textrm{#1}}}
+\def\ulabelize#1#2{{#2}^{\textrm{#1}}}
+\def\dlabL#1{\dlabelize L {#1}}
+\def\dlabR#1{\dlabelize R {#1}}
+\def\ulabL#1{\ulabelize L {#1}}
+\def\ulabR#1{\ulabelize R {#1}}
+\let\labelize=\dlabelize
+\let\labL=\dlabL
+\let\labR=\dlabR
 %%}}}
 
 %%{{{ number theory 
