@@ -274,6 +274,14 @@
 \def\thereforetnb#1{\proofsteptnb{\ttherefore#1}}
 \def\thereforemnb#1{\proofsteptnb{\ttherefore$#1$}}
 \def\thereforet#1{\text{\ttherefore #1}}
+\makeatletter
+\def\paths#1{%
+{%
+\def\pathween##1{\faded{\text{\smaller ##1\vphantom{Gg}}}\cr}%
+\leftangle{%
+\,\vcenter{\normalbaselines\m@th\ialign{$##\hfil$&\quad##\hfil\crcr#1\crcr}%
+}}}}
+\makeatother
 %%}}}
 
 %%{{{ generic TeX symbol machinery 
