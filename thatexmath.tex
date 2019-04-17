@@ -768,6 +768,8 @@
 %%}}}
 
 %%{{{ set theory 
+\let\knuthsetminus=\setminus
+\def\setminus{\mathbin{\knuthsetminus}}
 \def\cantorcard#1{\overline{\overline{#1}}}
 \def\cantorset{{\frak C}}
 \def\continuum{\euf{c}}
