@@ -872,7 +872,9 @@
 %%}}}
 
 %%{{{ group theory 
-\def\gop{\mathbin{\pmb{\cdot}}}
+\def\go{\mathbin{\pmb{\cdot}}}
+\def\gop#1{{#1}^{\mathrmtiny{op}}}
+\def\gopp#1{\gop{\paren{#1}}}
 \def\quogroup#1#2{\quoset#1#2}
 \let\quogrp=\quogroup
 \def\gord#1{\mathord{\it o}\funparen{#1}}
