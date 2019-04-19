@@ -967,6 +967,8 @@
 \global\advance\noteno by 1\relax%
 {% example-scope 
 \def\exampletag{\the\chapterno.\the\noteno}%
+\let\notetag=\exampletag%
+\def\notekind{example}%
 \def\examplelabel{eg\the\chapterno.\the\noteno}%
 \def\label##1{\definexref{##1}{\exampletag}{example}}%
 \goodbreak\smallbreak\noindent%
@@ -998,6 +1000,8 @@
 \global\advance\noteno by 1\relax%
 {% nonexample-scope 
 \def\nonexampletag{\the\chapterno.\the\noteno}%
+\let\notetag=\nonexampletag%
+\def\notekind{nonexample}%
 \def\nonexamplelabel{eg\the\chapterno.\the\noteno}%
 \def\label##1{\definexref{##1}{\nonexampletag}{nonexample}}%
 \goodbreak\smallbreak\noindent%
