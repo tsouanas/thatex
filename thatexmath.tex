@@ -78,12 +78,13 @@
 \def\mathbf#1{\hbox{\text{\bf#1}}}
 \def\txt#1{\text{\tt #1}}
 \def\textrm#1{\text{\rm#1}}
-\def\namedrel#1{\operatorname{#1}\nolimits}
+\def\namedrel#1{\operatorname{#1}}
 \def\namedfun#1{\mathord{\mathit{#1}}}% for functions
 \def\namedfpf#1{\mathord{\mathit{#1}}}% for functional programming functions
 \def\namedtype#1{\mathord{\mathsf{#1}}}
 \def\namedcat#1{\mathord{\mathsfmbf{#1}}}
 \def\namedop#1{\operatorname{#1}}
+\def\namedoplims#1{\operatornamewithlimits{#1}}
 \def\cal{\Cal}
 %%}}}
 
@@ -611,7 +612,7 @@
 \def\psetp#1{\pset\funparen{#1}}
 \def\card#1{\abs{#1}}
 \def\eqof#1{\mathrel{=_{#1}}}
-\def\id{\mathrm{id}}
+\def\id{\namedop{id}}
 \def\idof#1{\mathord{\id}_{#1}}
 \let\iddom=\idof
 \def\idone{\mathord{1}}
@@ -725,7 +726,7 @@
 \def\diagdom#1{\diag_{#1}}
 \def\chr#1{\chi_{#1}}
 \def\chrdom#1#2{\chr{#2}^{#1}}
-\def\kon#1{\mathrm{k}_{#1}}
+\def\kon#1{\namedop{k}_{#1}}
 \def\kondom#1#2{\kon{#2}^{#1}}
 \def\inc{\imath}
 \def\incofin#1#2{\inc_{{#1}\incto{#2}}}
@@ -881,7 +882,7 @@
 \def\quogroup#1#2{\quoset#1#2}
 \let\quogrp=\quogroup
 \def\gord#1{\mathord{\it o}\funparen{#1}}
-\def\tord#1{\mathrm{ord}\funparen{#1}}
+\def\tord#1{\namedop{ord}\funparen{#1}}
 \def\bord#1{\abs{#1}}
 \def\gid{\mathord{e}}
 \def\gidof#1{\mathord{e_{#1}}}
@@ -921,10 +922,10 @@
 \DefOp Out
 \def\groupind#1#2{\left|\mathord{#1}\mathbin{:}\mathord{#2}\right|}
 \def\altgroupind#1#2{i_{#1}(#2)}
-\def\centralizer#1{{\mathrm Z}(#1)}
-\def\normalizer#1{{\mathrm N}(#1)}
-\def\centralizerin#1#2{{\mathrm Z}_{#1}(#2)}
-\def\normalizerin#1#2{{\mathrm N}_{#1}(#2)}
+\def\centralizer#1{{\namedop Z}(#1)}
+\def\normalizer#1{{\namedop N}(#1)}
+\def\centralizerin#1#2{{\namedop Z}_{#1}(#2)}
+\def\normalizerin#1#2{{\namedop N}_{#1}(#2)}
 \let\centizer=\centralizer
 \let\normizer=\normalizer
 \let\cizer=\centizer
