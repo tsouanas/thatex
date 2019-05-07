@@ -32,3 +32,5 @@ begin with some vertical space; it should never do that.
 \sourcecode can't display some unicode characters, like \nats, etc.
 
 Cannot use \def's with params (in a nice way) within hints, solutions, of exercises, examples, etc.  Weird behaviour.
+
+Blank page at end of book with header of "General index" and page number.
