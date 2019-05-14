@@ -427,13 +427,14 @@
 \def\liff{\mathbin{\leftrightarrow}}
 \def\unique{{\exists!}}
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
+\def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
 \def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantified{\text{#3}}}
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
-\def\lforallt{\quantifierabbrt{\forall}}
-\def\lexistst{\quantifierabbrt{\exists}}
-\def\luniquet{\quantifierabbrt{\unique}}
+\def\tforall{\quantifierabbrt{\forall}}
+\def\texists{\quantifierabbrt{\exists}}
+\def\tunique{\quantifierabbrt{\unique}}
 \def\pexists#1{\paren{\exists#1}}
 \def\pforall#1{\paren{\forall#1}}
 \def\punique#1{\paren{\unique#1}}
