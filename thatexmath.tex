@@ -203,9 +203,52 @@
 \def\matrixp#1{\pmatrix#1\endpmatrix}
 %%}}}
 
-%%{{{ misc symbols 
+%%{{{ greek letter symbols 
+
+% save original symbols
+\let\knuthepsilon=\epsilon
+\let\knuthvarepsilon=\varepsilon
+\let\knuththeta=\theta
+\let\knuthvartheta=\vartheta
+\let\knuthkappa=\kappa
+\let\knuthvarkappa=\varkappa
+\let\knuthpi=\pi
+\let\knuthvarpi=\varpi
+\let\knuthrho=\rho
+\let\knuthvarrho=\varrho
+\let\knuthsigma=\sigma
+\let\knuthvarsigma=\varsigma
 \let\knuthphi=\phi
-\let\phi=\varphi
+\let\knuthvarphi=\varphi
+
+% use the following ones
+\let\epsilon=\knuthvarepsilon
+\let\lunepsilon=\knuthepsilon
+\let\theta=\knuthvartheta
+\let\clotheta=\knuththeta
+\let\kappa=\knuthkappa
+\let\curkappa=\knuthvarkappa
+\let\pi=\knuthpi
+\let\curpi=\knuthvarpi
+\let\rho=\knuthrho
+\let\currho=\knuthvarrho
+\let\sigma=\knuthsigma
+\let\finsigma=\knuthvarsigma
+\let\phi=\knuthvarphi
+\let\clophi=\knuthphi
+
+% don't use var- cs's
+\let\varepsilon=\UNDEFINED
+\let\vartheta=\UNDEFINED
+\let\varkappa=\UNDEFINED
+\let\varpi=\UNDEFINED
+\let\varrho=\UNDEFINED
+\let\varsigma=\UNDEFINED
+\let\varphi=\UNDEFINED
+
+%%}}}
+
+%%{{{ misc symbols 
 \def\caret{\hat{}}
 \def\heart{\heartsuit}
 \def\spade{\spadesuit}
@@ -331,7 +374,7 @@
 \def\genlcm#1{\mathopen{\text{\rm lcm}(}#1\mathclose{)}}
 \def\gcd#1#2{\left(#1,#2\right)}
 \def\lcm#1#2{\left[#1,#2\right]}
-\def\totsym{\varphi}
+\def\totsym{\knuthphi}
 \def\tot#1{\mathopen{\totsym}\left({#1}\right)\mathclose{}}
 \DefRel Prime
 \DefRel Even
@@ -684,11 +727,11 @@
 \def\descrsym{\iota}
 \def\descr#1#2{\descrsym\,{#1}\,.\,{#2}}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
-\def\inbag{\mathrel{\varepsilon}}
+\def\inbag{\mathrel{\knuthvarepsilon}}
 \def\bagunion{\mathbin{\Cup}}
 \def\baginter{\mathbin{\Cap}}
 \def\bagplus{\mathbin{\oplus}}
-\def\notinbag{\mathrel{\mkern-2mu\not{\mkern-3mu\varepsilon}}}
+\def\notinbag{\mathrel{\mkern-2mu\not{\mkern-3mu\knuthvarepsilon}}}
 \def\subbag{\mathrel{\Subset}}
 \def\notsubbag{\mathrel{\not\Subset}}
 \def\emptybag{\bag{\mkern-3mu}}
