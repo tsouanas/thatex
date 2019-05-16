@@ -562,7 +562,8 @@
 \def\Union{\bigcup}
 \def\Unionl{\Union\nolimits}% same line
 \def\Interl{\Inter\nolimits}% same line
-\def\limit{\lim\nolimits}% same line
+\def\liml{\lim\nolimits}% same line
+\let\limit=\liml
 \let\liminflimits=\liminf
 \let\limsuplimits=\limsup
 \edef\liminf{\liminf\nolimits}
@@ -1051,8 +1052,18 @@
 \def\limto{\mathrel{\to}}
 \let\tendsto=\limto
 \let\tends=\tendsto
+\def\nlimto{\smartnot{\limto}}
+\let\ntendsto=\nlimto
+\let\ntends=\ntendsto
 \def\convexhull#1{\left\langle#1\right\rangle}
 \let\hull=\convexhull
+\def\ballsym{{\cal B}}
+\def\ball#1#2{\ballsym_{#1}\funparen{#2}}
+\def\ballm#1#2#3{\ballsym^{#1}_{#2}\funparen{#3}}
+\def\cball#1#2{\ballsym^{\mathord{\leq}#1}\funparen{#2}}
+\def\cballm#1#2#3{\ballsym^{#1}_{\mathord{\leq}#2}\funparen{#3}}
+\def\nbhd#1{\cal N_{#1}}
+\let\hood=\nbhd
 %%}}}
 
 %%{{{ givens/goals table 
