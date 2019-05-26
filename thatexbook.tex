@@ -405,6 +405,27 @@
 \ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi%
 }
 
+\def\chapterblah#1. #2\par{%
+\titlepage%
+\topmarker={}%
+\toptitle={#1}%
+\noteno=0%
+\exerciseno=0%
+\codeitno=0%
+\problemno=0%
+{%
+#2%
+\hldestizepage%
+\vglue 4ex%
+\centerline{\chaptertitlestyle{#1}}\par%
+\vglue\chaptertitleskip%
+}%
+}
+
+\def\endchapterblah{%
+\ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi%
+}
+
 \def\appendix#1. #2\par{%
 \global\advance\appendixno by 1%
 \titlepage%
