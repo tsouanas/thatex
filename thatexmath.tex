@@ -329,6 +329,7 @@
 %%}}}
 
 %%{{{ generic TeX symbol machinery 
+\def\pmbb#1{{\pmb{\pmb{#1}}}}
 \def\smartnot{\mathpalette\NoT}
 \def\NoT#1#2{\mathrel{\ooalign{\hfil$#1{#2}$\hfil\cr\hfil$#1/$\hfil}}}
 \def\stackrel#1#2{{\buildrel{#1} \over {#2}}}
@@ -844,9 +845,10 @@
 \def\russell#1{{\mathbf{r}(#1)}}
 \def\metain{\mathrel{\in\kern-0.425em\in}}
 \let\inclass=\metain
-\def\class#1#2{\pmb{\{}\;{#1}\;\st \;{#2}\;\pmb{\}}}
-\def\classt#1#2{\pmb{\{}\;{#1}\;\st \;{\text{#2}}\;\pmb{\}}}
-\def\classimg#1#2{{#1}{\pmb[}\,{#2}\,{\pmb]}}
+\def\classst#1#2{\pmbb{\{}\;{#1}\;\st \;{#2}\;\pmbb{\}}}
+\def\classstt#1#2{\pmbb{\{}\;{#1}\;\st \;{\text{#2}}\;\pmbb{\}}}
+\def\classimg#1#2{{#1}{\pmbb[}\,{#2}\,{\pmbb]}}
+\let\clsimg=\classimg
 \def\universet{{\cal U}}
 \DefRel Eq
 \DefRel Set
