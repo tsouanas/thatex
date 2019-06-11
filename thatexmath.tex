@@ -903,6 +903,7 @@
 %%}}}
 
 %%{{{ order theory 
+\let\bottom=\bot
 \def\smallcovby{\mathrel{-\mkern-8mu\Yleft}}
 \def\covby{\mathrel{-\mkern-9mu<}}
 \def\wellbelow{\mathrel{\ll}}
@@ -930,6 +931,11 @@
 \def\fixpoints{\namedop{Fix}}
 \def\lfp{\namedop{lfp}}
 \def\gfp{\namedop{gfp}}
+\def\lift#1{#1_{\bot}}
+\def\ordplus{\oplus}
+\def\ordinal#1{\mathbf{#1}}
+\let\ordnum=\ordinal
+\def\flatnum#1{\overline{\mathbf{#1}}}
 %%}}}
 
 %%{{{ group theory 
