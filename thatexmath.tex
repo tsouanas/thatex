@@ -428,23 +428,27 @@
 \def\rldirset{($\supset$)}
 \def\rlrewrite#1{{#1}$^\leftarrow$}
 \def\lrrewrite#1{{#1}$^\rightarrow$}
-\def\syneq{\mathrel{\equiv}}        % syntactic
-\def\synasseq{\mathrel{:\equiv}}
-\def\synneq{\mathrel{\smartnot{\syneq}}}
-\def\inteq{\mathrel{\equiv}}        % intensional
-\def\intneq{\mathrel{\smartnot{\inteq}}}
+\def\tripleeq{\mathrel{\equiv}} % symbol
+\def\tripleneq{\mathrel{\smartnot{\tripleeq}}} % symbol
+\def\tripleasseq{\mathrel{:\equiv}} % symbol
+\def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
+\let\syneq=\tripleeq        % syntactic
+\let\synasseq=\tripleasseq
+\let\synneq=\tripleneq
+\let\inteq=\tripleeq        % intensional
+\let\intneq=\tripleneq
 \def\semeq{\mathrel{\eqcirc}}
 \def\semneq{\mathrel{\not\eqcirc}}
 \let\abbreq=\syneq
 \let\sugareq=\syneq
-\def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
-\def\tripledefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}} % symbol
+\def\intiff{\;\mathrel{\tripleiff}\;}
 \def\abbrdefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\abbreq}}}}
 \def\syndefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\syneq}}}}
 \def\syndefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}}
-\def\sugardefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\sugareq}}}}
-\def\sugardefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}}
-\def\intiff{\;\mathrel{\tripleiff}\;}
+\def\sugardefeq{\mathrel{{\buildrel{\text{\sixss sug}} \over {\sugareq}}}}
+\def\sugardefiff{\;\mathrel{{\buildrel{\text{\sixss sug}} \over {\tripleiff}}\;}}
+\def\abusedefeq{\mathrel{{\buildrel{\text{\sixss abu}} \over {\inteq}}}}
+\def\abusedefiff{\;\mathrel{{\buildrel{\text{\sixss abu}} \over {\intiff}}\;}}
 \let\means=\intiff
 \def\sugariff{\intiff}
 \let\sugiff=\sugariff
