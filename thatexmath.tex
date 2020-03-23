@@ -387,9 +387,10 @@
 \def\iffsymbol{\Longleftrightarrow}
 \def\impliessymbol{\Longrightarrow}
 \def\impliedbysymbol{\Longleftarrow}
-\def\defiff{\mathrel{{\buildrel{\text{\sixss def}} \over {\iff}}}}
+\def\deftag{{\text{\sixss def}}}
+\def\defiff{\mathrel{{\buildrel{\deftag} \over {\iff}}}}
 \def\alertdefiff{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {\iff}}}}
-\def\defiffsymbol{\mathop{\buildrel{\text{\sixss def}} \over {\Longleftrightarrow}}}
+\def\defiffsymbol{\mathop{\buildrel{\deftag} \over {\Longleftrightarrow}}}
 \def\impliesbecause#1{\mathrel{{\buildrel{\text{\explanationstyle{\sixrm #1}}} \over {\implies}}}}
 \def\pseudodefiff{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {\iff}}}}
 \def\askiff{\mathrel{{\buildrel{\text{?}} \over {\iff}}}}
@@ -400,7 +401,7 @@
 \def\askdots{{\dots\text{?}\dots}}
 \def\assiff{\mathrel{\;:\Longleftrightarrow \;}}
 \let\letiff=\assiff
-\def\defeq{\mathrel{{\buildrel{\text{\sixss def}} \over {=}}}}
+\def\defeq{\mathrel{{\buildrel{\deftag} \over {=}}}}
 \def\alertdefeq{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {=}}}}
 \def\pseudodefeq{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {=}}}}
 \def\pseudoeq{\mathrel{\textrm{``$\mathord{=}$''}}}
@@ -442,9 +443,9 @@
 \let\abbreq=\syneq
 \let\sugareq=\syneq
 \def\intiff{\;\mathrel{\tripleiff}\;}
-\def\abbrdefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\abbreq}}}}
-\def\syndefeq{\mathrel{{\buildrel{\text{\sixss def}} \over {\syneq}}}}
-\def\syndefiff{\;\mathrel{{\buildrel{\text{\sixss def}} \over {\tripleiff}}\;}}
+\def\abbrdefeq{\mathrel{{\buildrel{\deftag} \over {\abbreq}}}}
+\def\syndefeq{\mathrel{{\buildrel{\deftag} \over {\syneq}}}}
+\def\syndefiff{\;\mathrel{{\buildrel{\deftag} \over {\tripleiff}}\;}}
 \def\sugardefeq{\mathrel{{\buildrel{\text{\sixss sug}} \over {\sugareq}}}}
 \def\sugardefiff{\;\mathrel{{\buildrel{\text{\sixss sug}} \over {\tripleiff}}\;}}
 \def\abusedefeq{\mathrel{{\buildrel{\text{\sixss abu}} \over {\inteq}}}}
