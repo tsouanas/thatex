@@ -190,12 +190,16 @@
 \def\tool#1{{\sf #1}}
 \def\symquote#1{`\,#1\,'}
 \def\symqquote#1{``\,#1\,''}
+\def\wordquote#1{<<#1>>}
 \def\mathsymquote#1{\text{\symquote{$#1$}}}
 \def\mathsymqquote#1{\text{\symqquote{$#1$}}}
+\def\textwq#1{\text{\wq{#1}}}
 \let\sq=\symquote
 \let\sqq=\symqquote
+\let\wq=\wordquote
 \let\msq=\mathsymquote
 \let\msqq=\mathsymqquote
+\def\flwq#1{\kern-1.333ex\wq{#1}}
 \def\dotspc{{.} }% XXX: to work with \remark, etc.
 \def\versus{vs\dotspc}% XXX: to work with \remark, etc.
 \let\vs=\versus
