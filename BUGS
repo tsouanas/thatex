@@ -14,7 +14,9 @@ contains math, it breaks.
 
 \beginol and friends misbehave in doublecolumns when near the end of a page.
 
-\text{\emph{..}} in math doesn't print SOME non-ascii letters.
+\text{\emph{..}} in math doesn't print SOME non-ascii letters:
+\it inside $$\text{..}$$ changes meaning, as shown by \show\it.
+This is because of amstex.tex.
 
 Pagebreak can occur between problem and its hint-status.
 
