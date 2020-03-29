@@ -485,8 +485,9 @@
 \def\liff{\mathbin{\leftrightarrow}}
 \def\unique{{\exists!}}
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
+\def\quantifiedt#1{\quantified{\text{#1}}}
 \def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
-\def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantified{\text{#3}}}
+\def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantifiedt{#3}}
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
