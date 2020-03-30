@@ -94,7 +94,7 @@
 %%}}}
 
 %%{{{ ThaTeX abbrev macros 
-\def\today#1{\the\year#1\relax\the\month\relax#1\the\day\relax}
+\def\today#1{\the\year#1\relax\ifnum\month<10 0\fi\the\month\relax#1\ifnum\day<10 0\fi\the\day\relax}
 \def\humantime{
 \innernewcount\hours
 \innernewcount\minutes
