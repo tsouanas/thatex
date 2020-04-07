@@ -446,15 +446,14 @@
 \let\intneq=\tripleneq
 \def\semeq{\mathrel{\eqcirc}}
 \def\semneq{\mathrel{\not\eqcirc}}
-\let\abbreq=\syneq
-\let\sugareq=\syneq
 \def\intiff{\;\mathrel{\tripleiff}\;}
 \def\intiffsymbol{\tripleiff}
 \def\defintiffsymbol{\mathop{\buildrel{\deftag} \over {\intiffsymbol}}}
-\def\abbrdefeq{\mathrel{{\buildrel{\deftag} \over {\abbreq}}}}
+\def\abbreq{\mathrel{\;{\buildrel{\abbrtag} \over {\tripleeq}\;}}}
+\def\abbriff{\;\mathrel{{\buildrel{\abbrtag} \over {\tripleiff}}\;}}
 \def\syndefeq{\mathrel{{\buildrel{\deftag} \over {\syneq}}}}
 \def\syndefiff{\;\mathrel{{\buildrel{\deftag} \over {\tripleiff}}\;}}
-\def\sugareq{\mathrel{{\buildrel{\sugtag} \over {\tripleeq}}}}
+\def\sugareq{\mathrel{\;{\buildrel{\sugtag} \over {\tripleeq}}\;}}
 \def\sugariff{\;\mathrel{{\buildrel{\sugtag} \over {\tripleiff}}\;}}
 \def\abusedefeq{\mathrel{{\buildrel{\abutag} \over {\inteq}}}}
 \def\abusedefiff{\;\mathrel{{\buildrel{\abutag} \over {\intiff}}\;}}
@@ -473,7 +472,7 @@
 
 %%{{{ grammars 
 \def\bnf#1{\left<\mathit{#1}\,\right>}
-\def\bnfeq{\mathrel{\,::=\,}}
+\def\bnfeq{\mathrel{\;::=\;}}
 \def\bnfor{\mathrel{\,\mid\,}}
 \def\bnfOR{\mathrel{\,\phantom{::}\,|\,\,\,}}
 %%}}}
