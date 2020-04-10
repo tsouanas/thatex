@@ -33,7 +33,7 @@
 
 % Proof{,m,r,mr}:
 % m = assume math mode for nodes
-% r = put rule labels in \rule{...}
+% r = put rule labels in \rulelabel{...}
 
 \def\Proof#1{
 \def\A{\Assumption}
@@ -59,7 +59,7 @@
 \def\A{\Assumption}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
-\InfFromBy##1{\rule{##3}}{##4}
+\InfFromBy##1{\rulelabel{##3}}{##4}
 }
 #1
 \DisplayProof
@@ -69,7 +69,7 @@
 \def\A##1{\Assumption{$##1$}}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
-\InfFromBy##1{\rule{##3}}{$##4$}
+\InfFromBy##1{\rulelabel{##3}}{$##4$}
 }
 #1
 \DisplayProof
