@@ -643,7 +643,7 @@
 \DefFun succ
 \DefFun curry
 \DefFun uncurry
-\DefFun apply
+\DefFun eval
 \DefFun compose
 \def\paren#1{{\left({#1}\right)}}
 \def\nparen#1{{(\left.{#1}\right.)}}% forced normal-size parens
@@ -796,7 +796,7 @@
 \def\kondom#1#2{\kon{#2}^{#1}}
 \def\inc{\imath}
 \def\incofin#1#2{\inc_{{#1}\incto{#2}}}
-\def\applydc#1#2{\apply_{{#1}\to{#2}}}
+\def\evaldc#1#2{\eval_{{#1}\to{#2}}}
 \def\composeftt#1#2#3{\mathbin{\compose_{{#1}\to{#2}\to{#3}}}}% from-to-to
 \let\comftt=\composeftt
 \let\oflab=\composeftt
