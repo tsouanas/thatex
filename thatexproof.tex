@@ -30,6 +30,11 @@
 \QuinaryInfC{#3}
 \fi
 }
+
+% Proof{,m,r,mr}:
+% m = assume math mode for nodes
+% r = put rule labels in \rule{...}
+
 \def\Proof#1{
 \def\A{\Assumption}
 \def\Inf{\InfFromBy}
@@ -39,6 +44,7 @@
 #1
 \DisplayProof
 }
+
 \def\Proofm#1{
 \def\A##1{\Assumption{$##1$}}
 \def\Inf{\InfFromBy}
@@ -48,3 +54,24 @@
 #1
 \DisplayProof
 }
+
+\def\Proofr#1{
+\def\A{\Assumption}
+\def\Inf{\InfFromBy}
+\def\I##1##2 ##3##4{
+\InfFromBy##1{\rule{##3}}{##4}
+}
+#1
+\DisplayProof
+}
+
+\def\Proofmr#1{
+\def\A##1{\Assumption{$##1$}}
+\def\Inf{\InfFromBy}
+\def\I##1##2 ##3##4{
+\InfFromBy##1{\rule{##3}}{$##4$}
+}
+#1
+\DisplayProof
+}
+
