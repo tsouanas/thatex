@@ -397,11 +397,6 @@
 \def\defiffsymbol{\mathop{\buildrel{\deftag} \over {\Longleftrightarrow}}}
 \def\impliesbecause#1{\mathrel{{\buildrel{\text{\explanationstyle{\sixrm #1}}} \over {\implies}}}}
 \def\pseudodefiff{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {\iff}}}}
-\def\askiff{\mathrel{{\buildrel{\text{?}} \over {\iff}}}}
-\def\bangiff{\mathrel{{\buildrel{\text{!}} \over {\iff}}}}
-\def\wowiff{\mathrel{{\buildrel{\text{!!}} \over {\iff}}}}
-\def\askimplies{\mathrel{{\buildrel{\text{?}} \over {\implies}}}}
-\def\askimpliedby{\mathrel{{\buildrel{\text{?}} \over {\impliedby}}}}
 \def\askdots{{\dots\text{?}\dots}}
 \def\assiff{\mathrel{\;:\Longleftrightarrow \;}}
 \def\iffass{\mathrel{\;\Longleftrightarrow: \;}}
@@ -411,12 +406,37 @@
 \def\alertdefeq{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {=}}}}
 \def\pseudodefeq{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {=}}}}
 \def\pseudoeq{\mathrel{\textrm{``$\mathord{=}$''}}}
-\def\dotseq{\mathrel{{\buildrel{{...}} \over {=}}}}
-\def\dotsiff{\mathrel{{\buildrel{{\dots}} \over {\iff}}}}
-\def\askeq{\mathrel{{\buildrel{\text?} \over {=}}}}
-\def\asteq{\mathrel{{\buildrel{\text*} \over {=}}}}
-\def\eqlabel#1{\mathrel{{\buildrel{\text{\explanationstyle{(#1)}}} \over {=}}}}
-\def\ifflabel#1{\mathrel{{\buildrel{\text{\explanationstyle{(#1)}}} \over {\iff}}}}
+% decorate mathrels
+\def\spacerel#1{\mathrel{~~{{}#1{}}~~}}
+\def\dotsrel#1{\mathrel{{\buildrel{{...}} \over {#1}}}}
+\def\longdotsrel#1{\mathrel{{\buildrel{\dots} \over {#1}}}}
+\def\askrel#1{\mathrel{{\buildrel{\text?} \over {#1}}}}
+\def\astrel#1{\mathrel{{\buildrel{\text*} \over {#1}}}}
+\def\bangrel#1{\mathrel{{\buildrel{\text!} \over {#1}}}}
+\def\wowrel#1{\mathrel{{\buildrel{\text{!!}} \over {#1}}}}
+\def\wtfrel#1{\mathrel{{\buildrel{\text{?!}} \over {#1}}}}
+\def\labelrel#1#2{\mathrel{{\buildrel{\text{\explanationstyle{(#2)}}} \over {#1}}}}
+% handy uses:
+\def\spaceq{\spacerel=}
+\def\askiff{\askrel\iff}
+\def\astiff{\astrel\iff}
+\def\bangiff{\bangrel\iff}
+\def\wowiff{\wowrel\iff}
+\def\wtfiff{\wtfrel\iff}
+\def\dotsiff{\longdotsrel\iff}
+\def\ifflabel#1{\labelrel{\iff}#1}
+\def\askimplies{\askrel\implies}
+\def\askimpliedby{\askrel\impliedby}
+\def\dotsimplies{\longdotsrel\implies}
+\def\dotsimpliedby{\longdotsrel\impliedby}
+\def\askeq{\askrel=}
+\def\asteq{\astrel=}
+\def\bangeq{\bangrel=}
+\def\woweq{\wowrel=}
+\def\wtfeq{\wtfrel=}
+\def\dotseq{\dotsrel=}
+\def\eqlabel#1{\labelrel{=}#1}
+% end of decorated mathrels
 \def\eqass{\mathrel{=:}}
 \def\asseq{\mathrel{:=}}
 \let\leteq=\asseq
