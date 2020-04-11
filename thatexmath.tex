@@ -304,7 +304,7 @@
 \let\mubrace=\munderbrace
 \let\mobraceleg=\moverbraceleg
 \let\mubraceleg=\munderbraceleg
-\def\shell#1\endshell{$$\xxalignat2\relax #1\endxxalignat$$}% TODO: make a real shell macro
+\def\shell#1\endshell{\quote{\tentt #1}\endquote}% TODO: make a real shell macro
 \def\compute#1\endcompute{$$\alignat2\relax #1\endalignat$$}
 \def\computed#1\endcomputed{\alignedat2\relax #1\endalignedat}
 \def\stepproof#1\endstepproof{$$\alignat2\relax #1\endalignat$$}
