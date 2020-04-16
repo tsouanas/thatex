@@ -461,6 +461,8 @@
 \def\tripleneq{\mathrel{\smartnot{\tripleeq}}} % symbol
 \def\tripleasseq{\mathrel{:\equiv}} % symbol
 \def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
+\def\triplehearteq{{\buildrel{\heart} \over {\tripleeq}}}
+\def\tripleheartiff{{\buildrel{\heart} \over {\tripleiff}}}
 \let\syneq=\tripleeq        % syntactic
 \let\synasseq=\tripleasseq
 \let\synneq=\tripleneq
@@ -475,6 +477,8 @@
 \def\abbriff{\;\mathrel{{\buildrel{\abbrtag} \over {\tripleiff}}\;}}
 \def\syndefeq{\mathrel{{\buildrel{\deftag} \over {\syneq}}}}
 \def\syndefiff{\;\mathrel{{\buildrel{\deftag} \over {\tripleiff}}\;}}
+\def\hearteq{\mathrel{\triplehearteq}}
+\def\heartiff{\;\mathrel{\tripleheartiff}\;}
 \def\sugareq{\mathrel{\;{\buildrel{\sugtag} \over {\tripleeq}}\;}}
 \def\sugariff{\;\mathrel{{\buildrel{\sugtag} \over {\tripleiff}}\;}}
 \def\abusedefeq{\mathrel{{\buildrel{\abutag} \over {\inteq}}}}
