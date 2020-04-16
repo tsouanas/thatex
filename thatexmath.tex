@@ -410,6 +410,7 @@
 \def\spacerel#1{\mathrel{~~{{}#1{}}~~}}
 \def\dotsrel#1{\mathrel{{\buildrel{{...}} \over {#1}}}}
 \def\longdotsrel#1{\mathrel{{\buildrel{\dots} \over {#1}}}}
+\def\heartrel#1{\mathrel{{\buildrel{\heart} \over {#1}}}}
 \def\askrel#1{\mathrel{{\buildrel{\text?} \over {#1}}}}
 \def\astrel#1{\mathrel{{\buildrel{\text*} \over {#1}}}}
 \def\bangrel#1{\mathrel{{\buildrel{\text!} \over {#1}}}}
@@ -418,6 +419,7 @@
 \def\labelrel#1#2{\mathrel{{\buildrel{\text{\explanationstyle{(#2)}}} \over {#1}}}}
 % handy uses:
 \def\spaceq{\spacerel=}
+\def\heartiff{\heartrel\iff}
 \def\askiff{\askrel\iff}
 \def\astiff{\astrel\iff}
 \def\bangiff{\bangrel\iff}
@@ -425,10 +427,12 @@
 \def\wtfiff{\wtfrel\iff}
 \def\dotsiff{\longdotsrel\iff}
 \def\ifflabel#1{\labelrel{\iff}#1}
+\def\heartimplies{\heartrel\implies}
 \def\askimplies{\askrel\implies}
 \def\askimpliedby{\askrel\impliedby}
 \def\dotsimplies{\longdotsrel\implies}
 \def\dotsimpliedby{\longdotsrel\impliedby}
+\def\hearteq{\heartrel=}
 \def\askeq{\askrel=}
 \def\asteq{\astrel=}
 \def\bangeq{\bangrel=}
@@ -461,8 +465,6 @@
 \def\tripleneq{\mathrel{\smartnot{\tripleeq}}} % symbol
 \def\tripleasseq{\mathrel{:\equiv}} % symbol
 \def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
-\def\triplehearteq{{\buildrel{\heart} \over {\tripleeq}}}
-\def\tripleheartiff{{\buildrel{\heart} \over {\tripleiff}}}
 \let\syneq=\tripleeq        % syntactic
 \let\synasseq=\tripleasseq
 \let\synneq=\tripleneq
@@ -477,8 +479,6 @@
 \def\abbriff{\;\mathrel{{\buildrel{\abbrtag} \over {\tripleiff}}\;}}
 \def\syndefeq{\mathrel{{\buildrel{\deftag} \over {\syneq}}}}
 \def\syndefiff{\;\mathrel{{\buildrel{\deftag} \over {\tripleiff}}\;}}
-\def\hearteq{\mathrel{\triplehearteq}}
-\def\heartiff{\;\mathrel{\tripleheartiff}\;}
 \def\sugareq{\mathrel{\;{\buildrel{\sugtag} \over {\tripleeq}}\;}}
 \def\sugariff{\;\mathrel{{\buildrel{\sugtag} \over {\tripleiff}}\;}}
 \def\abusedefeq{\mathrel{{\buildrel{\abutag} \over {\inteq}}}}
