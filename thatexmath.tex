@@ -101,7 +101,7 @@
 \def\reals{{\bbb R}}
 \def\complex{{\bbb C}}
 \def\bools{{\bbb B}}
-\def\polys#1#2{#1\bracket{#2}}
+\def\polys#1#2{#1\bracket{#2}} % #1: field ; #2: variable
 %%}}}
 
 %%{{{ alternative font for other uses (for example implementations) 
@@ -383,6 +383,8 @@
 \def\lcm#1#2{\left[#1,#2\right]}
 \def\totsym{\knuthphi}
 \def\tot#1{\mathopen{\totsym}\left({#1}\right)\mathclose{}}
+\def\intsmod#1{\ints_{#1}}
+\def\padics#1{{\mathord{\mathbf Z_{#1}}}}
 \DefRel Prime
 \DefRel Even
 \DefRel Odd
