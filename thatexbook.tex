@@ -973,11 +973,11 @@
 \ifnum\hintno>\maxhintno%
 \global\advance\maxhintno by 1\relax%
 \fi
-\immediate\writehint{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\number\hintno}{\unexpanded{##1}}%
+\immediate\writehint{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\number\hintno}{\unexpanded{{##1}}}%
 }
 % solution
 \def\solution##1\par{%
-\immediate\writesolution{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\unexpanded{##1}}%
+\immediate\writesolution{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\unexpanded{{##1}}}%
 }%
 #2% output body
 #3% process hints
@@ -1009,10 +1009,10 @@
 %\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
 %\argumentationheadstyle{\solutionname}. %
 %\else%
-%\argumentationheadstyle{##1}%
+%\argumentationheadstyle{{##1}}%
 %\fi%
 \argumentationheadstyle{\solutionname}. %
-{##1}
+{{##1}}
 }%
 #2%
 \XXXeolfill$\qexsymbol$\par\egroup\medbreak
@@ -1042,10 +1042,10 @@
 %\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
 %\argumentationheadstyle{\solutionname}. %
 %\else%
-%\argumentationheadstyle{##1}%
+%\argumentationheadstyle{{##1}}%
 %\fi%
 \argumentationheadstyle{\solutionname}. %
-{##1}
+{{##1}}
 }%
 #2%
 \XXXeolfill$\qexsymbol$\par\egroup\medbreak
@@ -1124,11 +1124,11 @@
 \ifnum\hintno>\maxhintno%
 \global\advance\maxhintno by 1\relax%
 \fi
-\immediate\writehint{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\number\hintno}{\unexpanded{##1}}
+\immediate\writehint{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\number\hintno}{\unexpanded{{##1}}}
 }
 % solution
 \def\solution##1\par{%
-\immediate\writesolution{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\unexpanded{##1}}%
+\immediate\writesolution{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\unexpanded{{##1}}}%
 }%
 #2%
 #3%
