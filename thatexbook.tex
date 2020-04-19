@@ -122,6 +122,7 @@
 \hldestizepage%
 
 \def\hintentry##1##2##3##4##5##6{%
+\global\advance\hinttotal by 1\relax%
 \ifnum\number\i=##5
 \noindent{\llap{\bf \refn{##4}.~}}%
 {\scshape\hintname~\oldstyle{##5}:}
@@ -153,6 +154,7 @@
 \innernewcount\curchapterno
 
 \def\solutionentry##1##2##3##4##5{%
+\global\advance\solutiontotal by 1\relax%
 \ifnum##2>\curchapterno
 \curchapterno=##2
 \goodbreak
@@ -291,11 +293,13 @@
 %%{{{ \Report 
 \def\makereport{%
 \Report
-\WriteReport{exercises}{\the\exercisetotal}
-\WriteReport{problems}{\the\problemtotal}
-\WriteReport{chapters}{\the\chaptertotal}
-\WriteReport{sections}{\the\sectionno}
-\WriteReport{pages}{\the\pageno}
+\WriteReport {exercises} {\the\exercisetotal}
+\WriteReport {problems}  {\the\problemtotal}
+\WriteReport {hints}     {\the\hinttotal}
+\WriteReport {solutions} {\the\solutiontotal}
+\WriteReport {chapters}  {\the\chaptertotal}
+\WriteReport {sections}  {\the\sectionno}
+\WriteReport {pages}     {\the\pageno}
 \EndReport
 }
 %%}}}
@@ -340,9 +344,14 @@
 % \WriteReport counters
 \newcount\exercisetotal
 \newcount\problemtotal
+\newcount\hinttotal
+\newcount\solutiontotal % of exercises and problems, not examples
 \newcount\chaptertotal
+% sectiontotal makes no sense: it doesn't reset
 \exercisetotal=0
 \problemtotal=0
+\hinttotal=0
+\solutiontotal=0
 \chaptertotal=0
 
 %%{{{ spoilers 
