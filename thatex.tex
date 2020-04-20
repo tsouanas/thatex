@@ -220,6 +220,19 @@
 \def\dotspc{{.} }% XXX: to work with \remark, etc.
 \def\versus{vs\dotspc}% XXX: to work with \remark, etc.
 \let\vs=\versus
+\def\paracrase{% TODO: maybe abstract accent and letter away? 
+$
+\mathord{%
+{}\kern-.3ex%
+{{}^{{}^{{}_(}}}%
+\kern-.6ex%
+\text{à}%
+\kern-.4ex%
+{{}^{{}^{{}_)}}}%
+\kern-.48ex{}%
+}
+$%
+}
 %%}}}
 
 %%{{{ ThaTeX aux files
