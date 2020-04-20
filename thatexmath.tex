@@ -770,8 +770,9 @@
 \def\IF#1\THEN#2\ELSE#3\FI{\ifthenelse{#1}{#2}{#3}}
 \def\PIF#1\THEN#2\ELSE#3\FIP{\pifthenelse{#1}{#2}{#3}}
 \def\mapsio#1#2{\paren{#1\mapsto#2}}% maps input (#1) to output (#2)
-\def\lam#1#2{\lambda\,{#1}\,.\,{#2}}
-\def\lamt#1#2{\lambda\,{#1}\,.\,{\text{#2}}}
+\def\lamhead#1{\lambda\,{#1}}% just the head without any body
+\def\lam#1#2{\lamhead{#1}\,.\,{#2}}
+\def\lamt#1#2{\lam{#1}{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
 \def\plam#1#2{\nparen{\lam{#1}{#2}}}% parenthesize whole term
 \def\plamt#1#2{\nparen{\lamt{#1}{#2}}}
