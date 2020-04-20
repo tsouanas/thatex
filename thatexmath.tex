@@ -270,6 +270,8 @@
 %%}}}
 
 %%{{{ layout/text tools 
+\def\lmathwith#1#2{$$\xxalignat2 #1&#2 &&\endxxalignat$$}
+\def\lmath#1\endlmath{\lmathwith{\qqqquad}{#1}}
 \def\leftbrace#1{\left\{#1\right.}
 \def\rightbrace#1{\left.#1\right\}}
 \let\knuthbrace=\brace
