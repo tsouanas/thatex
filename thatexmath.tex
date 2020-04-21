@@ -76,6 +76,7 @@
 \def\mathsc#1{\hbox{\text{\scshape #1}}}
 \def\mathtt#1{\hbox{\text{\tentt#1}}}
 \def\mathbf#1{\hbox{\text{\tenbf#1}}}
+\def\mathsl#1{\hbox{\text{\tensl#1}}}
 \def\txt#1{\text{\tt #1}}
 \def\textrm#1{\text{\rm#1}}
 \def\namedrel#1{\operatorname{#1}}
@@ -1155,6 +1156,7 @@
 \def\diffables#1{\mathord{\mathrm{C}^{#1}}}
 \def\smooths{\diffables\infty}
 \def\analytics{\diffable\omega}
+\def\intbv#1#2#3#4{\int_{#1}^{#2}{#3}\,\mathsl{d}{#4}}% bound & var: int from #1 to #2 of #3 as a fun of the var #4
 \DefOpP length
 %%}}}
 
