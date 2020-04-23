@@ -41,6 +41,9 @@
 \let\Repeat=\repeat
 \let\repeat=\knuthrepeat
 
+% protect other possibly overwritten macros
+\let\knuthll=\ll
+
 % not currently used
 %\input insbox
 
@@ -116,15 +119,47 @@
 %%}}}
 
 %%{{{ ThaTeX lists 
-\def\beginol{\orderedlist}
-\def\endol{\endorderedlist\noindent}
-\def\endolp{\endorderedlist\endgraf}
-\def\beginul{\unorderedlist}
-\def\endul{\endunorderedlist\noindent}
-\def\endulp{\endunorderedlist\endgraf}
-\def\beginil{\begingroup\abovelistskip} % begin plain \item-list
-\def\endil{\endgroup\belowlistskip\noindent}
-\def\endilp{\endgroup\belowlistskip\endgraf}
+
+\let\eplainli=\li
+
+% unordered lists
+\def\begul #1\endul {\unorderedlist{#1}\endunorderedlist\noindent}
+
+% ordered lists: TODO work on this \fmt thing
+\def\begol #1\endol {%
+    \orderedlist
+    {\def\li{\eplainli}
+     \def\fmt ##1\m##2 {\def\stylizedmarker{{##1}\marker{##2}}}
+     #1}
+    \endorderedlist\noindent
+}
+\def\begoL #1: #2\endoL {% (L)abelled: #1: prefix; #2: body (items)
+\begingroup
+\def\Li :##1 {\li\definexref{#1:##1}{(\marker)}{li}}
+\begol
+#2
+\endol
+\endgroup\noindent
+}
+
+% item lists
+\def\begil #1\endil {%
+\begingroup
+\def\li ##1 {\item{(##1)}}
+\beginlist
+#1
+\endlist
+\endgroup\noindent
+}
+\def\begiL #1: #2\endiL {%
+\begingroup
+\def\Li ##1 :##2 {\li ##1 \definexref{#1:##2}{(##1)}{li}}
+\begil
+#2
+\endil
+\endgroup\noindent
+}
+
 %%}}}
 
 %%{{{ ThaTeX draft 
@@ -195,7 +230,7 @@
 \noindent
 }
 \def\spoken#1\endspoken{\quote\emph{#1}\endquote}
-\def\dialogue#1\enddialogue{{\beginil\def\say{\item{--}}\def\who##1{\item{##1:}}#1\endil}}
+\def\dialogue#1\enddialogue{{\begil\def\say{\item{--}}\def\who##1{\item{##1:}}#1\endil}}
 \def\tablerule{\noalign{\smallskip\hrule\smallskip}}
 \def\tablethickrule{\noalign{\smallskip\hrule\hrule\hrule\smallskip}}
 \def\tabletoprule{\noalign{\hrule\smallskip}}
