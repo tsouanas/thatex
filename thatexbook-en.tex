@@ -10,120 +10,79 @@
 
 %\uselanguage{english}% not existent/needed
 
-\def\proofname{Proof}
-\def\proofsname{Proofs}
-\def\sketchname{Sketch}
-\def\hintname{Hint}
-\def\hintsname{Hints}
-\def\solutionname{Solution}
-\def\solutionsname{Solutions}
-\def\claimname{Claim}
 \def\indexseeword{see}
 \def\indexseealsowords{see also}
 \def\iipl#1 {\ii{programming!language!#1}}
-
-\def\theoremname{Theorem}
-\def\theoremsname{Theorems}
-\def\lemmaname{Lemma}
-\def\lemmasname{Lemmata}
-\def\propositionname{Proposition}
-\def\propositionsname{Propositions}
-\def\propertyname{Property}
-\def\propertysname{Properties}
-\def\corollaryname{Corollary}
-\def\corollarysname{Corollaries}
-\def\conjecturename{Conjecture}
-\def\conjecturesname{Conjectures}
-\def\openproblemname{Open problem}
-\def\openproblemsname{Open problems}
-\def\questionname{Question}
-\def\questionsname{Questions}
-\def\answername{Answer}
-\def\answersname{Answers}
-\def\axiomname{Axiom}
-\def\axiomsname{Axioms}
-\def\lawname{Law}
-\def\lawsname{Laws}
-\def\principlename{Principle}
-\def\principlesname{Principles}
-\def\hypothesisname{Hypothesis}
-\def\hypothesissname{Hypotheses}
-
-\def\primitivename{Primitive notion}
-\def\primitivesname{Primitive notions}
-\def\definitionname{Definition}
-\def\definitionsname{Definitions}
-\def\pseudodefinitionname{``Definition''}
-\def\pseudodefinitionsname{``Definitions''}
-\def\specificationname{Specification}
-\def\specificationsname{Specifications}
-\def\implementationname{Implementation}
-\def\implementationsname{Implementations}
-\def\teasername{Teaser}
-\def\teasersname{Teasers}
-\def\jokename{Joke}
-\def\jokesname{Jokes}
-\def\notationname{Notation}
-\def\notationsname{Notations}
-\def\remarkname{Observation}
-\def\remarksname{Observations}
-\def\advicename{Advice}
-\def\advicesname{Advices}
-\def\bewarename{Beware}
-\def\bewaresname{Bewares}
-\def\warningname{Warning}
-\def\warningsname{Warnings}
-\def\criterionname{Criterion}
-\def\criterionsname{Criteria}
-
-\def\algorithmname{Algorithm}
-\def\algorithmsname{Algorithms}
-\def\algoinputname{Input}
-\def\algooutputname{Output}
-\def\programname{Program}
-\def\programsname{Programs}
-\def\grammarname{Grammar}
-\def\grammarsname{Grammars}
-
-\def\givensname{Givens}
-\def\goalsname{Goals}
-
-\def\exercisename{Exercise}
-\def\exercisesname{Exercises}
-\def\codeitname{Code-it}
-\def\examplename{Example}
-\def\examplesname{Examples}
-\def\nonexamplename{Nonexample}
-\def\nonexamplesname{Nonexamples}
-\def\problemname{Problem}
-\def\problemsname{Problems}
-
-\def\chaptername{Chapter}
-\def\chaptersname{Chapters}
-\def\appendixname{Appendix}
-\def\appendicesname{Appendices}
-\def\sectionname{Section}
-\def\furthername{Further reading}
-\def\historyname{History notes}
-\def\summaryname{Summary}
-\def\prefacename{Preface}
-\def\tocname{Table of contents}
-\def\shorttocname{Short table of contents}
-\def\referencesname{References}
-\def\symglossaryname{Glossary of symbols}
-\def\loaname{List of algorithms}
-\def\locname{List of codes}
-\def\logname{List of grammars}
-\def\indexname{General index}
-\def\nameindexname{Person index}
-\def\symbolindexname{Definitions of symbols}
-\def\notename{Item}
-\def\notesname{Items}
 
 \def\xrefpageword{}
 
 \def\orword{or}
 \def\andword{and}
 
-\input thatexbook-words
+\DefWords proof             {Proof} {Proofs}
+\DefWords sketch            {Sketch} {Sketches}
+\DefWords hint              {Hint} {Hints}
+\DefWords solution          {Solution} {Solutions}
+\DefWords answer            {Answer} {Answers}
+\DefWords claim             {Claim} {Claims}
+\DefWords given             {Given} {Givens}
+\DefWords goal              {Goal} {Goals}
+\DefWord  algoinput         {Input}
+\DefWord  algooutput        {Output}
+
+\DefWord preface            {Preface}
+\DefWord toc                {Table of contents}
+\DefWord shorttoc           {Short table of contents}
+\DefWord references         {References}
+\DefWord symglossary        {Glossary of symbols}
+\DefWord loa                {List of algorithms}
+\DefWord loc                {List of codes}
+\DefWord log                {List of grammars}
+\DefWord index              {General index}
+\DefWord nameindex          {Person index}
+\DefWord symbolindex        {Definitions of symbols}
+\DefWord further            {Further reading}
+\DefWord history            {History notes}
+\DefWord summary            {Summary}
+
+\DefWords chapter           {Chapter} {Chapters}
+\DefWords appendix          {Appendix} {Appendices}
+\DefWords section           {Section} {Sections}
+\DefWords note              {Note} {Notes}
+
+\DefWords theorem           {Theorem} {Theorems}
+\DefWords lemma             {Lemma} {Lemmata}
+\DefWords proposition       {Proposition} {Propositions}
+\DefWords property          {Property} {Properties}
+\DefWords corollary         {Corollary} {Corollaries}
+\DefWords conjecture        {Conjecture} {Conjectures}
+\DefWords openproblem       {Open problem} {Open problems}
+\DefWords question          {Question} {Questions}
+\DefWords axiom             {Axiom} {Axioms}
+\DefWords law               {Law} {Laws}
+\DefWords principle         {Principle} {Principles}
+\DefWords hypothesis        {Hypothesis} {Hypotheses}
+\DefWords criterion         {Criterion} {Criteria}
+
+\DefWords algorithm         {Algorithm} {Algorithms}
+\DefWords program           {Program} {Programs}
+\DefWords grammar           {Grammar} {Grammars}
+\DefWords remark            {Observation} {Observations}
+\DefWords advice            {Advice} {Advices}
+\DefWords beware            {Beware} {Bewares}
+\DefWords warning           {Warning} {Warnings}
+\DefWords primitive         {Primitive notion} {Primitive notions}
+\DefWords definition        {Definition} {Definitions}
+\DefWords notation          {Notation} {Notations}
+\DefWords pseudodefinition  {``Definition''} {``Definitions''}
+\DefWords specification     {Specification} {Specifications}
+\DefWords implementation    {Implementation} {Implementations}
+\DefWords teaser            {Teaser} {Teasers}
+\DefWords joke              {Joke} {Jokes}
+
+\DefWords exercise          {Exercise} {Exercises}
+\DefWords codeit            {Code-it} {Code-it}
+\DefWords example           {Example} {Examples}
+\DefWords nonexample        {Nonexample} {Nonexamples}
+\DefWords problem           {Problem} {Problems}
 

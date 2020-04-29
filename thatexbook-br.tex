@@ -10,120 +10,79 @@
 
 \uselanguage{portuguese}% needed for hyphenation
 
-\def\proofname{Demonstração}
-\def\proofsname{Demonstrações}
-\def\sketchname{Esboço}
-\def\hintname{Dica}
-\def\hintsname{Dicas}
-\def\solutionname{Resolução}
-\def\solutionsname{Resoluções}
-\def\claimname{Afirmação}
 \def\indexseeword{veja}
 \def\indexseealsowords{veja também}
 \def\iipl#1 {\ii{programação!linguagem!#1}}
-
-\def\theoremname{Teorema}
-\def\theoremsname{Teorémata}
-\def\lemmaname{Lema}
-\def\lemmasname{Lémata}
-\def\propositionname{Proposição}
-\def\propositionsname{Proposições}
-\def\propertyname{Propriedade}
-\def\propertysname{Propriedades}
-\def\corollaryname{Corolário}
-\def\corollarysname{Corolários}
-\def\conjecturename{Conjectura}
-\def\conjecturesname{Conjecturas}
-\def\openproblemname{Problema~em~aberto}
-\def\openproblemsname{Problemas~em~aberto}
-\def\questionname{Questão}
-\def\questionsname{Questões}
-\def\answername{Resposta}
-\def\answersname{Respostas}
-\def\axiomname{Axioma}
-\def\axiomsname{Axiómata}
-\def\lawname{Lei}
-\def\lawsname{Leis}
-\def\principlename{Princípio}
-\def\principlesname{Princípios}
-\def\hypothesisname{Hipótese}
-\def\hypothesissname{Hipoteses}
-
-\def\primitivename{Noção primitiva}
-\def\primitivesname{Noções primitivas}
-\def\definitionname{Definição}
-\def\definitionsname{Definições}
-\def\pseudodefinitionname{``Definição''}
-\def\pseudodefinitionsname{``Definições''}
-\def\specificationname{Especificação}
-\def\specificationsname{Especificações}
-\def\implementationname{Implementação}
-\def\implementationsname{Implementações}
-\def\teasername{Teaser}
-\def\teasersname{Teasers}
-\def\jokename{Piada}
-\def\jokesname{Piadas}
-\def\notationname{Notação}
-\def\notationsname{Notações}
-\def\remarkname{Observação}
-\def\remarksname{Observações}
-\def\bewarename{Cuidado}
-\def\bewaresname{Cuidados}
-\def\advicename{Conselho}
-\def\advicesname{Conselhos}
-\def\warningname{Atenção}
-\def\warningsname{Atenções}
-\def\criterionname{Critérion}
-\def\criterionsname{Critéria}
-
-\def\algorithmname{Algoritmo}
-\def\algorithmsname{Algoritmos}
-\def\algoinputname{Entrada}
-\def\algooutputname{Saída}
-\def\programname{Programa}
-\def\programsname{Prográmata}
-\def\grammarname{Gramática}
-\def\grammarsname{Gramáticas}
-
-\def\givensname{Dados}
-\def\goalsname{Alvos}
-
-\def\exercisename{Exercício}
-\def\exercisesname{Exercícios}
-\def\codeitname{Code-it}
-\def\examplename{Exemplo}
-\def\examplesname{Exemplos}
-\def\nonexamplename{Nãœxemplo}
-\def\nonexamplesname{Nãœxemplos}
-\def\problemname{Problema}
-\def\problemsname{Problemas}
-
-\def\chaptername{Capítulo}
-\def\chaptersname{Capítulos}
-\def\appendixname{Apêndice}
-\def\appendicesname{Apêndices}
-\def\sectionname{Secção}
-\def\furthername{Leitura complementar}
-\def\historyname{Notas históricas}
-\def\summaryname{Resumo}
-\def\prefacename{Preface}
-\def\tocname{Conteudo detalhado}
-\def\shorttocname{Conteudo curto}
-\def\referencesname{Referências}
-\def\symglossaryname{Glossário de símbolos}
-\def\loaname{Lista de algorítmos}
-\def\locname{Lista de código}
-\def\logname{Lista de gramáticas}
-\def\indexname{Índice geral}
-\def\nameindexname{Índice de pessoas}
-\def\symbolindexname{Definições de símbolos}
-\def\notename{Item}
-\def\notesname{Itens}
 
 \def\xrefpageword{}
 
 \def\orword{ou}
 \def\andword{\&}
 
-\input thatexbook-words
+\DefWords proof             {Demonstração} {Demonstrações}
+\DefWords sketch            {Esboço} {Esboços}
+\DefWords hint              {Dica} {Dicas}
+\DefWords solution          {Resolução} {Resoluções}
+\DefWords answer            {Resposta} {Respostas}
+\DefWords claim             {Afirmações} {Afirmação}
+\DefWords given             {Dado} {Dados}
+\DefWords goal              {Alvo} {Alvos}
+\DefWord  algoinput         {Entrada}
+\DefWord  algooutput        {Saída}
+
+\DefWord  preface           {Preface}
+\DefWord  toc               {Conteudo detalhado}
+\DefWord  shorttoc          {Conteudo curto}
+\DefWord  references        {Referências}
+\DefWord  symglossary       {Glossário de símbolos}
+\DefWord  loa               {Lista de algorítmos}
+\DefWord  loc               {Lista de código}
+\DefWord  log               {Lista de gramáticas}
+\DefWord  index             {Índice geral}
+\DefWord  nameindex         {Índice de pessoas}
+\DefWord  symbolindex       {Definições de símbolos}
+\DefWord  further           {Leitura complementar}
+\DefWord  history           {Notas históricas}
+\DefWord  summary           {Resumo}
+
+\DefWords chapter           {Capítulo} {Capítulos}
+\DefWords appendix          {Apêndice} {Apêndices}
+\DefWords section           {Secção} {Secções}
+\DefWords note              {Nota} {Notas}
+
+\DefWords theorem           {Teorema} {Teorémata}
+\DefWords lemma             {Lema} {Lémata}
+\DefWords proposition       {Proposição} {Proposições}
+\DefWords property          {Propriedade} {Propriedades}
+\DefWords corollary         {Corolário} {Corolários}
+\DefWords conjecture        {Conjectura} {Conjecturas}
+\DefWords openproblem       {Problema em aberto} {Problemas em aberto}
+\DefWords question          {Questão} {Questões}
+\DefWords axiom             {Axioma} {Axiómata}
+\DefWords law               {Lei} {Leis}
+\DefWords principle         {Princípio} {Princípios}
+\DefWords hypothesis        {Hipótese} {Hipoteses}
+\DefWords criterion         {Critérion} {Critéria}
+
+\DefWords algorithm         {Algoritmo} {Algoritmos}
+\DefWords program           {Programa} {Prográmata}
+\DefWords grammar           {Gramática} {Gramáticas}
+\DefWords remark            {Observação} {Observações}
+\DefWords advice            {Conselho} {Conselhos}
+\DefWords beware            {Cuidado} {Cuidados}
+\DefWords warning           {Atenção} {Atenções}
+\DefWords primitive         {Noção primitiva} {Noções primitivas}
+\DefWords definition        {Definição} {Definições}
+\DefWords notation          {Notação} {Notações}
+\DefWords pseudodefinition  {``Definição''} {``Definições''}
+\DefWords specification     {Especificação} {Especificações}
+\DefWords implementation    {Implementação} {Implementações}
+\DefWords teaser            {Teaser} {Teasers}
+\DefWords joke              {Piada} {Piadas}
+
+\DefWords exercise          {Exercício} {Exercícios}
+\DefWords codeit            {Code-it} {Code-it}
+\DefWords example           {Exemplo} {Exemplos}
+\DefWords nonexample        {Nãœxemplo} {Nãœxemplos}
+\DefWords problem           {Problema} {Problemas}
 

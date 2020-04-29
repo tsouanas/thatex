@@ -317,10 +317,18 @@
 \def\printbetweencitations#1{{\ninesl,}~}
 %%}}}
 
-%%{{{ rosters 
-\let\listmarkerspace=\enspace
-\listleftindent=.5\parindent
-\def\numberedprintmarker#1{\llap{(#1) \listmarkerspace}}
+%%{{{ i18n 
+
+% \DefWord(s) define: #1name #1word (#1sname)
+\def\DefWord #1 #2{% #1: handle ; #2: singular
+\expandafter\def\csname #1name\endcsname{#2}
+\expandafter\def\csname #1word\endcsname{#2}
+}
+\def\DefWords #1 #2#3{% #2: singular ; #3 plural
+\DefWord #1 {#2}
+\expandafter\def\csname #1sname\endcsname{#3}
+}
+
 %%}}}
 
 %%{{{ text structures 
