@@ -10,10 +10,36 @@
 
 %%{{{ \inputs 
 
+% xstring <3
+\input xstring
+
+% OPmac
+% XXX: weird conflict with eplain-based labs/refs if loaded after eplain
+%\input thatex-opmac
+%\hyperlinks \Red \Blue
+
 % eplain
 \let\noarrow=t
-\input eplain
+\input thatex-eplain
 \let\noarrow\relax
+\def\xrefpageword{}
+
+% hiding:
+%\let\eplainref=\ref % (\eplainref is already defined by eplain)
+\let\eplainrefn=\refn
+\let\eplainrefs=\refs
+\let\eplaineqref=\eqref
+\let\eplaineqrefn=\eqrefn
+\let\eplaineqdef=\eqdef
+\let\eplaineqdefn=\eqdefn
+\let\eplaincite=\cite
+\let\ref=\undefined
+\let\refs=\undefined
+\let\refn=\undefined
+\let\eqref=\undefined
+\let\eqrefn=\undefined
+\let\eqdef=\undefined
+\let\cite=\undefined
 
 % these must be loaded before the following LaTeX packages
 \input bussproofs.sty
@@ -35,14 +61,18 @@
 \let\color\eplaincolor
 \let\definecolor\eplaindefinecolor
 
-% protect and restore original repeat
-\let\knuthrepeat=\repeat
-\input repeat
-\let\Repeat=\repeat
-\let\repeat=\knuthrepeat
+% thatex-repeat has \Repeat so it's safe
+\input thatex-repeat
 
 % protect other possibly overwritten macros
 \let\knuthll=\ll
+\let\knuthast=\ast
+\let\knuthcirc=\circ
+\let\knuthbullet=\bullet
+\let\knuthcdot=\cdot
+\let\knuthS=\S
+\let\knuthP=\P
+\let\knuthTILDE=~
 
 % not currently used
 %\input insbox
@@ -64,45 +94,299 @@
 \def\hldestizepage{\hldest{fit}{}{TOCPG\the\pageno}}
 %%}}}
 
+%%{{{ ThaTeX symbols 
+
+%%}}}
+
 %%{{{ ThaTeX sidekick 
+
 \def\ThaTeX{\hbox{$\Theta$\kern-.1333em\lower.5ex\hbox{${\acute\alpha}$}\kern-.21em\TeX}}
-\def\ifEqStr#1#2{\def\stra{#1}\def\strb{#2}\ifx\stra\strb}% XXX: this pollutes the namespace
-\def\ifEmpty#1{\ifx\empty#1}
-\def\ifnull#1\\{\expandafter\ifx\csname empty#1\endcsname\empty}
-\def\blank{\hbox{}}
-\def\toupper#1{\uppercase\expandafter{#1}}
-\def\tolower#1{\lowercase\expandafter{#1}}
+\def\thatexmsg[#1]{\message{[ThaTeX]: #1}}
+\def\thatexwarn[#1]{\thatexmsg[Warning: #1]}
+\def\thatexerror[#1]{\thatexmsg[******** ERROR: #1]\ThaTeXERROR}
+\long\def\thatexdebug[#1]{\thatexmsg[****************************************************************]\message{#1}\thatexmsg[****************************************************************]}
+\let\ea=\expandafter
+
+% xstring love
+\def\IfStrEmpty#1#2#3{\IfStrEq {#1} {} {#2} {#3}}
+\def\IfStrNempty#1#2#3{\IfStrEq {#1} {} {#3} {#2}}
+% IfSubStr has a bad name
+\let\IfStrContains=\IfSubStr\relax
+\def\IfSubStr#1#2#3{\IfStrContains {#2} {#1} {#3}}
+\def\WhenStrEq#1#2#3{\IfStrEq {#1} {#2} {#3} {}}
+\def\WhenStrNeq#1#2#3{\IfStrEq {#1} {#2} {} {#3}}
+\def\WhenStrEmpty#1#2{\IfStrEq {#1} {} {#2} {}}
+\def\WhenStrNempty#1#2{\IfStrEq {#1} {} {} {#2}}
+\let\IfStrBeginsWith=\IfBeginWith
+\let\IfStrEndsWith=\IfEndWith
+
+
+% used all over the place in \ifx\NIL..\fi patterns
+\def\NIL{}
+
+\def\ifblank#1{\ifx\empty#1}
+\def\ifvanishes#1\\{\csgroup\ifx{empty#1}\empty}
+% XXX: ifnil has a bad name because of \NIL defined above
+\def\ifnil#1\\{\if\relax\detokenize{#1}\relax}% needs e-TeX
 \def\twodigitfmt#1{\ifnum #1<10 0\fi#1}
+\def\twopadthe#1{\ifnum #1<10 \phantom0\fi\the#1}
+
+% first is taken from opmac
+\long\def\addto#1#2{\ea\def\ea#1\ea{#1#2}}
+\long\def\gaddto#1#2{\ea\gdef\ea#1\ea{#1#2}}
+
+\long\def\stripgroup#1{#1}% XXX/TODO
+\def\eatfst#1{}
+\def\eatsnd#1#2{#1}
+% fullyexpanded: \romannumeral-`0...
+\def\fullyexpand{\romannumeral - `0}
+
+% check Ulrich Diez's answer at:
+% https://tex.stackexchange.com/questions/543592/using-let-with-csname-inside-a-macro/543600
+% csgroup \csname'izes the next {..} in sight (even if far: \long)
+% you can use multiple, e.g.:
+% \csgroup\csgroup....{fst}....{snd} -> \csgroup...\fst...{snd} -> ...\fst...\snd
+\long\def\csgroup#1#{\fullyexpand\SIDEKICKcsgroup{#1}}
+% made this \long
+\long\def\SIDEKICKcsgroup#1#2{\ea\swapcs\ea{\csname#2\endcsname}{ #1}}%
+% made this \long
+\long\def\swapcs#1#2{#2#1}
+
+%% \safelet mac omac : lets mac=omac unless mac is already set
+\def\safelet#1 #2 {\ifcsname #1\endcsname\else\csgroup\csgroup\let{#1}={#2}}
+
+%% Mixin parameters if available
+\def\safeset#1#2#3{\ifcsname #2#3\endcsname\csgroup\csgroup\let{#1#3}={#2#3}\fi}
+\def\Mixin #1\from #2 \to #3 {%
+\SIDEKICKDefSafeSetter{#3}{#2}%
+\csgroup{SafeSet#3}#1 ;
+\SIDEKICKUndefSafeSetter{#3}%
+}
+\def\SIDEKICKDefSafeSetter#1#2{%
+\csgroup\def{safeset#1}##1{\safeset{#1}{#2}{##1}}%
+\csgroup\def{SafeSet#1}##1 ; {\csgroup\Maps{safeset#1}{##1}}%
+}
+\def\SIDEKICKUndefSafeSetter#1{\csgroup\undef{safeset#1}\csgroup\undef{SafeSet#1}}
+
+\def\CAR#1#2\NIL{#1}
+\def\CDR#1#2\NIL{#2}
+
+\def\spacechar{ }
+
+% \DefStyle foo {\bf} <- this will define \foostyle (nullary) and \foostylize (unary)
+\def\DefStyle #1 #{\csgroup\def{#1stylize}##1{{\csgroup{#1style}##1}}\csgroup\def{#1style}}
+
+\protected\def\safedef#1#2#{\ifx\relax#1\else\ifdefined#1\thatexerror[SafedefError: (\noexpand#1)]\fi\fi\def#1#2}
+\protected\def\undef#1{\let#1=\undefined}
+\def\undef#1{\let#1=\undefined}
+
 \long\def\ignore#1{}
-\def\boxit#1#2{\hbox{\vrule\vtop{\vbox{\hrule\kern#1\hbox{\kern#1#2\kern#1}}\kern#1\hrule}\vrule\relax}}
-\def\frameit#1#2#3{\hbox{\vrule width #1\vtop{\vbox{\hrule height #1\kern#2\hbox{\kern#2#3\kern#2}}\kern#2\hrule height #1}\vrule width #2\relax}}
-\def\frameit#1#2#3{\hbox{\vrule width #1\vtop{\vbox{\hrule height #1\kern#2\hbox{\kern#2#3\kern#2}}\kern#2\hrule height #1}\vrule width #2\relax}}
-\let\footnote=\numberedfootnote
-\def\foot#1\endfoot{\footnote{#1} }% XXX: ugly
+\def\nrepeat#1 #2{\Repeat \for{i} \from{1} \to{#1} \do{#2}}
+
+% replace (without any expansion)
+\def\replace[#1=#2]#3\\{% by David Carlisle
+\def\stopreplace##1\stopreplace{}
+\def\delimreplacer##1#1{##1#2\delimreplacer}%
+\delimreplacer#3\stopreplace#1\stopreplace}
+
+% same thing but different order
+% (useful for \ea in \Replace below)
+\def\replacein#1[#2=#3]{\replace[#2=#3]#1\\}
+
+% expand and replace
+\def\Replace[#1=#2]#3\\{% deep
+\edef\ReplaceString{#3}%
+\ea\replacein \ReplaceString[#1=#2]}
+
+\protected\def\Map#1#2#3{% [The Advanced TeXbook, 5.16]
+% #1: separator
+% #2: function
+% #3: #1-separated list
+\def\mapfun##1#1{%
+\if;##1\let\next=\relax
+\else\let\next=\mapfun
+#2{##1}%
+\fi\next}%
+\mapfun #3#1;#1\let\mapfun=\relax
+}
+
+\protected\def\Maps#1#2{\Map{ }{#1}{#2}}
+
+\def\toupper#1{\uppercase\ea{#1}}
+\def\tolower#1{\lowercase\ea{#1}}
+
 \def\qqquad{\hskip 3em\relax}
 \def\qqqquad{\hskip 4em\relax}
+
+% XXX: for use with qed symbols, etc.  Works well but not great.
+\def\XXXeolllap#1{\unskip\nolinebreak\phantom{X}\nolinebreak\hfill\llap{#1}}
+\def\XXXeolrlap#1{\unskip\nolinebreak\phantom{X}\nolinebreak\hfill\rlap{#1}}
 % \eolfill ensures the next thing is placed at the end of the same or the next line
 \def\eolfill{\ifhmode\unskip\nobreak\fi\hbox{}\hfill\hbox{}\nobreak}% XXX 
 \def\XXXeolfill{\ifhmode\phantom.\fi\ifhmode\unskip\nobreak\fi\hbox{}\hfill\hbox{}\nobreak}% XXX 
 \def\CR{\newline}
-\def\nrepeat#1#2{\Repeat \for{i} \from{1} \to{#1} \do{#2}}
+\def\boxit#1#2{\hbox{\vrule\vtop{\vbox{\hrule\kern#1\hbox{\kern#1#2\kern#1}}\kern#1\hrule}\vrule\relax}}
+\def\frameit#1#2#3{\hbox{\vrule width #1\vtop{\vbox{\hrule height #1\kern#2\hbox{\kern#2#3\kern#2}}\kern#2\hrule height #1}\vrule width #2\relax}}
+\let\footnote=\numberedfootnote
+\def\foot#1\toof{\footnote{#1} }% XXX: ugly
 \def\colorboxfb#1#2#3{\colorbox{#2}{\color{#1}#3}}% colorbox fg in bg
 \def\procrustes{{\vphantom{Tj}}}
 \def\procrustext#1{\text{\procrustes#1}}
 \def\procruster{{\vphantom{{}^T_j}}}% even more extreme for math
 \def\procrustest{{\vphantom{{}^{T^T}_{j_j}}}}% even more!
+
+%%}}}
+
+%%{{{ ThaTeX skips 
+
+% N.B.: the default skip namings are inconsistent:
+%       the amount of a baselineskip is called baselineskip
+
+% meta: creates skip amount and corresponding skip command
+\def\Newskip#1=#2; {%
+\csgroup\newskip{#1skipamount}%
+\csgroup{#1skipamount}=#2\relax
+\csgroup\edef{#1skip}{\csgroup\vskip{#1skipamount}}%
+}
+
+\Newskip tiny=2pt plus 1pt minus 1pt;
+
 %%}}}
 
 %%{{{ ThaTeX numerals 
-%\def\asciinumeral#1 offset #2{\advance#1 by #2\relax\char#1\advance#1 by -#2}
 \def\asciinumeral#1 offset #2{{\innernewcount\tmp\tmp=#1\relax\advance\tmp by #2\relax\char\tmp}}
 \def\Alphabetnumeral#1{\asciinumeral#1 offset {64}}
 \def\alphabetnumeral#1{\asciinumeral#1 offset {96}}
-%\def\Romannumeral#1{\toupper{\romannumeral#1}}
-\def\Romannumeralof#1{\uppercase\expandafter{\romannumeral#1\relax}}
+
+\def\nthe#1{\number#1}
+\def\ithe#1{\romannumeral#1}
+\def\Ithe#1{\uppercase\ea{\romannumeral#1}}
+\def\athe#1{\ifcase#1?\or a\or b\or c\or d\or e\or f\or g\or h\or i\or j\or k\or l\or m\or n\or o\or p\or q\or r\or s\or t\or u\or v\or w\or x\or y\or z\else\thatexerror[atheOutOfRange]\fi}
+\def\Athe#1{\ifcase#1?\or A\or B\or C\or D\or E\or F\or G\or H\or I\or J\or K\or L\or M\or N\or O\or P\or Q\or R\or S\or T\or U\or V\or W\or X\or Y\or Z\else\thatexerror[AtheOutOfRange]\fi}
+\def\gthe#1{\ifcase#1?\or α\or β\or γ\or δ\or ε\or ς\or ζ\or η\or θ\or ι\or ια\or ιβ\or ιγ\or ιδ\or ιε\or ιϛ\or ιζ\or ιη\or ιθ\or κ\or κα\or κβ\or κγ\or κδ\or κε\or κς\or κζ\or κη\or κθ\else\thatexerror[alphatheOutOfRange]\fi ʹ}
+\def\Gthe#1{\ifcase#1?\or Α\or Β\or Γ\or Δ\or Ε\or Σ\or Ζ\or Η\or Θ\or Ι\or ΙΑ\or ΙΒ\or ΙΓ\or ΙΔ\or ΙΕ\or ΙϚ\or ΙΖ\or ΙΗ\or ΙΘ\or Κ\or ΚΑ\or ΚΒ\or ΚΓ\or ΚΔ\or ΚΕ\or ΚΣ\or ΚΖ\or ΚΗ\or ΚΘ\else\thatexerror[AlphatheOutOfRange]\fi ʹ}
+
+\def\constthe#1#2{#1}
+\def\emptythe   {\constthe {}}
+\def\bulletthe  {\constthe {$\knuthbullet$}}
+\def\dashthe    {\constthe {--}}
+\def\circthe    {\constthe {$\knuthcirc$}}
+\def\starthe    {\constthe {$\knuthast$}}
+\def\dotthe     {\constthe {$\knuthcdot$}}
+\def\userthe    {\constthe {\userthesymbol}}
+
+\def\userthesymbol{\thatexerror[userthesymbol never defined, yet I found userthe]}
+\def\setuserthesymbol#1{\def\userthesymbol{#1}}
+
+\def\oldthe#1{\oldstylize{\nthe#1}}
+
+\def\thetypen   {{1}} % 1, 2, 3, ...
+\def\thetypea   {{a}} % a, b, c, ...
+\def\thetypei   {{i}} % i, ii, iii, ...
+\def\thetypeg   {{g}} % α, β, γ, ...
+\def\thetypeA   {{A}} % a, b, c, ...
+\def\thetypeI   {{I}} % i, ii, iii, ...
+\def\thetypeG   {{G}} % α, β, γ, ...
+\def\thetypee   {{e}} % empty
+\def\thetypeb   {{.}} % bullets
+\def\thetypeo   {{o}} % circ
+\def\thetyped   {{-}} % dashes
+\def\thetypes   {{*}} % stars
+\def\thetypeu   {{u}} % user-defined
+
+% english the
+\def\ENthe#1{\ifcase#1zero\or one\or two\or three\or four\or five\or six\or seven\or eight\or nine\or ten\or eleven\or twelve\or thirteen\or fourteen\or fifteen\or sixteen\or seventeen\or eighteen\or nineteen\or twenty\or \thatexerror[ENtheOutOfRange]\fi}
+
+\def\humanthe#1{\ifnum#1>20\oldthe{#1}\else\ea\csname \ENthe#1word\endcsname\fi}
+\def\humanmthe#1{\ifnum#1>20\oldthe{#1}\else\ea\csname \ENthe#1mword\endcsname\fi}
+\def\humanfthe#1{\ifnum#1>20\oldthe{#1}\else\ea\csname \ENthe#1fword\endcsname\fi}
+
 %%}}}
 
-%%{{{ ThaTeX abbrev macros 
+%%{{{ ThaTeX i18n 
+
+\def\genderm{m}
+\def\genderf{f}
+\def\gendern{n}
+\def\genderna{}
+
+\def\sayone#1{\csname #1word\endcsname}
+\def\saymany#1{\csname #1sword\endcsname}
+\def\sayname#1{\csname #1name\endcsname}
+\def\sayName#1{\csname #1Name\endcsname}
+\def\sayNAME#1{\csname #1NAME\endcsname}
+\def\saynames#1{\csname #1sname\endcsname}
+\def\sayNames#1{\csname #1sName\endcsname}
+\def\sayNAMES#1{\csname #1sNAME\endcsname}
+\def\sayXname #1[#2]{\ifnum 1 = #1\relax\sayname{#2}\else\saynames{#2}\fi}
+\def\sayXName #1[#2]{\ifnum 1 = #1\relax\sayName{#2}\else\sayNames{#2}\fi}
+\def\sayXNAME #1[#2]{\ifnum 1 = #1\relax\sayNAME{#2}\else\sayNAMES{#2}\fi}
+
+\def\humancount #1[#2]{%
+\def\thisgender{#2}%
+\ifx\thisgender\genderm\humanmthe{#1}%
+\else\ifx\thisgender\genderf\humanfthe{#1}%
+\else\humanthe{#1}\fi\fi
+}
+\def\humancountknowngender#1{% assumes \thisgender is set
+\ifx\thisgender\genderm\humanmthe{#1}%
+\else\ifx\thisgender\genderf\humanfthe{#1}%
+\else\humanthe{#1}\fi\fi
+}
+\def\humancountword #1[#2]{%
+\def\thisgender{\csname #2wordgender\endcsname}
+\ifx\thisgender\genderm\humanmthe{#1}%
+\else\ifx\thisgender\genderf\humanfthe{#1}%
+\else\humanthe{#1}\fi\fi
+\ifnum 1=#1\relax\sayone{#2}\else\saymany{#2}\fi
+}
+\def\humancountwordknowngender #1[#2]{% assumes \thisgender is set
+\if\thisgender\genderm\humanmthe{#1}%
+\else\if\thisgender\genderf\humanfthe{#1}%
+\else\humanthe{#1}\fi\fi\spacechar
+\ifnum 1=#1\relax\sayone{#2}\else\saymany{#2}\fi
+}
+
+
+% XXX: \DefNoun define capitalization variants of words
+% because it seems easier this way than making just the first letter uppercase
+\protected\def\DefNoun #1 #2: | #3 #4| #5 #6| {% #1: handle ; #2: gender ; #3: Singular ; #5: Plural ; #4,#6: hack to absorve whitespace
+\def\TMP{#3}%
+\ea\edef\csname #1Name\endcsname{\TMP}%
+\ea\edef\csname #1Word\endcsname{\TMP}%
+\lowercase{\def\TMP{#3}}%
+\ea\edef\csname #1name\endcsname{\TMP}%
+\ea\edef\csname #1word\endcsname{\TMP}%
+\uppercase{\def\TMP{#3}}%
+\ea\edef\csname #1NAME\endcsname{\TMP}%
+\ea\edef\csname #1WORD\endcsname{\TMP}%
+\def\TMP{#5}%
+\ea\edef\csname #1sName\endcsname{\TMP}%
+\ea\edef\csname #1sWord\endcsname{\TMP}%
+\lowercase{\def\TMP{#5}}%
+\ea\edef\csname #1sname\endcsname{\TMP}%
+\ea\edef\csname #1sword\endcsname{\TMP}%
+\uppercase{\def\TMP{#5}}%
+\ea\edef\csname #1sNAME\endcsname{\TMP}%
+\ea\edef\csname #1sWORD\endcsname{\TMP}%
+\undef\TMP
+\ea\edef\csname #1wordgender\endcsname{#2}% one of: m,f,n,(empty)
+}
+\def\DefTerm #1 #2{% #1: handle ; #2: singular
+\ea\def\csname #1term\endcsname{#2}%
+}
+\def\DefNumWords #1 #2 #3 #4 {% #1: english ; #2: neutral ; #3: m ; #4: f
+\ea\def\csname #1word\endcsname{#2}%
+\ea\def\csname #1mword\endcsname{#3}%
+\ea\def\csname #1fword\endcsname{#4}%
+}
+\def\DefNumWord #1 #2 {% #1: english ; #2: n/m/f
+\DefNumWords #1 #2 #2 #2
+}
+
+%%}}}
+
+%%{{{ ThaTeX datetime 
 \def\today#1{\the\year#1\relax\ifnum\month<10 0\fi\the\month\relax#1\ifnum\day<10 0\fi\the\day\relax}
 \def\humantime{
 \innernewcount\hours
@@ -115,69 +399,598 @@
 \multiply\minutes by -1
 \twodigitfmt{\the\hours}:\twodigitfmt{\the\minutes}
 }
-\let\numfootnote=\numberedfootnote\relax
 %%}}}
 
-%%{{{ ThaTeX lists 
+%%{{{ ThaTeX citations 
 
-\let\eplainli=\li
+% high level interface, based on thatex-eplain
+\def\printcitestart{\bgroup\ninessdc[}
+\def\printcitefinish{]\egroup}
+\def\printcitenote#1{\ninerm:~{\relax#1}}
+\def\printbetweencitations#1{{\ninesl,}~}
+\def\CITE#1{\eplaincite{#1}}
+\def\CITEIN#1: #2\ENDCITEIN{\eplaincite[#2]{#1}}
+\def\cite[#1]{\IfStrContains {#1} {: }
+    {\CITEIN#1\ENDCITEIN}
+    {\CITE{#1}}}
 
-% unordered lists
-\def\begul #1\endul {\unorderedlist{#1}\endunorderedlist\noindent}
+%%}}}
 
-% ordered lists: TODO work on this \fmt thing
-\def\begol #1\endol {%
-    \orderedlist
-    {\def\li{\eplainli}
-     \def\fmt ##1\m##2 {\def\stylizedmarker{{##1}\marker{##2}}}
-     #1}
-    \endorderedlist\noindent
-}
-\def\begoL #1: #2\endoL {% (L)abelled: #1: prefix; #2: body (items)
-\begingroup
-\def\Li :##1 {\li\definexref{#1:##1}{(\marker)}{li}}
-\begol
-#2
-\endol
-\endgroup\noindent
+%%{{{ ThaTeX hyperlinks 
+
+% beware not to define already existing colors (cryptic error message)
+\definecolor{thatexcyan}{cmyk}{0.75,.0,.0,.5}
+\definecolor{thatexpurple}{rgb}{0.444,.0,.666}
+\definecolor{thatexorange}{rgb}{0.9,.3,.1}
+
+\def\hlhrefopts{bstyle=U,bwidth=0,colormodel=,color=thatexpurple,zoom=2000}
+\def\hlurlopts{bstyle=U,colormodel=,color=thatexorange,bcolor=.444 .0 .666,bwidth=.666}
+\def\mark[#1]{\hldest{xyz}{\hlopts}{#1}}                % use: This is the chapter about set theory.\mark[settheory]
+\def\href[#1|#2]{\hlstart{name}{\hlopts}{#1}#2\hlend}   % use: Studying \href[settheory|the theory of sets] we...
+\def\urlrefas[#1|#2]{\hlstart{url}{\hlurlopts}{#1}{\tt #2}\hlend}     % use: Check \urlref[https://tsouanas.org/fmcbook] for more info.
+\def\urlref[#1]{\urlrefas[#1|#1]}
+
+%%}}}
+
+%%{{{ ThaTeX refs 
+
+% low-level, ignoring dir hierarchy system
+
+% eplain based refs:
+\protected\def\labcat#1#2#3{\definexref{#2}{#3}{#1}}% #1: category; #2: key; #3: value
+\def\LABELRAW[#1=#2]{\labcat{\thislabelclass}{#1}{#2}}% #1: key; #2: value
+\def\LABELPAGERAW[#1]{\xrdef{#1,page}}
+\def\REFERRAW[#1]{\eplainrefn{#1}}
+\def\REFERPAGERAW[#1:#2]{\ifnil#1\\\xref{#2,page}\else\xref[#1]{#2,page}\fi}
+\def\REFERTEXTRAW[#1]{\csgroup\expanded{\xrlabel{#1}}}% no hyperlink, no refpwd
+
+% TODO: from this point on macros should be based on the macros above as an interface
+
+\def\REFER[#1]{\IfStrBeginsWith{#1}{/}
+    {\eplainrefn{#1}}
+    {\eplainrefn{\refpwd#1}}}
+\def\LABEL[#1=#2]{\IfStrBeginsWith{#1}{/}
+    {\labcat{\thislabelclass}{#1}{#2}}
+    {\labcat{\thislabelclass}{\labpwd#1}{#2}}} % #1: key; #2: value
+\def\ALTLABEL[#1=#2]{\IfStrBeginsWith{#1}{/}
+    {\eplaineqdefn[#2]{#1}}
+    {\eplaineqdefn[#2]{\labpwd#1}}}
+\def\LABELPAGE[#1]{\IfStrBeginsWith{#1}{/}
+    {\xrdef{#1,page}}
+    {\xrdef{\labpwd#1,page}}}
+\def\ALTREFER[#1]{\IfStrBeginsWith{#1}{/}
+    {\eplaineqref{#1}}
+    {\eplaineqref{\refpwd#1}}}
+\def\ALTREFERNUDE[#1]{\IfStrBeginsWith{#1}{/}
+    {\eplaineqrefn{\refpwd#1}}
+    {\eplaineqrefn{#1}}}
+\def\REFERPAGE[#1:#2]{\ifnil#1\\\xref\else\xref[#1]\fi
+    \IfStrBeginsWith{#2}{/}
+        {{#2,page}}
+        {{\refpwd#2,page}}}
+\def\REFERTEXT[#1]{\IfStrBeginsWith{#1}{/}
+    {\expanded{\csname\xrlabel{#1}\endcsname}}
+    {\expanded{\csname\xrlabel{\refpwd#1}\endcsname}}}% no hyperlink
+
+
+\def\reftext[#1]{\REFERTEXT[#1]}
+
+\def\labp[#1=#2]{\LABEL[#1=#2]\labpage[#1]}% #1: key; #2: value
+\def\labpage[#1]{\LABELPAGE[#1]}
+\def\refpage[#1]{\REFERPAGE[:#1]}
+\def\refpabbr[#1]{\REFERPAGE[\pageabbr:#1]}
+\def\refpword[#1]{\REFERPAGE[\pageword:#1]}
+
+\def\mathref[#1]{\ALTREFER[#1]}
+\def\mathrefnude[#1]{\ALTREFERNUDE[#1]}
+\def\axiomref[#1]{\ALTREFER[ax:#1]}
+\def\axiomrefnude[#1]{\ALTREFERNUDE[ax:#1]}
+\let\mref=\mathref
+\let\mrefn=\mathrefnude
+\let\axref=\axiomref
+\let\axrefn=\axiomrefnude
+
+\def\labchapof[#1=#2]{\LABEL[#1,chap=#2]}
+\def\labsecof[#1=#2]{\LABEL[#1,sec=#2]}
+\def\labnoteof[#1=#2]{\LABEL[#1,note=#2]}
+\def\refchapof[#1]{\REFER[#1,chap]}
+\def\refsecof[#1]{\REFER[#1,sec]}
+\def\refnoteof[#1]{\REFER[#1,note]}
+
+\def\refmany[#1]{\csname\getproperty{\xrlabel{#1}}{class}sname\endcsname}% eg: theorems (to be used with further \reftag's)
+\def\Refmany[#1]{\csname\getproperty{\xrlabel{#1}}{class}sName\endcsname}% like above but capitalized
+
+% ThaTeX lab/refs: from this point on only the interface above should be used
+% XXX: this is not yet true for auto/math/decotags
+
+\def\labsuffix #1 [#2=#3]{\LABEL[#2,#1=#3]}
+\def\labidof        {\labsuffix id }
+\def\labsmart       {\labsuffix smart }
+\def\labnear        {\labsuffix near }
+\def\labtag         {\labsuffix tag }
+\def\labfull        {\labsuffix full }
+\def\labtitle       {\labsuffix title }
+\def\labformal      {\labsuffix formal }
+
+\def\labraw[#1=#2]{\labcat{raw}{#1}{#2}}
+\def\labtagofid[#1=#2]{\labraw[#1,tag=#2]} % usually sets the tag of an id
+\def\lablabelofid[#1=#2]{\labraw[#1,label=#2]} % usually sets the label of an id
+\def\labpageofid[#1]{\LABELPAGERAW[#1]}
+\def\refidof[#1]{\REFER[#1,id]} % this should normally return the tag
+\def\reftagofid[#1]{\REFERRAW[#1,tag]}
+\def\refpageofid[#1]{\REFERPAGERAW[:#1]}
+\def\refpabbrofid[#1]{\REFERPAGERAW[\pageabbr:#1]}
+\def\refpwordofid[#1]{\REFERPAGERAW[\pageword:#1]}
+\def\reflabelofid[#1]{\REFERTEXTRAW[#1,label]} % this should normally return the label
+
+\def\refsuffix #1 [#2]{\REFER[#2,#1]}
+\def\refsmart       {\refsuffix smart }
+\def\refnear        {\refsuffix near }
+\def\reftag         {\refsuffix tag }
+\def\reffull        {\refsuffix full }
+\def\reftitle       {\refsuffix title }
+\def\refformal      {\refsuffix formal }
+\def\refcountnum    {\refsuffix count }
+\def\refcountthe    {\refsuffix count,show }
+\def\refcountn      {\refsuffix count,human }
+\def\refcount       {\refsuffix count,human,full }
+\def\refhumanm      {\refsuffix count,humanm }
+\def\refhumanf      {\refsuffix count,humanf }
+\def\refnoun        {\refsuffix count,noun }
+\def\refnounone     {\refsuffix count,nouns }
+\def\refnounmany    {\refsuffix count,nounp }
+\def\refcountfar    {\refsuffix count,human,full,far }
+
+\def\refcountnfull[#1]{\refcountn[#1] \refnoun[#1]}% shows the pretty numeral titled
+
+% defaults:
+\let\ref=\refsmart
+\let\lab=\LABEL
+
+
+% configurators
+\def\setlabelclass#1{\def\thislabelclass{#1}}
+\def\eachitem #1 {\setlabelclass{#1}}%
+\def\labelclass #1 {\setlabelclass{#1}}%
+
+\setlabelclass{}
+
+\def\rootdir{/}
+\let\labpwd=\rootdir
+\let\refpwd=\rootdir
+\def\labpath#1\\{/\if/#1\else\ea\eatfst\labpwd#1/\fi}% explanation below
+\def\refpath#1\\{/\if/#1\else\ea\eatfst\refpwd#1/\fi}
+% XXX: delete this DATED \labpath / \refpath explained ?:
+% \labpath#1\\ prints path #1 (which can be absolute or relative) as an absolute path
+% 1: /%                            print / because all absolute paths start with a slash
+% 2: \if/#1%                       if #1 starts with / (it is an absolute path) print it without its initial slash because we already have one from line 1 of this def and we are done
+% 3: \else%                        #1 is a relative path
+% 4: \ea\eatfst\labpwd%   print \labpwd without its initial slash (because we already have one from line 1 of this def)
+%                                  now we must join the relative path (#1) part to what we have already printed
+%                                  but we must be careful we must use a slash to join the two parts iff labpws is not root (/):
+%                                  if labpwd is root (/) then do not use a slash to join
+%                                  labpwd is (/something) which we have already printed (line 1 and 4 of this def) so print a slash to join the two parts:
+% 5: \ifx\labpwd\rootdir\else/\fi% done with the glue
+% 8: #1\fi}%                        finally print the second part and we're done
+% CD commands for internal use
+\protected\def\labCD#1{\edef\labpwd{\labpath#1\\}}
+\protected\def\refCD#1{\edef\refpwd{\refpath#1\\}}
+\def\labrefCD#1{\labCD{#1}\refCD{#1}}
+% cd commands for user
+\def\labcd #1 {\ifnil#1\\\thatexerror[CannotChangeDirToEmptyThisIsNotReallyUnixYouAreHomelessHere]\fi\labCD{#1}}
+\def\refcd #1 {\ifnil#1\\\thatexerror[CannotChangeDirToEmptyThisIsNotReallyUnixYouAreHomelessHere]\fi\refCD{#1}}
+\def\labrefcd #1 {\labrefCD{#1}}
+\def\labcdroot{\labCD{/}}
+\def\refcdroot{\refCD{/}}
+\def\labrefcdroot{\labrefCD{/}}
+\let\cdroot=\labrefcdroot
+%%}}}
+
+%%{{{ ThaTeX tlist 
+
+\newcount\tlistlevel  \tlistlevel=0
+\newdimen\tlistindent \tlistindent=1.333\parindent
+\newif\iftliststarted \tliststartedfalse % has this tlist produced any tlitems?
+\newif\iftlistcompact \tlistcompactfalse
+\newif\iftlistjustskipped \tlistjustskippedfalse
+
+\def\compactlists{\global\tlistcompacttrue}
+\def\spaciouslists{\global\tlistcompactfalse}
+
+\Newskip tlist=\smallskipamount; % space above and below \tlist...\endtlist
+\Newskip tlitem=\tinyskipamount;  % space above \tlitem's (except first)
+
+\def\tlitemspace{\enspace\thinspace}
+
+\def\neartag#1{#1}% usually overwritten by thatexbook
+\def\fartag#1{#1}% usually overwritten by thatexbook
+
+\def\settlistshowtaga#1{\def\tlistshowtaga{#1}}
+\def\settlistshowtagz#1{\def\tlistshowtagz{#1}}
+\def\tlistshowtag#1{\tlistshowtaga{#1}\tlistshowtagz}
+\settlistshowtaga {}
+\settlistshowtaga {}
+
+\protected\def\tlist #1:#2 {%
+% 1: tag style
+% 2: name (ignored for now)
+\ifnil#2\\\else\thatexwarn[tlist was given a name (#2) but this does nothing for now.]\fi
+    \par\tlistskip
+    \global\tlistjustskippedtrue
+    \bgroup
+    \ifnil#1\\\def\tlitemtag{$\bullet$}\else\def\tlitemtag{#1}\fi
+    \def\iftoptlist{\ifnum\tlistlevel=0\relax}
+    %% internal use
+    \def\tlistskipifnotcompact{\iftlistcompact\else\tlitemskip\fi}
+    % customly tagged tlitem:
+    \def\ctlitem##1{\par
+        \iftliststarted\tlistskipifnotcompact\fi
+        \tliststartedtrue
+        \noindent\llap{##1\tlitemspace}\ignorespaces
+        \global\tlistjustskippedfalse}
+    \def\ctlitemlab##1##2{\ctlitem{##1}\ifvanishes##2\\\else\labp[##2=##1]\labsmart[##2=\fartag{##1}]\labnear[##2=\neartag{##1}]\fi}
+    % default tlitem
+    \def\tlitem{\ctlitem{\tlitemtag}}
+    % tlitem that works with empty or nonempty tag
+    \def\tlitemauto##1##2{\ifnil##1\\\tlitem\else\ctlitemlab{##1}{##2}\fi}
+    %% user customization
+    \def\spaciouslist{\tlistcompactfalse}
+    \def\compactlist{\tlistcompacttrue}
+    \def\dresstags with ##1_##2 {\settlistshowtaga{##1}\settlistshowtagz{##2}}%
+    \def\nakedtags{\dresstags with {}_{} }
+    \def\withtag ##1 {\def\tlitemtag{##1}}
+    \def\notags{\withtag {} }
+    % normal use
+    \def\li ##1:##2 {\tlitemauto{##1}{##2}}
+    %% setup: nest, count, etc.
+    \advance\leftskip by\tlistindent
+    \advance\tlistlevel by 1\relax
 }
 
-% item lists
-\def\begil #1\endil {%
-\begingroup
-\def\li ##1 {\item{(##1)}}
-\beginlist
-#1
-\endlist
-\endgroup\noindent
+\def\endtlist{%
+% if it has a name, create count and page labels
+\endgraf
+\egroup
+% avoid double tlistskip
+\iftlistjustskipped\else\tlistskip\global\tlistjustskippedtrue\fi
+\par
+\noindent
 }
-\def\begiL #1: #2\endiL {%
-\begingroup
-\def\Li ##1 :##2 {\li ##1 \definexref{#1:##2}{(##1)}{li}}
-\begil
-#2
-\endil
-\endgroup\noindent
+
+%%}}}
+
+%%{{{ ThaTeX enum 
+
+\newcount \enumcount        % not really used for counting
+\newcount \enumicount
+\newcount \enumiicount
+\newcount \enumiiicount
+\newcount \enumiiiicount
+\newcount \enumiiiiicount
+
+\newcount \enumlevel    \enumlevel = 0
+\newcount \maxenumlevel \maxenumlevel = 5
+\newcount \minenumlevel \minenumlevel = 0
+
+\def\enumsep        {}% this should always be empty
+\def\enumisep       {}
+\def\enumiisep      {.}
+\def\enumiiisep     {.}
+\def\enumiiiisep    {.}
+\def\enumiiiiisep   {.}
+
+\def\enumtype      {{e}}
+\def\enumitype     {{1}}
+\def\enumiitype    {{a}}
+\def\enumiiitype   {{i}}
+\def\enumiiiitype  {{g}}
+\def\enumiiiiitype {{1}}
+
+\def\setenumshowtaga#1{\def\enumshowtaga{#1}}
+\def\setenumshowtagz#1{\def\enumshowtagz{#1}}
+\def\enumshowtag#1{\enumshowtaga{#1}\enumshowtagz}
+\setenumshowtaga {(}
+\setenumshowtagz {)}
+
+\def\enumncount[#1]{\ifcase#1\enumcount\or\enumicount\or\enumiicount\or\enumiiicount\or\enumiiiicount\or\enumiiiiicount
+                    \else\thatexerror[enumlevel off limits]\fi}
+\def\enumnsep  [#1]{\ifcase#1\enumsep  \or\enumisep  \or\enumiisep  \or\enumiiisep  \or\enumiiiisep  \or\enumiiiiisep
+                    \else\thatexerror[enumlevel off limits]\fi}
+\def\enumntype [#1]{\ifcase#1\enumtype \or\enumitype \or\enumiitype \or\enumiiitype \or\enumiiiitype \or\enumiiiiitype
+                    \else\thatexerror[enumlevel off limits]\fi}
+
+\def\setenumntype#1#2{%
+\ifcase#1\def\enumtype      {{#2}}\or
+         \def\enumitype     {{#2}}\or
+         \def\enumiitype    {{#2}}\or
+         \def\enumiiitype   {{#2}}\or
+         \def\enumiiiitype  {{#2}}\or
+         \def\enumiiiiitype {{#2}}\else
+         \thatexerror[enumlevel off limits]\fi}
+\def\setthisenumtype#1{\setenumntype{\enumlevel}{#1}}
+
+\def\setenumnsep#1#2{%
+\ifcase#1\def\enumsep      {{#2}}\or
+         \def\enumisep     {{#2}}\or
+         \def\enumiisep    {{#2}}\or
+         \def\enumiiisep   {{#2}}\or
+         \def\enumiiiisep  {{#2}}\or
+         \def\enumiiiiisep {{#2}}\else
+         \thatexerror[enumlevel off limits]\fi}
+\def\setthisenumsep#1{\setenumnsep{\enumlevel}{#1}}
+
+%%{{{ \enumnthe-- 
+\def\enumnthe#1#2{%
+    \ifcase#1\ifx\enumtype      \thetypen \nthe{#2}\else
+             \ifx\enumtype      \thetypea \athe{#2}\else
+             \ifx\enumtype      \thetypei \ithe{#2}\else
+             \ifx\enumtype      \thetypeg \gthe{#2}\else
+             \ifx\enumtype      \thetypeA \Athe{#2}\else
+             \ifx\enumtype      \thetypeI \Ithe{#2}\else
+             \ifx\enumtype      \thetypeG \Gthe{#2}\else
+             \ifx\enumtype      \thetypee \emptythe{#2}\else
+             \ifx\enumtype      \thetypeb \bulletthe{#2}\else
+             \ifx\enumtype      \thetypeo \circthe{#2}\else
+             \ifx\enumtype      \thetyped \dashthe{#2}\else
+             \ifx\enumtype      \thetypes \starthe{#2}\else
+             \ifx\enumtype      \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+        \or  \ifx\enumitype     \thetypen \nthe{#2}\else
+             \ifx\enumitype     \thetypea \athe{#2}\else
+             \ifx\enumitype     \thetypei \ithe{#2}\else
+             \ifx\enumitype     \thetypeg \gthe{#2}\else
+             \ifx\enumitype     \thetypeA \Athe{#2}\else
+             \ifx\enumitype     \thetypeI \Ithe{#2}\else
+             \ifx\enumitype     \thetypeG \Gthe{#2}\else
+             \ifx\enumitype     \thetypee \emptythe{#2}\else
+             \ifx\enumitype     \thetypeb \bulletthe{#2}\else
+             \ifx\enumitype     \thetypeo \circthe{#2}\else
+             \ifx\enumitype     \thetyped \dashthe{#2}\else
+             \ifx\enumitype     \thetypes \starthe{#2}\else
+             \ifx\enumitype     \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+        \or  \ifx\enumiitype    \thetypen \nthe{#2}\else
+             \ifx\enumiitype    \thetypea \athe{#2}\else
+             \ifx\enumiitype    \thetypei \ithe{#2}\else
+             \ifx\enumiitype    \thetypeg \gthe{#2}\else
+             \ifx\enumiitype    \thetypeA \Athe{#2}\else
+             \ifx\enumiitype    \thetypeI \Ithe{#2}\else
+             \ifx\enumiitype    \thetypeG \Gthe{#2}\else
+             \ifx\enumiitype    \thetypee \emptythe{#2}\else
+             \ifx\enumiitype    \thetypeb \bulletthe{#2}\else
+             \ifx\enumiitype    \thetypeo \circthe{#2}\else
+             \ifx\enumiitype    \thetyped \dashthe{#2}\else
+             \ifx\enumiitype    \thetypes \starthe{#2}\else
+             \ifx\enumiitype    \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+        \or  \ifx\enumiiitype   \thetypen \nthe{#2}\else
+             \ifx\enumiiitype   \thetypea \athe{#2}\else
+             \ifx\enumiiitype   \thetypei \ithe{#2}\else
+             \ifx\enumiiitype   \thetypeg \gthe{#2}\else
+             \ifx\enumiiitype   \thetypeA \Athe{#2}\else
+             \ifx\enumiiitype   \thetypeI \Ithe{#2}\else
+             \ifx\enumiiitype   \thetypeG \Gthe{#2}\else
+             \ifx\enumiiitype   \thetypee \emptythe{#2}\else
+             \ifx\enumiiitype   \thetypeb \bulletthe{#2}\else
+             \ifx\enumiiitype   \thetypeo \circthe{#2}\else
+             \ifx\enumiiitype   \thetyped \dashthe{#2}\else
+             \ifx\enumiiitype   \thetypes \starthe{#2}\else
+             \ifx\enumiiitype   \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+        \or  \ifx\enumiiiitype  \thetypen \nthe{#2}\else
+             \ifx\enumiiiitype  \thetypea \athe{#2}\else
+             \ifx\enumiiiitype  \thetypei \ithe{#2}\else
+             \ifx\enumiiiitype  \thetypeg \gthe{#2}\else
+             \ifx\enumiiiitype  \thetypeA \Athe{#2}\else
+             \ifx\enumiiiitype  \thetypeI \Ithe{#2}\else
+             \ifx\enumiiiitype  \thetypeG \Gthe{#2}\else
+             \ifx\enumiiiitype  \thetypee \emptythe{#2}\else
+             \ifx\enumiiiitype  \thetypeb \bulletthe{#2}\else
+             \ifx\enumiiiitype  \thetypeo \circthe{#2}\else
+             \ifx\enumiiiitype  \thetyped \dashthe{#2}\else
+             \ifx\enumiiiitype  \thetypes \starthe{#2}\else
+             \ifx\enumiiiitype  \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+        \or  \ifx\enumiiiiitype \thetypen \nthe{#2}\else
+             \ifx\enumiiiiitype \thetypea \athe{#2}\else
+             \ifx\enumiiiiitype \thetypei \ithe{#2}\else
+             \ifx\enumiiiiitype \thetypeg \gthe{#2}\else
+             \ifx\enumiiiiitype \thetypeA \Athe{#2}\else
+             \ifx\enumiiiiitype \thetypeI \Ithe{#2}\else
+             \ifx\enumiiiiitype \thetypeG \Gthe{#2}\else
+             \ifx\enumiiiiitype \thetypee \emptythe{#2}\else
+             \ifx\enumiiiiitype \thetypeb \bulletthe{#2}\else
+             \ifx\enumiiiiitype \thetypeo \circthe{#2}\else
+             \ifx\enumiiiiitype \thetyped \dashthe{#2}\else
+             \ifx\enumiiiiitype \thetypes \starthe{#2}\else
+             \ifx\enumiiiiitype \thetypeu \userthe{#2}\else
+             \thatexerror[Unknown enumtype.]
+             \fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi\fi
+      \else\thatexerror[enumlevel too high]\fi
 }
+%%}}}
+
+\def\enumlabel{}
+\def\setenumlabel#1{\def\enumlabel{#1}}
+
+\def\thisenumprefix{}
+\def\thisenumsep{\enumnsep[\enumlevel]}
+\def\thisenitemtag{\enumnthe{\enumlevel}{\thisenumcount}}
+\def\thisenitemfulltag{\thisenumprefix\thisenumsep\thisenitemtag}
+\def\thisenitemfartag{\fartag{\thisenitemfulltag}}
+\def\showenitemtag{\enumshowtag{\thisenitemtag}}
+\def\showenitemfulltag{\enumshowtag{\thisenitemfulltag}}
+\def\showenitemfartag{\enumshowtag{\thisenitemfartag}}
+\def\thisenumcount{\enumncount[\enumlevel]}
+\def\countinc{\global\advance\thisenumcount by 1\relax}
+\def\countreset{\global\thisenumcount=0\relax}
+
+\def\enumenter{%
+\ifnum\enumlevel=\maxenumlevel\thatexerror[cannot enumenter past level \the\maxenumlevel]\fi
+\bgroup
+\setenumlabel{}%
+\setlabelclass{item}%
+\ifnil\thisenitemtag\\\else\edef\thisenumprefix{\thisenitemfulltag}\fi
+\global\advance\enumlevel by 1\relax
+\countreset
+}
+
+\def\enumleave{%
+\ifnum\enumlevel=\minenumlevel\thatexerror[cannot enumleave past level \the\minenumlevel]\fi
+\def\dolabword##1{\ifvanishes\thislabelclass\\\else\labword##1[\enumlabel=\thislabelclass]\fi}%
+\ifvanishes\enumlabel\\\else\labcount[\enumlabel=\thisenumcount]\labnoteof[\enumlabel=\structtag]\dolabword{\thisenumcount}\fi
+\countreset
+\global\advance\enumlevel by -1\relax
+\egroup
+}
+
+% high-level interface
+
+\def\enum #1:#2 {\enumenter
+% 1: enum type
+% 2: enum name/label
+\ifnil#1\\\else\setthisenumtype{#1}\fi
+\ifnil#2\\\else\setenumlabel{#2}\fi
+\def\dresstags with ##1_##2 {\setenumshowtaga{##1}\setenumshowtagz{##2}}%
+\def\nakedtags{\dresstags with {}_{} }
+\def\sepwith ##1 {\setthisenumsep{##1}}%
+\def\whereu is ##1 {\setuserthesymbol{##1}\def\userthe{\constthe{\userthesymbol}}}%
+\def\nn{\countinc}%
+\def\ti{\thisenitemtag}%
+\def\TI{\thisenitemfulltag}%
+\def\si{\showenitemtag}%
+\def\SI{\showenitemfulltag}%
+\def\ei{\nn\si}%
+\def\EI{\nn\SI}%
+}
+\def\endenum{\enumleave
+}
+
+%% more (i)lab/(i)ref macros
+\def\countthe#1{\oldthe{#1}}
+
+\def\labcount[#1=#2]{%
+\bgroup
+% XXX: this could pollute the namespace, trying it in a group now
+\def\thisgender{\csname \thislabelclass wordgender\endcsname}
+% XXX: these might work better with specialized \lab... like the \ref... ones.
+\LABEL[#1,count=\nthe{#2}]%
+\LABEL[#1,count,show=\countthe{#2}]%
+\LABEL[#1,count,human=\humancountknowngender{#2}]%  human count (known gender)
+\LABEL[#1,count,humanm=\humanmthe{#2}]% human count (for m. nouns)
+\LABEL[#1,count,humanf=\humanfthe{#2}]% human count (for f. nouns)
+\edef\thiscountfull{\humancountwordknowngender {#2}[\thislabelclass]}
+\ifcsname\thislabelclass word\endcsname
+\LABEL[#1,gender=\thisgender]%
+\LABEL[#1,count,human,full=\thiscountfull]%
+% XXX: these two assume paragtag which is only defined in thatexbook!
+\LABEL[#1,count,human,full,far=\thiscountfull\ (\paragtag)]%
+\LABEL[#1,smart=\thiscountfull\ (\paragtag)]%
+\fi
+\egroup
+}
+
+\def\labword#1[#2=#3]{\ifvanishes#2\\\thatexerror[empty name on setting labword]\fi
+% 1: count
+% 2: name of count
+% 3: words (noun) to describe counted items
+\LABEL[#2,count,nouns=\csname #3word\endcsname]%
+\LABEL[#2,count,nounp=\csname #3sword\endcsname]%
+\ifnum #1=1\relax
+\LABEL[#2,count,noun=\csname #3word\endcsname]%
+\else
+\LABEL[#2,count,noun=\csname #3sword\endcsname]%
+\fi
+}
+
+%%}}}
+
+%%{{{ ThaTeX elist: tlist + enum 
+
+\def\elist #1:#2 {%
+% 1: numeral style of enum
+% 2: name of enum and tlist
+%% always open tlist nameless and without itag
+\tlist :#2
+\enum #1:#2
+\def\li ##1:##2 {\nn\tlitemauto{\si}{##2}}%
+\def\LI ##1:##2 {\nn\tlitemauto{\SI}{##2}}%
+}
+
+\def\endelist{\endenum\endtlist}
+%%}}}
+
+%%{{{ ThaTeX math counting and refs/labs
+
+\newcount\savedmcount
+\newif\ifloadmcount
+\global\loadmcountfalse
+
+\def\reseteqnumber{\global\eqnumber=0\relax}
+\def\resetsavedmcount{\global\savedmcount=0\relax}
+\def\resetmcount{\reseteqnumber\resetsavedmcount}
+\def\loadeqnumber{\global\eqnumber=\savedmcount\relax}
+\def\saveeqnumber{\ifnum\eqnumber>0\global\savedmcount=\eqnumber\relax\fi}
+\def\fixmcount{\aftergroup\loadeqnumber}
+
+\def\manuinvtag[#1=#2]{{\let\eqconstruct=\ideqconstruct
+                        \ALTLABEL[#1=\neartag{#2}]\empty
+                        \let\eqconstruct=\fareqconstruct
+                        \ALTLABEL[#1,full=\fartag{#2}]}}
+\def\manutag[#1=#2]{\tag{\manuinvtag[#1=#2]#2}}
+\def\tmanutag[#1=#2]{\textrm{\labp[#1=#2]\labsmart[#1=\fartag{#2}]{(#2)}}}
+\def\axiominvtag[#1=#2]{{\let\eqconstruct=\ideqconstruct
+                         \ALTLABEL[ax:#1=\neartag{#2}]}}
+\def\axiomtag[#1=#2]{\tag{\axiominvtag[#1=#2]#2}}
+% XXX: \def\axiomtag[#1=#2]{\textrm{\labp[ax:#1=#2]{(#2)}}}
+
+\def\autoinvtag[#1]{{\let\eqconstruct=\ideqconstruct
+                     \eplaineqdefn{\labpwd#1}\empty
+                     \labsmart[#1=\fartag{\the\eqnumber}]}}
+\def\autotag[#1]{\tag{\autoinvtag[#1]\the\eqnumber}}
+\def\tautotag[#1]{\global\advance\eqnumber by 1\relax
+                  \tmanutag[#1=\the\eqnumber]}
+
+\def\decotag[#1=#2 with #3_#4]{\manutag[#1={#3\csgroup{\xrlabel{\refpwd#2}}#4}]}
+
+% abbreviations:
+\let\mtag  = \manutag
+\let\atag  = \autotag
+\let\axtag  = \axiomtag
+\let\mitag = \manuinvtag
+\let\aitag = \autoinvtag
+\let\tatag = \tautotag
+\let\tmtag = \tmanutag
+\let\dtag  = \decotag
 
 %%}}}
 
 %%{{{ ThaTeX draft 
 \definecolor{todocolor}{rgb}{.0,.5,.75}
 \definecolor{todocolorinv}{rgb}{1,1,1}
-\def\TODO#1\par{{}\endgraf\noindent {\llap{\colorboxfb{todocolorinv}{todocolor}{\sfmbf~~TODO~~}\enspace}{\color{todocolor}\sf #1}}\par}
+\def\TODO#1.{{}\eop\noi{\llap{\colorboxfb{todocolorinv}{todocolor}{\sfmbf~~TODO~~}\enspace}{\color{todocolor}\sf #1}}\eop}
+\def\hiddenTODO{{}}
 %%}}}
 
 %%{{{ ThaTeX text 
+\let\eop=\endgraf
+\let\noi=\noindent
 \def\emph#1{{\it #1}}
 \def\strikeout#1{$\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,text=black]{$\text{#1}$};$}
-\def\yearof#1{\oldstyle{#1}}
+\def\yearof#1{\oldstylize{#1}}
 \definecolor{alertR}{rgb}{.9,.0,.0}
 \definecolor{alertG}{rgb}{.0,.7,.0}
 \definecolor{alertB}{rgb}{.0,.0,.999}
 \definecolor{normal}{rgb}{.0,.0,.0}
 \definecolor{spoiler}{rgb}{.666,.666,.666}
 \definecolor{faded}{rgb}{.666,.666,.666}
+\definecolor{veryfaded}{rgb}{.75,.75,.75}
+\definecolor{veryveryfaded}{rgb}{.888,.888,.888}
 \definecolor{trueR}{rgb}{1,0,0}
 \definecolor{trueG}{rgb}{0,1,0}
 \definecolor{trueB}{rgb}{0,0,1}
@@ -192,6 +1005,8 @@
 \let\alertb=\alertB
 \let\alertc=\alertG
 \def\faded#1{{\color{faded}#1}}
+\def\veryfaded#1{{\color{veryfaded}#1}}
+\def\veryveryfaded#1{{\color{veryveryfaded}#1}}
 \def\standout#1\endstandout{%
 \endgraf
 \bigskip
@@ -215,6 +1030,44 @@
 \advance \leftskip -2\parindent \advance \rightskip -2\parindent%
 \noindent
 }
+% text alignments: centering, righting, lefting
+\def\centeringmargin#1 #2\endcenteringmargin{%
+\par
+\begingroup
+\leftskip=#1 plus 1fil
+\rightskip=\leftskip
+\parindent=0pt
+\parfillskip=0pt
+#2%
+\par
+\endgroup
+}
+\def\centering#1\endcentering{\centeringmargin 0pt #1\endcenteringmargin}
+\def\rightingmargin#1 #2\endrightingmargin{%
+\par
+\begingroup
+\leftskip=#1 plus 1fil
+\rightskip=0pt
+\parindent=0pt
+\parfillskip=0pt
+#2%
+\par
+\endgroup
+}
+\def\righting#1\endrighting{\rightingmargin 0pt #1\endrightingmargin}
+\def\leftingmargin#1 #2\endleftingmargin{%
+\par
+\begingroup
+\rightskip=#1 plus 1fil
+\leftskip=0pt
+\parindent=0pt
+\parfillskip=0pt
+#2%
+\par
+\endgroup
+}
+\def\lefting#1\endlefting{\leftingmargin 0pt #1\endleftingmargin}
+
 \def\leftindent{%
 \endgraf
 \smallskip
@@ -230,7 +1083,7 @@
 \noindent
 }
 \def\spoken#1\endspoken{\quote\emph{#1}\endquote}
-\def\dialogue#1\enddialogue{{\begil\def\say{\item{--}}\def\who##1{\item{##1:}}#1\endil}}
+\def\dialogue#1\enddialogue{{\tlist: \def\say{\li --: }\def\who ##1: {\li {##1:}: }#1\endtlist}}
 \def\tablerule{\noalign{\smallskip\hrule\smallskip}}
 \def\tablethickrule{\noalign{\smallskip\hrule\hrule\hrule\smallskip}}
 \def\tabletoprule{\noalign{\hrule\smallskip}}
@@ -292,7 +1145,7 @@ $%
 
 \newif\iftitlepage          \titlepagefalse
 \newtoks\titlepagehead      \titlepagehead={\hfil}
-\newtoks\titlepagefoot      \titlepagefoot={\hfil\twelverm---~{\oldstyle{\number\pageno}}~---\hfil}
+\newtoks\titlepagefoot      \titlepagefoot={\hfil\twelverm---~{\oldstylize{\number\pageno}}~---\hfil}
 \newtoks\toptitle           \toptitle={\hfil}
 \newtoks\topmarker          \topmarker={\hfil}
 \newtoks\oddpagehead        \oddpagehead={\hfil}
@@ -327,7 +1180,6 @@ $%
 \def\oddpage{\ifodd\pageno\else\blankpage\fi}
 \def\makenextpageodd{\ifodd\pageno\eject\null\blankpage\fi}
 \def\partpage{\oddpage\nodecorspage}
-\def\titlepage{\titlepagetrue}
 
 %%}}}
 
@@ -341,7 +1193,7 @@ $%
 \def\empty@{}
 \begingroup  \catcode`\-=3
 \long\gdef\notempty#1{%
-  \expandafter\ifx\first@#1-\end-\empty@ \false@\else \true@\fi}
+  \ea\ifx\first@#1-\end-\empty@ \false@\else \true@\fi}
 \endgroup
 \def\captionfont{}
 \def\topcaption#1#2\endcaption{%
@@ -368,6 +1220,175 @@ $%
 \let\amsendinsert=\endinsert
 \def\topinsert{\amstopinsert\noindent}
 \def\midinsert{\goodbreak\amsmidinsert\noindent}
+
+%%}}}
+
+\endinput
+
+%%{{{ Documentation / Notes 
+
+%%{{{ ref notes and citations
+## ref/lab notes
+
+\cite[euclid]
+\cite[euclid: Book III]
+
+%%}}}
+
+%%{{{ How to use mathrefs 
+## How to use mathrefs
+
+use inside any of:
+\math
+\longmath
+\mathcols N
+\compute
+\stepproof
+\context
+etc.
+
+Shortcuts:
+\atag = \autotag
+\mtag = \manutag
+\dtag = \decotag
+\itag = \aitag
+
+Examples:
+
+\math
+1 + 1 = 2   \manutag[joke=Fun]  % Tags this as (Fun) and labels it 'joke'
+\endmath
+
+\compute
+z+w  &= 2x  \by {by Lemma}  \autotag[foo] \\ % Tags this as (1) and labels it 'foo'
+     &= x+x \by {by def.}   \autotag[bar] \\ % Tags this as (2) and labels it 'bar'
+\endcompute
+
+To decorate an existing tag use \decotag:
+
+\math
+1 + 1 = 3   \decotag[terror=joke with _*] % Tags this as (Fun*) and labels it 'terror'
+\endmath
+
+You may decorate autotagged stuff as well:
+
+\math
+z+w = 3x \decotag[altfoo=foo with *_']   % Tags this as (*1') and labels it 'altfoo'
+\endmath
+
+You may abuse decotag to have subequations.
+\autoinvtag helps in case you don't need a (3) but just (3a), (3b):
+(\manuinvtag works in a similar way)
+
+\autoinvtag[xyzzy] % increments the eqnumber to 3 here but doesn't tag anything
+
+Then use \decotag:
+
+... \decotag[xyzzya=xyzzy with _a] \\
+... \decotag[xyzzyb=xyzzy with _b] \\
+
+Makes no sense to use a \subeqnumber counter for this,
+since usually they are few and more easily managed like this.
+%%}}}
+
+%%{{{ How to use enums 
+## How to use enums
+
+\enumenter \enumleave are "low-level" commands
+Low level configuration via:
+\setenumlabel#Label
+\setenumshowtaga#Atag
+\setenumshowtagz#Ztag
+\setenumntype#Level#Type
+\setenumnsep#Level#Sep
+You should only use \enum..\endenum
+
+Tag types:
+1: 1, 2, 3, ...
+a: a, b, c, ...
+i: i, ii, iii, ...
+g: α, β, γ, ...
+A: a, b, c, ...
+I: i, ii, iii, ...
+G: α, β, γ, ...
+e: empty
+.: bullets
+o: circ
+-: dashes
+*: stars
+u: user-defined
+
+Note that some conf-tags overwrite each other (e.g. \dresstags, \li, ...)
+
+### \tlist #DefaultTag:#Label .. \endtlist
+Configuration:
+    \spaciouslist
+    \compactlist
+    \dresstags with ##1_##2
+    \nakedtags
+    \withtag ##1
+    \notags
+    \eachitem ##1
+Use:
+    \li #Tag:#Label
+
+### \enum #Numeraltype:#Label .. \endenum
+Configuration:
+    \dresstags with ##1_##2
+    \nakedtags
+    \sepwith ##1
+    \eachitem ##1
+    \whereu is ##1 (may be used to set userthesymbol, normally when #Numeraltype is u)
+Use:
+    \nn  % increases the current counter ("next number")
+    \ti  % prints the enitemtag (naked)
+    \si  % shows the enitemtag (pretty)
+    \TI  % prints the enitemfulltag (naked)
+    \SI  % shows the enimefulltag (pretty)
+    \ei  % \nn\si  This is the most common use: \ei~nice stuff; \ei~more stuff; ...
+    \EI  % \nn\SI
+
+### \elist .. endelist
+Use:
+    \li #Comment:#Label  % \li from \tlist has been shadowed
+    \LI #Comment:#Label  % \li from \tlist has been shadowed
+
+Use \elist .. \endelist iff you want all tags of this list to be created via the enum
+
+Examples:
+
+\elist i:poutsidio
+\eachitem hint
+\li: first
+\li: third
+\endelist
+Temos varios motivos:
+\enum:i
+\ei~pessoais;
+\ei~profissionais;
+\ei~doidos;
+\endenum
+e isso não nos preocupa não.
+No outro lado olha nisso:
+\elist g:fasoules
+\eachitem example
+\li:inter fase intermediaria;
+\li:      fase inicial;
+\endelist
+Sacou?
+
+Then check \refcount* and friends to ref.
+
+%%}}}
+
+%%{{{ How to humanly say n nouns 
+
+## counting nouns
+\humancount 2[m] homens
+\humancount 2[f] mulheres
+\humancountword 84[theorem]
+
+%%}}}
 
 %%}}}
 

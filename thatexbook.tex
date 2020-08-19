@@ -6,23 +6,38 @@
 %% thatexbook.tex
 %% author: Thanos Tsouanas <thanos@tsouanas.org>
 
-%%{{{ Frontmatter 
+%%{{{ frontmatter 
+
+%%{{{ \WRITE*TOCENTRY
+% XXX: Wrapper hacking around eplain's \write*tocentry
+\def\WRITENUMBEREDTOCENTRY#1#2#3{%
+\edef\TOCITEMCLASS{{#1}}%
+\edef\TOCITEMTITLE{{#2}}%
+\edef\TOCITEMNO{\number#3}%
+\ea\ea\ea\writenumberedtocentry\ea\TOCITEMCLASS\TOCITEMTITLE{\TOCITEMNO}%
+}
+\def\WRITETOCENTRY#1#2{%
+\edef\TOCITEMCLASS{{#1}}%
+\edef\TOCITEMTITLE{{#2}}%
+\ea\ea\ea\writetocentry\ea\TOCITEMCLASS\TOCITEMTITLE%
+}
+%%}}}
 
 %%{{{ short toc 
 \def\printshorttoc{{
 \oddpage\titlepagetrue
 \baselineskip=18pt
-%\def\tocchapterentry##1##2##3{{\line{\llap{{##2}.~}##1\dotfill##3}}}
-\def\tocchapterentry##1##2##3{{\line{\llap{{##2}.~}##1\dotfill\hlprintpage{##3}}}}
-\def\tocappendixentry##1##2##3{{\line{\llap{{\Alphabetnumeral##2}.~}##1\dotfill\hlprintpage{##3}}}}
-\def\tocchapteroidentry##1##2{{\line{##1\dotfill\hlprintpage{##2}}}}
+\def\tocchapterentry##1##2##3{\smallskip{\line{\llap{{\chapterthe{##2}}.~}##1\dotfill\hlprintpage{##3}}}}
+\def\tocappendixentry##1##2##3{\smallskip{\line{\llap{{\appendixthe{##2}}.~}##1\dotfill\hlprintpage{##3}}}}
+\def\tocchapblahentry##1##2{\smallskip{\line{##1\dotfill\hlprintpage{##2}}}}
+\def\tocwhereentry##1##2{{\leftingmargin {2em} \color{wheretoccolor}\nineit ##1\endleftingmargin}}
 \def\tocsectionentry##1##2##3{}
-\def\tocsectionoidentry##1##2{}
+\def\tocsecblahentry##1##2{}
 {\larger\bf
 \parindent=0pt
 \baselineskip=16pt
-\centerline{\fourteenrm\toupper{\shorttocname}}
-\vskip\chapteroidtitleskip
+\centerline{\fourteenrm\toupper{\shorttocterm}}
+\chaptitleskip
 \readtocfile
 }
 \vfil
@@ -35,15 +50,16 @@
 \oddpage
 \titlepagetrue
 \nodecorspage
-\def\tocchapterentry##1##2##3{{\bf\vskip 2ex\line{\llap{{##2}.~}##1\enspace\hrulefill\enspace\hlprintpage{##3}}}\vskip 1ex}
-\def\tocappendixentry##1##2##3{{\bf\vskip 2ex\line{\llap{{\Alphabetnumeral##2}.~}##1\enspace\hrulefill\enspace\hlprintpage{##3}}}\vskip 1ex}
-\def\tocchapteroidentry##1##2{{\bf\vskip 2ex\line{##1\enspace\hrulefill\enspace\hlprintpage{##2}}}\vskip 1ex}
-\def\tocsectionentry##1##2##3{{\line{{\qquad} \llap{\S##2.~}{##1}{\dotfill}{\hlprintpage{##3}}\qquad\qquad}}}
-\def\tocsectionoidentry##1##2{{\line{{\qquad} {##1}{\dotfill}{\hlprintpage{##2}}\qquad\qquad}}}
+\def\tocchapterentry    ##1##2##3{{\bf\vskip 2ex\line{\llap{{\chapterthe{##2}}.~}##1\enspace\hrulefill\enspace\hlprintpage{##3}}}\vskip 1ex}
+\def\tocappendixentry   ##1##2##3{{\bf\vskip 2ex\line{\llap{{\appendixthe{##2}}.~}##1\enspace\hrulefill\enspace\hlprintpage{##3}}}\vskip 1ex}
+\def\tocchapblahentry ##1##2{{\bf\vskip 2ex\line{##1\enspace\hrulefill\enspace\hlprintpage{##2}}}\vskip 1ex}
+\def\tocwhereentry      ##1##2{}
+\def\tocsectionentry    ##1##2##3{{\line{{\qquad} \llap{\secdecoratetag{\secthe{##2}}. }{##1}{\dotfill}{\hlprintpage{##3}}\qquad\qquad}}}
+\def\tocsecblahentry    ##1##2{{\line{{\qquad} {##1}{\dotfill}{\hlprintpage{##2}}\qquad\qquad}}}
 {
 \parindent=0pt
-\centerline{\fourteenrm\toupper{\tocname}}
-\vskip\chaptertitleskip
+\centerline{\fourteenrm\toupper{\tocterm}}
+\chaptitleskip
 \readtocfile
 }
 \vfil
@@ -53,25 +69,25 @@
 
 %%{{{ list of algorithms 
 \def\printloa{{% TODO
-\chapteroid \loaname.
+\chapblah \loaterm:
 
-\endchapteroid
+\endchapblah
 }}
 %%}}}
 
 %%{{{ list of code 
 \def\printloc{{% TODO
-\chapteroid \locname.
+\chapblah \locterm:
 
-\endchapteroid
+\endchapblah
 }}
 %%}}}
 
 %%}}}
 
-%%{{{ Appendices 
+%%{{{ appendix printers  
 
-%%{{{ Part pages 
+%%{{{ \printpartpage 
 \def\printpartpage#1{{
 \partpage
 \hbox{}\vfil
@@ -84,156 +100,183 @@
 }}
 %%}}}
 
-%%{{{ Proofs 
-\def\printproofsappendix{%
-\appendix \proofsname.
+\def\hinttagdecorator{H}
+\def\solutiontagdecorator{S}
+\def\fullprooftagdecorator{P}
 
+\def\getpdef#1{\csgroup\csgroup\let{#1}={PDEF\paragid#1}}%
+
+% needs \paragid to be set
+\def\autogetpdefs{%
+% this is needed to define \pdeflist in a mapover-able way
+\ifcsname PDEFS\paragid\endcsname
+\exploregroups\StrRemoveBraces{\csgroup{PDEFS\paragid}}[\pdeflist]%
+\ea\Maps\ea\getpdef\ea{\pdeflist}%
+\fi
+}
+
+%%{{{ \printproofsappendix 
+\def\printproofsappendix{%
 {%
 \immediate\closeout\fullproofsfile
 \innernewcount\curchapterno
 
 \def\fullproofentry##1##2##3##4{%
+% 1: chapno
+% 2: paragid
+% 3: paragtag (needed because of XXXnoproperreftext)
+% 4: proof text
 \ifnum##1>\curchapterno
-\curchapterno=##1
+\curchapterno=##1\relax
 \goodbreak
-\centerline{\fourteenbf\chaptername~##1}\vskip\fullproofskip
+\centerline{\fourteenbf\chapterName~##1}\fullproofskip
 \fi
-\noindent{\bf \refn{##3}.}
-\xrdef{##3_fullproof}%
-##4
-\goodbreak\vskip\fullproofskip
+\begingroup
+\def\paragid{##2}%
+\def\paragtag{##3\fullprooftagdecorator}%
+\noindent{\bf \reftagofid[##2]\fullprooftagdecorator.}
+\labpageofid[##2_fullproof]%
+% XXX: XXXnoproperreftext: reftext would make passing tag redundant:
+% \labtagofid[##2_fullproof={\reftexttagofid{##2}}]
+% instead of:
+\labtagofid[##2_fullproof=\fullprooftagdecorator]%
+\autogetpdefs
+##4%
+\endgroup
+\goodbreak\fullproofskip
 }
 
 \safereadfile{proofs}
-}
-
-\endappendix
+}%
 }
 %%}}}
 
-%%{{{ Hints 
+%%{{{ \printhintsappendix 
 \def\printhintsappendix{%
-\appendix \hintsname.
-
-{%
+{% begin group
 \immediate\closeout\hintsfile
-\Repeat \for{i} \from{1} \to{\maxhintno} \do{
-\expandafter\hintsection \number\i.
-\hldestizepage%
-
-\def\hintentry##1##2##3##4##5##6{%
-\ifnum\number\i=##5
-\noindent{\llap{\bf \refn{##4}.~}}%
-{\scshape\hintname~\oldstyle{##5}:}
-\definexref{##4_hint_##5}{##5}{hint}%
-##6
-%
+\def\hintentry##1##2##3{%
+% 1: paragid
+% 2: hintno
+% 3: hint body
+\begingroup
+\def\paragid{##1}%
+\ifnum\number\i=##2\relax
+\noindent
+{\bf {\reftagofid[##1]\hinttagdecorator##2}.~}%
+{\labtagofid[##1_hint_##2=##2]}%
+\autogetpdefs
+##3%
 \goodbreak
-\vskip\hintskip
+\hintskip
 \fi
+\endgroup
 \goodbreak
 }
+% XXX: ^ to hintentry htan mesa sto Repeat
+\Repeat \for{i} \from{1} \to{\maxhintno} \do {% repeat
+\hintsection \hintsterm \#\number\i.
+\hldestizepage
 
 \safereadfile{hints}
 
 \endhintsection
-}% end repeat
-}
-
-\endappendix
+}% /repeat
+}% end group
 }
 %%}}}
 
-%%{{{ Solutions 
+%%{{{ \printsolutionsappendix 
 \def\printsolutionsappendix{%
-\appendix \solutionsname.
-
 {%
 \immediate\closeout\solutionsfile
 \innernewcount\curchapterno
 
-\def\solutionentry##1##2##3##4##5{%
+\def\solutionentry##1##2##3{%
+% 1: paragid
+% 2: chapterno
+% 3: solution body
+% print a header if we just started a new chapter's solutions
 \ifnum##2>\curchapterno
-\curchapterno=##2
-\goodbreak
-\centerline{\fourteenbf\chaptername~##2}\vskip\solutionskip
+    \curchapterno=##2\relax
+    \goodbreak
+    \centerline{\fourteenbf\sayName{chapter} \chapterthe{##2}}\solutionskip
 \fi
-\noindent\llap{\bf \refn{##4}.\enspace}%
-##5
-\vskip\solutionskip
+\noindent
+\begingroup
+\def\paragid{##1}%
+{\bf \reftagofid[##1]\solutiontagdecorator.\enspace}%
+\autogetpdefs
+##3%
+\endgroup
+\solutionskip
 }
 
 \safereadfile{solutions}
-}
-
-\endappendix
+}%
 }
 %%}}}
 
-%%{{{ Program code 
+%%{{{ \printcodeappendix 
 \def\printcodeappendix{%
-\appendix Código de programas.
-
-\safereadfile{programs}
-
-\endappendix
+{%
+\safereadfile{programs}%
+}%
 }
 %%}}}
 
 %%}}}
 
-%%{{{ Backmatter 
+%%{{{ backmatter printers
 
-%%{{{ References 
+%%{{{ \printreferenceswith 
 \def\printreferenceswith#1{%
-\chapteroid \referencesname.
-
-\bibliographystyle{alpha}
-\bibliography{#1}
-
-\endchapteroid
+\begingroup
+\def\biblabelcontents##1{{\ninessdc[##1]}}%
+\let\protect=\NIL
+\def\newblock{\newline}
+\def\UrlFont{\tenrm}
+\sizex
+\bibliographystyle{alpha}%
+\bibliography{#1}%
+\endgroup
 }
 %%}}}
 
-%%{{{ Symbol glossary 
-\def\sholed#1{\alert{#1}}
+%%{{{ \printsymbolglossary 
 \def\printsymbolglossary{%
-\chapteroid \symglossaryname.
-
 {%
 \immediate\closeout\symbolsfile
 \multiply\baselineskip by 2
 
-\def\symbolentry##1##2##3##4##5##6##7{%
+\def\symbolentry##1##2##3##4{%
+% 1: symbolid
+% 2: symbol
+% 3: pronunciation
+% 4: pageno
 \def\glossor{{\;;\;}}
-\line{\llap{##6}\quad\hbox{##7}\quad\dotfill{}\enspace{\refn{##5},\enspace{##4}}}%
+\line{\llap{##2}\quad
+      \hbox{##3}\quad
+      \dotfill{}\enspace
+      \reftagofid[##1],\enspace
+      {##4}}%
 }
 
 \safereadfile{symbols}
 
-}
-
-\endchapteroid
+}%
 }
 %%}}}
 
-%%{{{ Index of names 
+%%{{{ \printindexofnames 
 \def\printindexofnames{%
-\chapteroid \nameindexname.
-
 \readindexfile n
-
-\endchapteroid
 }
 %%}}}
 
-%%{{{ Index of terms 
+%%{{{ \printindexofterms 
 \def\printindexofterms{%
-\chapteroid \indexname.
-
 \readindexfile i
-
-\endchapteroid
 }
 %%}}}
 
@@ -272,7 +315,6 @@
 
 %%}}} 
 
-
 %%{{{ draft / release versions
 \ifdraft
 \overfullrule=2cm
@@ -282,578 +324,1325 @@
 
 %%}}}
 
-%%{{{ Symbols 
-\def\activitysymbol{{\manual\char'170}}
-\def\examplesymbol{{$\bullet$}}
-\def\nonexamplesymbol{{$\bullet$}}
-%%}}}
+%%{{{ \Report : XXX: remove? (better use a shell script for this) 
 
-%%{{{ \Report : better use a shell script for this 
+% \WriteReport counters
+\newcount\chaptertotal      \chaptertotal=0\relax
+\newcount\sectiontotal      \sectiontotal=0\relax
+\newcount\chapblahtotal     \chapblahtotal=0\relax
+\newcount\appendixtotal     \appendixtotal=0\relax
+\newcount\paragtotal        \paragtotal=0\relax
+\newcount\exercisetotal     \exercisetotal=0\relax
+\newcount\problemtotal      \problemtotal=0\relax
+\newcount\codeittotal       \codeittotal=0\relax
+
 \def\makereport{%
 \Report
-\WriteReport {exercises} {\the\exercisetotal}
-\WriteReport {problems}  {\the\problemtotal}
-\WriteReport {chapters}  {\the\chaptertotal}
-\WriteReport {sections}  {\the\sectionno}
-\WriteReport {pages}     {\the\pageno}
+\WriteReport {exercises} {\the\exercisetotal}%
+\WriteReport {problems}  {\the\problemtotal}%
+\WriteReport {chapters}  {\the\chaptertotal}%
+\WriteReport {sections}  {\the\sectiontotal}%
+\WriteReport {pages}     {\the\pageno}%
 \EndReport
 }
+
+\newwrite\reportfile
+\def\Report{\immediate\openout\reportfile=\jobname.report}
+\def\WriteReport#1#2{\write\reportfile{#1:#2}}
+\def\EndReport{\closeout\reportfile}
+
 %%}}}
 
-%%{{{ indices 
+%%{{{ refs, tags, labels, etc.
+
+\newif\ifsectionwidetags \sectionwidetagsfalse
+\def\sectionwidetags{\sectionwidetagstrue}
+\def\paragwidetags{\sectionwidetagsfalse}
+
+% Use \sectionwidetags right after \section to keep count within the section.
+% Normally the count is reset on every \note-like.
+
+\def\ideqconstruct#1{#1}
+\def\sectionwidetag#1{\ifnil\sectag\\#1\else\sectag\,{#1}\fi}
+\def\paragwidetag#1{\ifnil\paragtag\\#1\else\paragtag\,{#1}\fi}
+\def\neartag#1{#1}
+\def\fartag#1{\ifsectionwidetags\sectionwidetag{#1}\else\paragwidetag{#1}\fi}
+\def\fareqconstruct#1{\fartag{#1}}
+\let\eqconstruct=\fareqconstruct
+
+%%}}}
+
+%%{{{ indexing 
+
+%%{{{ setup 
+
 %\defineindex i % this is already defined by eplain
 \defineindex n % friends
-\def\idxpmdefpage#1{{\bf #1}}
-%\def\idxpminfopage#1{{\it #1}}
+\def\idxnormalpage#1{{\rm #1}}
+\def\idxdefpage#1{{\bf #1}}
 \indexproofingfalse % default is false anyway
 \hookaction{beginindex}{\doublecolumns}
 \def\indexfonts{\sizex}
+
+% symbol counter
+\newcount\symbolidno
+
+\def\sholed#1{{\alert{#1}}}
+
 %%}}}
 
-%%{{{ biblio 
-\def\printcitestart{\bgroup[\ninessdc}
-\def\printcitefinish{]\egroup}
-\def\printcitenote#1{\ninerm:~{\relax#1}}
-\def\printbetweencitations#1{{\ninesl,}~}
+%%{{{ interface based on eplain 
+\def\INDEX#1{\sidx[pagemarkup=idxnormalpage]{#1}}
+\def\INDEXDEF#1{\sidx[pagemarkup=idxdefpage]{#1}}
+\def\INDEXSEE#1#2{\sidx[see]{#1}{#2}}
+\def\INDEXSEEALSO#1#2{\sidx[seealso]{#1}{#2}}
+\def\INDEXNAME#1#2{\sndxname[pagemarkup=idxnormalpage]{#1}{#2}}
+% (no more eplain should be used from now on)
 %%}}}
 
-%%{{{ i18n 
+%%{{{ low-level: the user should not need any of these 
+\def\INDEXES * #1 ;; {{\Map{ * }\SMARTINDEX{#1}}}
+\def\CREDITS * #1 ;; {{\Map{ * }\SMARTCREDIT{#1}}}
+\def\DEFINES * #1 ;; {{\Map{ * }\INDEXDEForINDEXSYMBOLPRIME{#1}}}
 
-% \DefWord(s) define: #1name #1word (#1sname)
-\def\DefWord #1 #2{% #1: handle ; #2: singular
-\expandafter\def\csname #1name\endcsname{#2}
-\expandafter\def\csname #1word\endcsname{#2}
+\def\SMARTINDEX#1{%
+    \IfStrContains {#1} { see: }
+        {\INDEXSEEPRIME #1;}
+        {\IfStrContains {#1} { seealso: }
+            {\INDEXSEEALSOPRIME #1;}
+            {\INDEX{#1}}}}
+\def\INDEXSEEPRIME #1 see: #2;{\INDEXSEE{#1}{#2}}
+\def\INDEXSEEALSOPRIME #1 seealso: #2;{\INDEXSEEALSO{#1}{#2}}
+
+\def\SMARTCREDIT#1{%
+    \IfStrContains {#1} { : }
+        {\CREDITFORPRIME #1;}
+        {\CREDIT{#1}}}
+\def\CREDITFORPRIME #1 : #2;{\csgroup{#1}[#2]}
+\def\CREDIT#1{\csgroup{#1}}
+
+\def\INDEXSYMBOLPRIME#1{\INDEXSYMBOLPRIMEPRIME #1\END}
+\def\INDEXSYMBOLPRIMEPRIME #1-- #2\END{\INDEXSYMBOL{#1 }{#2}}
+\def\INDEXDEForINDEXSYMBOLPRIME#1{\saveexpandmode\noexpandarg\IfStrContains{#1}{--}{\INDEXSYMBOLPRIME{#1}}{\INDEXDEF{#1}}\restoreexpandmode}
+\def\INDEXSYMBOL#1#2{%
+% 1: symbol
+% 2: pronunciation
+\global\advance\symbolidno by 1\relax
+\labtagofid[symbol\number\symbolidno=\paragtag]%
+\labpageofid[symbol\number\symbolidno]%
+\writesymbol
+  {symbol\number\symbolidno}
+  {\unexpanded{\let~=\sholed $#1$}}
+  {\unexpanded{#2}}
+  {\number\pageno}%4
 }
-\def\DefWords #1 #2#3{% #2: singular ; #3 plural
-\DefWord #1 {#2}
-\expandafter\def\csname #1sname\endcsname{#3}
+%%}}}
+
+%%{{{ user interface 
+
+% generic index commands
+\def\indexed[#1]{\SMARTINDEX{#1}}% for inline use
+\def\credited[#1]{\SMARTCREDIT{#1}}% for inline use
+\def\defined[#1]{\INDEXDEForINDEXSYMBOLPRIME{#1}}% for inline use
+
+% these should probably be placed on a separate file
+\def\DefFriend #1 #2, #3; {%
+\csgroup\def{#1}{\INDEXNAME{#3}{#2}}% this has an optional arg
+\csgroup\def{say#1}{{\csname #1\endcsname}#2}%
+\csgroup\def{full#1}{{\csname #1\endcsname}#3 #2}%
 }
 
 %%}}}
 
-%%{{{ text structures 
-
-% top-level counters
-\newcount\chapterno
-\newcount\appendixno
-\newcount\sectionno
-\newcount\noteno
-\newcount\exerciseno
-\newcount\codeitno
-\newcount\problemno
-\newcount\hintno
-\newcount\maxhintno
-\newcount\symbolno
-
-% \WriteReport counters
-\newcount\exercisetotal
-\newcount\problemtotal
-\newcount\chaptertotal
-% sectiontotal makes no sense: it doesn't reset
-\exercisetotal=0
-\problemtotal=0
-\chaptertotal=0
+%%}}}
 
 %%{{{ spoilers 
 
-\def\spoiler#1.{% TODO
-\nobreak\bigskip\nobreak\bigskip%
+\Newskip spoiler=3\bigskipamount;
+
+\def\spoiler{% TODO
+\spoilerskip
 \nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
-\nobreak\bigskip\nobreak\bigskip%
+\spoilerskip
 \goodbreak
 }
 
-\def\spoilerpage#1.{% TODO
-\nobreak\vfill%
+\def\spoilerpage{% TODO
+\nobreak\vfill
 \nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
-\nobreak\vfill%
-\bigskip%
+\nobreak\vfill
 \break
 }
 
 %%}}}
 
-%%{{{ chapter 
-\newskip\chaptertitleskip
-\newskip\chapteroidtitleskip
-\chaptertitleskip=8ex
-\chapteroidtitleskip=6ex
+%%{{{ struct setup and sidekicks 
 
-% styles
-\def\chapterwordstyle#1{\twelverm\toupper{#1}}
-\def\chaptertitlestyle#1{\twelverm\toupper{#1}}
-\def\chapteroidtitlestyle#1{\fourteenbf\vphantom{ÂÇ}#1}
+% by default all structs are labelled as toplevel dirs
+\newif\iftoplevelstruct     \toplevelstructtrue
 
-\def\chapter#1. #2\par{%
-\global\advance\chapterno by 1%
-\global\advance\chaptertotal by 1\relax%
-\titlepage%
-\topmarker={\chaptername~\number\chapterno}%
-\toptitle={#1}%
-\noteno=0%
-\exerciseno=0%
-\codeitno=0%
-\problemno=0%
-{%
-\def\chaptertag{\number\chapterno}%
-\def\label##1{\definexref{##1}{\chaptertag}{chapter}\xrdef{p:##1}}%
-#2%
-\hldestizepage%
-\writenumberedtocentry{chapter}{#1}{\number\chapterno}%
-\vglue 4ex%
-\centerline{\chapterwordstyle{\chaptername}~\Romannumeralof{\the\chapterno}}%
-\vglue 4ex%
-\centerline{\chaptertitlestyle{#1}}\par%
-\vglue\chaptertitleskip%
-}%
+%%{{{ counters 
+
+% base id counters
+\newcount\chapidno
+\newcount\secidno
+\newcount\paragidno
+
+% text struct counter
+\newcount\chapterno
+\newcount\appendixno
+\newcount\sectionno
+
+% parag counters
+\newcount\paragno
+
+% activity struct counters
+\newcount\exerciseno
+\newcount\codeitno
+\newcount\problemno
+\newcount\hintno
+\newcount\maxhintno
+\newcount\hintstatusno
+
+%%}}}
+
+%%{{{ *nest systems 
+% chapnest helps guarantee matching \chap...\endchap macros
+% Note that there still is a need for a "secnest system"  because
+% even though the definitions of sec* guarantee well-balanced macros,
+% we may put a sec inside a different type of sec,
+% e.g. \section .. \further .. \endfurther .. \endsection
+\newcount\chapnest  \chapnest=0\relax
+\newcount\secnest   \secnest=0\relax
+\newcount\paragnest \paragnest=0\relax
+\def\chapenter{%
+\ifnum\secnest   > 0\thatexerror[tried to open chap inside sec (\secid)]\fi
+\ifnum\paragnest > 0\thatexerror[tried to open chap inside parag (\paragid)]\fi
+\ifnum\chapnest  > 0\thatexerror[tried to open chap inside another (\chapid)]\fi
+\global\advance\chapnest  by  1\relax
+}
+\def\chapleave{%
+\ifnum\secnest   > 0\thatexerror[tried to close chap inside a sec (\secid)]\fi
+\ifnum\paragnest > 0\thatexerror[tried to close chap inside a parag (\paragid)]\fi
+\ifnum\chapnest  < 1\thatexerror[closed a chap but wasn't inside one?]\fi
+\global\advance\chapnest  by -1\relax
+}
+\def\secenter{%
+\ifnum\paragnest > 0\thatexerror[tried to open sec inside a parag (\paragid)]\fi
+\ifnum\secnest   > 0\thatexerror[tried to open sec inside another (\secid)]\fi
+\global\advance\secnest   by  1\relax
+}
+\def\secleave{%
+\ifnum\paragnest > 0\thatexerror[tried to close sec (\secid) inside a parag (\paragid)]\fi
+\ifnum\secnest   < 1\thatexerror[closed a sec (\secid) but wasn't inside one?]\fi
+\global\advance\secnest   by -1\relax
+}
+\def\paragenter{%
+\ifnum\paragnest > 0\thatexerror[opened a parag (\paragclass) inside a parag? (\paragid)]\fi
+\global\advance\paragnest by  1\relax
+}
+\def\paragleave{%
+\ifnum\paragnest < 1\thatexerror[closed a parag (\paragclass) but wasn't inside one?]\fi
+\global\advance\paragnest by -1\relax
+}
+%%}}}
+
+%%{{{ struct mixin 
+
+% \struct* stuff are practically locally set just
+% for the purpose of setting the labels with \dostructlabels
+
+%%{{{ \structmixin 
+% \structmixin #1 sets struct attributes to \#1attr
+% CLASSclass should be set before calling structmixin
+\def\structmixin#1{%
+\edef\structbase{#1}%
+% clear/set default values
+\def\structid{}%
+\def\structformal{\sayName{\structclass} \structtag}% <- probably bad idea to overwrite
+\def\structclass{}% <- this must be provided by the context of the caller
+\def\structtag{}%   <- this may be provided by the context of the caller
+\def\structtitle{}%
+\def\structparen{}%
+\def\structlabel{}%
+\def\structname{\sayName{\structclass}}%
+\def\structfull{\structformal\ifvanishes\structtitle\\\else\spacechar(\structtitle)\fi}%
+\def\structsmart{\structname \structtag\ifvanishes\structparen\\\else\spacechar(\structparen)\fi}%
+\Mixin
+    class tag
+    id formal title aka name
+    full smart
+    \from {\structbase}
+    \to struct
+% class should be set before calling structmixin:
+\ifvanishes\structclass\\\thatexerror[class must be set before you structmixin]\fi
+}
+%%}}}
+
+%%{{{ \dostructlabels 
+\def\dostructlabels{{%
+\WhenStrEmpty {\structclass}
+    {\thatexerror[dostructlabels called but there is no structclass]}%
+% basic labels set even for structlabel-less structs:
+\setlabelclass{\structclass}%
+\labpageofid[\structid]%
+\WhenStrNempty {\structtag}
+    {\labtagofid[\structid=\structtag]}%
+% these labels need structlabel to be set
+\WhenStrNempty {\structlabel} {% if we have \structlabel
+% low <-> high is actually an injection high >-> low:
+\labidof[\structlabel=\structid]%
+\lablabelofid[\structid=\structlabel]%
+% usual labels:
+\labpage[\structlabel]%
+\labtitle[\structlabel=\structtitle]%
+\labtag[\structlabel=\structtag]%
+\labformal[\structlabel=\structformal]%
+\labsmart[\structlabel=\structsmart]%
+\labfull[\structlabel=\structfull]%
+\lab[\structlabel=\structtag]% <- maybe this is never used?
+}% / if we have \structlabel
+}}
+%%}}}
+
+%%}}}
+
+%%{{{ struct/label/ref/cd shortcuts 
+
+\def\label #1 {%
+\def\structlabel{#1}%
+\iftoplevelstruct\def\structpath{/#1/}\else\edef\structpath{\structpath#1/}\fi
 }
 
-\def\chapintro#1\par{\noindent #1\endgraf\vskip\chaptertitleskip}
+\def\labcdhere{\labCD{\structpath}}
+\def\refcdhere{\refCD{\structpath}}
+\def\labrefcdhere{\labrefCD{\structpath}}
+\let\cdhere=\labrefcdhere
 
-\def\endchapter{%
-\ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi%
+%%}}}
+
+%%}}}
+
+%%{{{ chap 
+% TODO: this should be made similar to the sec/parag mechanism
+% TODO: chapblahs should be implemented accordingly as
+%       special cases of chaps without chapno
+
+%%{{{ chap(teroids) 
+
+\Newskip chaptitle=12ex;
+
+\definecolor{introcolor}{cmyk}{0.5,.1,.3,.4}
+\definecolor{wherecolor}{cmyk}{0.5,.1,.3,.4}
+\definecolor{wheretoccolor}{cmyk}{0.5,.1,.3,.4}
+\definecolor{quotecolor}{cmyk}{0.5,.1,.3,.4}
+
+\DefStyle intro         {\color{introcolor}\tenrm}
+\DefStyle chapwhere     {\color{wherecolor}\tenit}
+\DefStyle chapquote     {\ninesl}
+\DefStyle chapquoteby   {\elevenrm\scshape}
+
+\def\chapintro#1\par{\noindent\introstylize{#1}\endgraf\chaptitleskip}
+
+%%{{{ \dochapconf 
+\def\dochapconf#1{%
+% 1: conf body
+\def\dochapindexes{}%
+\def\dochapcredits{}%
+\def\dochappdefs{}%
+\def\chapquote{}%
+\def\chapquoteby{}%
+\def\chapwhere{}%
+% save current macros
+\let\OLDquote=\quote
+\let\OLDwhere=\where
+\let\OLDindexes=\indexes
+\let\OLDcredits=\credits
+\let\OLDpdefs=\pdefs
+% set conf-special macros
+\def\where     ##1 ;; {\def\chapwhere{##1}}%
+\def\quote ##1 \by ##2 ;; {\def\chapquote{##1}\def\chapquoteby{##2}}%
+\def\indexes * ##1 ;; {\def\dochapindexes{\INDEXES * ##1 ;; }}%
+\def\credits * ##1 ;; {\def\dochapcredits{\CREDITS * ##1 ;; }}%
+\def\pdefs ##1 ;; {%
+% XXX: code dup with other pdefs
+\def\dochappdefs{%
+\def\pdef########1 {%
+\unskip
+% the cs PDEFS\chapid holds a space-separated list of all pdef names
+% this get inherited as a predefined PDEFS\secid for each sec
+\ifcsname PDEFS\chapid\endcsname
+    \csgroup\gaddto{PDEFS\chapid}{ }\else
+    \csgroup\gdef{PDEFS\chapid}{}\fi
+\csgroup\gaddto{PDEFS\chapid}{########1}%
+\csgroup\def{########1}{\csgroup{PDEF\chapid ########1}}%
+\csgroup\gdef{PDEF\chapid ########1}%
+}% /pdef
+##1%
+}% /dochappdefs
+}% /pdefs
+% actually do the conf
+#1%
+% restore macros
+\let\quote=\OLDquote
+\let\where=\OLDwhere
+\let\indexes=\OLDindexes
+\let\credits=\OLDcredits
+\let\pdefs=\OLDpdefs
 }
+%%}}}
 
-\def\chapterblah#1. #2\par{%
-\titlepage%
-\topmarker={}%
-\toptitle={#1}%
-\noteno=0%
-\exerciseno=0%
-\codeitno=0%
-\problemno=0%
-{%
-#2%
-\hldestizepage%
-\vglue 4ex%
-\centerline{\chaptertitlestyle{#1}}\par%
-\vglue\chaptertitleskip%
-}%
+%%{{{ \resetchapwidecounters 
+\def\resetchapwidecounters{%
+\paragno=0\relax
+\exerciseno=0\relax
+\codeitno=0\relax
+\problemno=0\relax
 }
+%%}}}
 
-\def\endchapterblah{%
-\ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi%
-}
-
-\def\appendix#1. #2\par{%
-\global\advance\appendixno by 1%
-\titlepage%
-\topmarker={\appendixname~\Alphabetnumeral{\appendixno}}%
-\toptitle={#1}%
-\noteno=0%
-\exerciseno=0%
-\codeitno=0%
-\problemno=0%
-{%
-\def\appendixtag{\number\appendixno}%
-\def\label##1{\definexref{##1}{\appendixtag}{appendix}\xrdef{p:##1}}%
-#2%
-\hldestizepage%
-\writenumberedtocentry{appendix}{#1}{\number\appendixno}%
-\hbox{}\vskip 4ex
-\centerline{\chapterwordstyle{\appendixname}~\Alphabetnumeral{\appendixno}}
-\vskip 4ex
-\centerline{\chaptertitlestyle{#1}}\par
-\vskip\chaptertitleskip
+%%{{{ \genbeginchap 
+\def\genbeginchap#1#2#3{%
+% 1: chap class
+% 2: chap title
+% 3: chap conf
+\chapenter
+\begingroup % chap total namespace
+\def\chapconf   {#3}%
+\edef\chapclass {#1}%
+% XXX: decide: \edef or \def for title?
+\def\chaptitle {#2}%
+%%%% counters and toks
+\global\advance\chapidno  by 1\relax
+\csgroup\let\chapthe   = {\chapclass the}\relax
+\csgroup\let\chapno    = {\chapclass no}\relax
+\csgroup\let\chaptotal = {\chapclass total}\relax
+\global\advance\chapno    by 1\relax
+\global\advance\chaptotal by 1\relax
+%%%% chap getter (gets chapter##1, appendix##1, etc.)
+\def\getchapclass##1{\csname\chapclass ##1\endcsname}%
+%%%% tag and id are needed to call structmixin
+\edef\chaptag     {\chapthe{\number\chapno}}%
+\edef\chapid      {chap\number\chapidno}%
+%%%% we have: class, title, tag, id.
+\structmixin{chap}%
+%%%% page decorations
+\titlepagetrue
+\global\topmarker={\sayName{\chapclass} \chaptag:  \chaptitle}%
+\global\toptitle={\the\topmarker}%
+%%%% counters
+\resetchapwidecounters
+%%%% chap main namespace
+\bgroup % will end in \endchap*
+%%%% conf
+\dochapconf{\chapconf}%
+%%%% structlabels
+\WhenStrNempty {\structid}
+    {\dostructlabels}%
+%%%% toc stuff
+\hldestizepage
+\WRITENUMBEREDTOCENTRY
+    {\chapclass}
+    {\chaptitle}
+    {\number\chapno}%
+\titlepagetrue
+%%%% start outputting
+%% chap bandana
+\dochapquote
+%% /chap bandana
+%% chap head
+\vglue 2ex\relax
+\centering
+\twelverm
+\sayNAME{\chapclass} \chaptag%
+\vglue 4ex\relax
+\chaptitle
+% for upper use: \ea\ea\ea\toupper\ea{\chaptitle}
+\endcentering
+\chaptitleskip
+%% /chap head
+%% chap necklace
+\dochapwhere
+\chaptitleskip
+%% /chap necklace
+%%%% tasks
+\dochapindexes
+\dochapcredits
+\dochappdefs
 \noindent
 }
-}
+%%}}}
 
-\def\endappendix{%
-\vfill\eject%
+%%{{{ \genendchap 
+\def\genendchap{%
+% could take #1 for chap class but there is no use for it now
+\egroup % /chap main namespace
+\ifdim\pagetotal=0pt\relax\else\vfill$$\woohoo$$\eject\fi
+\endgroup % /chap total namespace
+\chapleave
 }
+%%}}}
 
-\def\chapteroid#1. #2\par{%
-\titlepage%
-\oddpage%
-\toptitle={#1}%
-\topmarker={#1}%
-\noteno=0%
-\exerciseno=0%
-\codeitno=0%
-\problemno=0%
+%%{{{ \dochapwhere 
+\def\dochapwhere{%
+\WhenStrNempty {\chapwhere}
 {%
-\def\label##1{\xrdef{p:##1}}%
-#2%
-\hldestizepage%
-\writetocentry{chapteroid}{#1}{}%
-\hbox{}\vskip 4ex
-\centerline{\chapteroidtitlestyle{#1}}\par
-\vskip.5ex\hrule 
-\vskip\chapteroidtitleskip
+\WRITETOCENTRY
+    {where}
+    {\chapwhere}%
+\centeringmargin 42pt
+\chapwherestylize{\chapwhere}
+\endcenteringmargin
+\vglue 4ex\relax
+}%
+}
+%%}}}
+
+%%{{{ \dochapquote 
+\def\dochapquote{
+\WhenStrNempty {\chapquote}
+{%
+\bgroup \color{quotecolor}%
+\rightingmargin {.333\hsize}
+\chapquotestylize{\chapquote}%
+\endrightingmargin
+\righting
+\chapquotebystylize{---~\chapquoteby}%
+\endrighting
+\egroup
+\vglue 4ex\relax
+}%
+}
+%%}}}
+
+%%{{{ instances: chapter, appendix 
+
+\def\DefChap #1 {\csgroup\def{#1}##1. ##2\par{\genbeginchap {#1} {##1}{##2}}\csgroup\def{end#1}{\genendchap}}
+
+\def\chapterthe#1{\nthe{#1}}
+\def\appendixthe#1{\Athe{\number#1}}
+
+% XXX: the defs above should become:
+%\SetChap chapter  the #1{\nthe{#1}}
+%\SetChap appendix the #1{\Athe{\number#1}}
+
+\DefChap chapter
+\DefChap appendix
+
+%%}}}
+
+%%}}}
+
+%%{{{ chapblah 
+
+\def\chapblahtitlestylize#1{\vglue 4ex\centerline{\fourteenbf\vphantom{ÂÇ}#1}\par\vskip.5ex\hrule}
+
+%%{{{ \dochapblahconf 
+\def\dochapblahconf#1{%
+\def\chapquote{}%
+\def\chapquoteby{}%
+\def\chapwhere{}%
+% save current macros
+\let\OLDquote=\quote
+\let\OLDwhere=\where
+% set conf-special macros
+\def\where     ##1 ;; {\def\chapwhere{##1}}%
+\def\quote ##1 \by ##2 ;; {\def\chapquote{##1}\def\chapquoteby{##2}}%
+% actually do the conf
+#1%
+% restore macros
+\let\quote=\OLDquote
+\let\where=\OLDwhere
+}
+%%}}}
+
+%%{{{ \chapblah 
+\def\chapblah #1. #2\par{%
+% 1: chapblah title
+% 2: chapblah conf
+\chapenter
+\begingroup % chapblah total namespace
+\def\chapblahconf{#2}%
+\edef\chapblahtitle{#1}%
+%%%% page decorations
+\titlepagetrue
+\oddpage
+\global\topmarker={\chapblahtitle}%
+\global\toptitle={\the\topmarker}%
+%%%% counters
+\resetchapwidecounters
+%%%% chap main namespace
+\bgroup % will end in \endchap*
+%%%% conf
+\dochapblahconf{\chapblahconf}%
+%%%% toc stuff
+\hldestizepage
+\WRITETOCENTRY
+    {chapblah}
+    {\chapblahtitle}%
+%%%% start outputting
+\titlepagetrue
+%% chapblah head
+\dochapquote
+\chapblahtitlestylize{\expanded{\chapblahtitle}}
+\chaptitleskip
+\dochapwhere
+\chaptitleskip
+%% /chapblah head
 \noindent
 }
-}
+%%}}}
 
-\def\endchapteroid{%
+%%{{{ \endchapblah 
+\def\endchapblah{%
+\egroup % /chapblah main namespace
 \vfill$$\woohoo$$%
-\makenextpageodd%
+\makenextpageodd
 \eject
+\endgroup % /chapblah total namespace
+\chapleave
+}
+%%}}}
+
+%%}}}
+
+%%}}}
+
+%%{{{ sec 
+% the situation is reversed from chap*:
+% in sec* we have only one main tagged instance (\section)
+% and many blahs
+
+%%{{{ default attrs and common macros 
+
+\def\secintro#1\par{\medskip\noindent{#1}\endgraf\sectitleskip}
+
+\Newskip sectitle=.333\chaptitleskipamount;
+\Newskip sec=8ex;
+
+\def\secno{}
+\def\sectotal{}
+\def\secthe#1{\nthe{#1}}
+\def\sectag{}
+\def\sectagdecorator{§}
+\def\secdecoratetag#1{\sectagdecorator#1}
+\def\sectitle{}
+\def\secahook{}
+\def\seczhook{}
+\def\secheadahook{\par\noindent\hfil\begingroup\twelvebf}
+\def\sechead{\WhenStrNempty{\sectag}{\sectag. }\WhenStrNempty{\sectitle}{\sectitle}}
+\def\secheadzhook{\endgroup\hfil\endgraf\sectitleskip}
+\def\secbodyahook{\noindent}
+\def\secbodyzhook{}
+
+%%{{{ \dosecconf 
+% common configuration macros for note
+\def\dosecconf#1{%
+\def\dosecindexes{}%
+\def\dosecdefines{}%
+\def\doseccredits{}%
+\def\dosecpdefs{}%
+% save current macros
+\let\OLDindexes=\indexes
+\let\OLDdefines=\defines
+\let\OLDcredits=\credits
+\let\OLDpdefs=\pdefs
+% set conf-special macros
+\def\indexes * ##1 ;; {\def\dosecindexes{\INDEXES * ##1 ;; }}%
+\def\defines * ##1 ;; {\def\dosecdefines{\DEFINES * ##1 ;; }}%
+\def\credits * ##1 ;; {\def\doseccredits{\CREDITS * ##1 ;; }}%
+\def\pdefs ##1 ;; {%
+% XXX: code dup with other pdefs
+\def\dosecpdefs{%
+\def\pdef########1 {%
+\unskip
+% the cs PDEFS\secid holds a space-separated list of all pdef names
+% this get inherited as a predefined PDEFS\pragid for each parag
+\ifcsname PDEFS\secid\endcsname
+    \csgroup\gaddto{PDEFS\secid}{ }\else
+    \csgroup\gdef{PDEFS\secid}{}\fi
+\csgroup\gaddto{PDEFS\secid}{########1}%
+\csgroup\def{########1}{\csgroup{PDEF\secid ########1}}%
+\csgroup\gdef{PDEF\secid ########1}%
+}% /pdef
+##1%
+}% /dosecpdefs
+}% /pdefs
+% actually do the conf
+#1%
+% restore macros
+\let\indexes=\OLDindexes
+\let\defines=\OLDdefines
+\let\credits=\OLDcredits
+\let\pdefs=\OLDpdefs
+}
+%%}}}
+
+%%{{{ \resetsecwidecounters 
+\def\resetsecwidecounters{%
+\resetmcount
+}
+%%}}}
+
+%%}}}
+
+%%{{{ \genbeginsec 
+\def\genbeginsec#1#2#3{
+% NOTE: Some work has been done to make it easy to
+% get a \genbeginsec out of it, but not completely:
+% some section-specific parts remain.
+% 1: sec class
+% 2: sec title
+% 3: sec conf
+\begingroup % section total namespace (will end in \endsec)
+\edef\secclass  {#1}%
+\edef\sectitle  {#2}% XXX: decide \def or \edef
+\def\secconf    {#3}%
+\secenter
+%% mixin attrs
+\Mixin
+    no total
+    skip
+    the
+    tag decoratetag tagdecorator
+    ahook zhook
+    head headahook headzhook
+    body bodyahook bodyzhook
+    \from {SEC\secclass}
+    \to sec
+%%%% counters and toks
+\global\advance\secidno by 1\relax
+\ifblank\secno   \else\global\advance\secno    by 1\relax\fi
+\ifblank\sectotal\else\global\advance\sectotal by 1\relax\fi
+%%%% id is needed to call structmixin
+\edef\secid      {sec\number\secidno}%
+\ifblank\secno\else\edef\sectag{\secdecoratetag{\secthe{\number\secno}}}\fi
+%%%% title for secblah and other notaggeds
+\ifblank\secno\WhenStrEmpty {\sectitle}
+    {\edef\sectitle{\csgroup{\secclass term}}}\fi
+%%%% structmixin
+\structmixin{sec}%
+%%%% page decorations
+\def\toptitlewithsec{\sechead}%
+\global\toptitle=\ea{\toptitlewithsec}%
+%%%% counters
+\resetsecwidecounters
+%%%% section main namespace
+\begingroup % will end in \endsec
+%%%% conf
+\dosecconf{\secconf}%
+% inherit pdefs from PDEFS\chapid
+\ifcsname PDEFS\chapid\endcsname
+    \csgroup\ea\gdef\ea{PDEFS\secid}\ea{\csname PDEFS\chapid\endcsname}\fi
+%%%% structlabels
+\WhenStrNempty {\structid}
+    {\dostructlabels}%
+%%%% start outputting
+\secahook
+% sechead
+\secheadahook
+\sechead
+\secheadzhook
+% /sechead
+%%%% toc stuff
+\hldestizepage
+\ifblank\secno\WRITETOCENTRY
+                  {secblah}
+                  {\sectitle}%
+\else         \WRITENUMBEREDTOCENTRY
+                  {\secclass}
+                  {\sectitle}
+                  {\number\secno}\fi
+%%%% tasks
+\dosecindexes
+\dosecdefines
+\doseccredits
+\dosecpdefs
+%%%% main body
+\secbodyahook
+}
+%%}}}
+
+%%{{{ \genendsec 
+\def\genendsec{%
+% could take #1 for sec class but there is no use for it now
+\secbodyzhook
+\endgroup % /sec* main namespace
+\seczhook % maybe evolve into yhook/zhook (for the time being not used)
+\par
+\phantom{XXX}%
+\par
+\vcur=0pt\relax
+\advance \vcur by \pagetotal\relax
+\advance \vcur by \vminsec\relax
+\ifdim \vcur > \vsize % not enough space to start section(oid)
+    \vfill
+    \eject
+\else % enough space to start section(oid)
+    \secskip
+    \goodbreak
+\fi
+\secleave
+\endgroup % /sec* total namespace
 }
 
 %%}}}
 
-%%{{{ section 
-\newskip\sectiontitleskip
-\sectiontitleskip=.333\chaptertitleskip
-\def\section#1. #2\par{%
-\global\advance\sectionno by 1%
-{%
-\def\sectiontag{\knuthS\the\sectionno}%
-\def\label##1{\definexref{##1}{\sectiontag}{section}\xrdef{p:##1}}%
-\writenumberedtocentry{section}{#1}{\the\sectionno}%
-\centerline{\twelvebf{\sectiontag.~}#1}%
-\hldestizepage%
-\bgroup%
-\noindent%
-#2%
-}%
-}
+%%{{{ \DefSec \SetSec \DoSec 
 
-\def\secintro#1\par{\medskip\noindent #1\endgraf\vskip\sectiontitleskip}
+% defines both \secinst and \endsecinst
+\def\DefSec #1 {\csgroup\def{#1}##1. ##2\par{\genbeginsec {#1} {##1}{##2}}\csgroup\def{end#1}{\genendsec}}
 
-\def\endsection{%
-\egroup%
-\endsectionoid
+\def\SetSec #1 #2 #3#{\csgroup\def{SEC#1#2}#3}
+% 1: class of sec; 2: attr; 3: args string (e.g. #1#2{...} for binary methods)
+% (see SetParag for an example)
+
+\def\DoSec #1 #2 {\csgroup{SEC#1#2}}
+% 1: class of sec; 2: attr
+
+%%}}}
+
+%%{{{ sec instances 
+
+%% tagged instances
+
+\SetSec section no    {\sectionno}
+\SetSec section total {\sectiontotal}
+\DefSec section
+
+%% untagged instances
+
+\DefSec secblah
+\DefSec problems
+\DefSec further
+\DefSec history
+\DefSec summary
+\DefSec hintsection
+
+%%}}}
+
+%%}}}
+
+%%{{{ parag 
+
+%%{{{ \doparagconf 
+\def\doparagconf#1{%
+% 1: conf body
+\def\doparagindexes{}%
+\def\doparagdefines{}%
+\def\doparagcredits{}%
+\def\doparagpdefs{}%
+% save current macros
+\let\OLDaka=\aka
+\let\OLDindexes=\indexes
+\let\OLDdefines=\defines
+\let\OLDcredits=\credits
+\let\OLDpdefs=\pdefs
+\let\OLDrelates=\relates
+\let\OLDof=\of
+\let\OLDthis=\this
+% set conf-special macros
+% \this-interface (to be used rarely, if ever)
+\def\this ##1 ##2 {\csgroup\def{parag##1}{##2}}%
+\def\aka ##1. {\def\paragaka{##1}}%
+\def\relates ##1 {\def\paragrelates{##1}}%
+\let\of=\relates
+\def\headerize {\edef\paragclassname{\paragtitle}\def\paragtitle{}}%
+\def\indexes * ##1 ;; {\def\doparagindexes{\INDEXES * ##1 ;; }}%
+\def\defines * ##1 ;; {\def\doparagdefines{\DEFINES * ##1 ;; }}%
+\def\credits * ##1 ;; {\def\doparagcredits{\CREDITS * ##1 ;; }}%
+\def\pdefs ##1 ;; {%
+% XXX: code dup with other pdefs
+\def\doparagpdefs{%
+\def\pdef########1 {%
+\unskip
+% the cs PDEFS\paragid holds a space-separated list of all pdef names
+% this is mapped over later on in \fullproofentry
+\ifcsname PDEFS\paragid\endcsname
+    \csgroup\gaddto{PDEFS\paragid}{ }\else
+    \csgroup\gdef{PDEFS\paragid}{}\fi
+\csgroup\gaddto{PDEFS\paragid}{########1}%
+\csgroup\def{########1}{\csgroup{PDEF\paragid ########1}}%
+\csgroup\gdef{PDEF\paragid ########1}%
+}% /pdef
+##1%
+}% /doparagpdefs
+}% /pdefs
+% actually do the conf
+\paragaconf
+#1%
+\paragzconf
+% restore macros
+\let\aka=\OLDaka
+\let\indexes=\OLDindexes
+\let\defines=\OLDdefines
+\let\credits=\OLDcredits
+\let\pdefs=\OLDpdefs
+\let\relates=\OLDrelates
+\let\of=\OLDof
+\let\this=\OLDthis
 }
 %%}}}
 
-%%{{{ sectionoids 
-
-% generic 
-\def\sectionoidwrapper#1#2{%
-{%
-\medbreak\goodbreak\noindent%
-{%
-\centerline{\fourteenbf#1}\nopagebreak%
-\immediate\writetocentry{sectionoid}{#1}{}%
-\hldestizepage\vskip\sectiontitleskip\par\nopagebreak%
-}%
-\noindent#2%
-}%
-}
-
-\def\sectionoid#1. #2\par{%
-{%
-\sectionoidwrapper{#1}{#2}%
-}%
-}
-
-\def\endsectionoid{%
-\vbox{}\vskip 0pt\relax
-\par%
-\vcur=0pt
-\advance \vcur by \pagetotal
-\advance \vcur by \vminsec
-\ifdim\vcur>\vsize% not enough space to start section(oid)
-\eject%
-\else% enough space to start section(oid)
-\vskip 8ex\relax\goodbreak%
+%%{{{ \resetparagwidecounters 
+\def\resetparagwidecounters{%
+\ifsectionwidetags\reseteqnumber
+\else             \resetmcount
 \fi
 }
+%%}}}
 
-\def\problems#1. #2\par{%
-\sectionoidwrapper{\ifEqStr{#1}{}\problemsname\else#1\fi}{#2}%
+%%{{{ parag constructor/prototype 
+
+%%{{{ default attrs 
+
+\Newskip parag=.5\bigskipamount;
+\def\paragthe#1{\nthe{#1}}
+\def\paragnocounter{\paragno}
+\def\paragtotalcounter{\paragtotal}
+\def\paragaconf{}
+\def\paragzconf{}
+\def\paragtag{}
+\def\paragtagahook{}
+\def\paragtagbhook{}
+\def\paragtagyhook{.}
+\def\paragtagzhook{}
+\def\paragtagdecorator{}
+\def\paragdecoratetag#1{\paragtagdecorator#1}
+\def\paragtitle{}
+\def\paragaka{}
+\def\paragclassname{\sayName{\paragclass}}
+\def\paragasymbol{}
+\def\paragasymbolahook{\ifx\NIL\paragrelates\thinspace\fi}
+\def\paragasymbolzhook{\enspace}
+\def\paragshowasymbol{\ifx\NIL\paragasymbol\else\paragasymbolahook\paragasymbol\paragasymbolzhook\fi}
+\def\paragzsymbol{}
+\def\paragzsymbolahook{\unskip\nobreak\hfill}
+\def\paragzsymbolzhook{}
+\def\paragshowzsymbol{\ifx\NIL\paragzsymbol\else\paragzsymbolahook\paragzsymbol\paragzsymbolzhook\fi}
+\def\paragrelates{}
+\def\paragrelatessymbol{\relatessymbol}
+\def\paragahang{\ifx\NIL\paragrelates\else(\reftag[\paragrelates])\enspace\paragrelatessymbol\fi}
+\def\paragahangahook{}
+\def\paragahangbhook{\sizeix\rm}
+\def\paragahangyhook{}
+\def\paragahangzhook{\enspace}
+\def\paragzhang{}
+\def\paragzhangahook{}
+\def\paragzhangbhook{}
+\def\paragzhangyhook{}
+\def\paragzhangzhook{}
+\def\paragshowahang{\ifx\NIL\paragahang\else\paragahangahook\begingroup\paragahangbhook\paragahang\paragahangyhook\endgroup\paragahangzhook\fi}
+\def\paragshowzhang{\ifx\NIL\paragzhang\else\rlap{\paragzhangahook\begingroup\paragzhangbhook\paragzhang\paragzhangyhook\endgroup\paragzhangzhook}\fi}
+\def\paragahook{\noindent\llap{\paragshowahang\paragshowasymbol}}
+\def\paragzhook{\paragshowzsymbol\paragshowzhang}
+\def\paragshowtag{\paragtagahook\begingroup\paragtagbhook\paragtag\paragtagyhook\endgroup\paragtagzhook}
+\def\paraghead{\paragshowtag \paragclassname\WhenStrNempty{\paragtitle}{ (\paragtitle)}\WhenStrNempty{\paragaka}{ (\paragaka)}}
+\def\paragheadahook{\noindent}
+\def\paragheadbhook{\bf}
+\def\paragheadyhook{.}
+\def\paragheadzhook{\enspace}
+\def\paragbodyahook{}
+\def\paragbodybhook{}
+\def\paragbody{}
+\def\paragbodyextras{}
+\def\paragbodymacros{}
+\def\paragbodyyhook{}
+\def\paragbodyzhook{}
+\def\paragfeetahook{}
+\def\paragfeet{}
+\def\paragfeetzhook{}
+
+%%}}}
+
+%%{{{ \genparag 
+\long\def\genparag#1#2#3#4#5{%
+% 1: parag class
+% 2: parag title
+% 3: parag conf
+% 4: parag body
+% 5: parag extras <- might contain \par's
+\begingroup % parag total namespace
+\edef\paragclass     {#1}%
+\edef\paragtitle     {#2}%
+\def\paragconf       {#3}%
+\paragenter
+\def\paragbody       {#4}%
+\def\paragbodyextras {#5}%
+%% mixin attrs
+\Mixin
+    nocounter totalcounter
+    skip
+    the
+    aconf zconf
+    tag tagahook tagbhook tagyhook tagzhook showtag
+    decoratetag tagdecorator
+    asymbol asymbolahook asymbolzhook showasymbol
+    zsymbol zsymbolahook zsymbolzhook showzsymbol
+    relates relatessymbol
+    ahang ahangahook ahangbhook ahangyhook ahangzhook showahang
+    zhang zhangahook zhangbhook zhangyhook zhangzhook showzhang
+    ahook zhook
+    head headahook headbhook headyhook headzhook
+    body bodyahook bodybhook bodymacros bodyyhook bodyzhook
+    feet feetahook feetzhook
+    \from {PARAG\paragclass}
+    \to parag
+%%%% counters and toks
+\global\advance\paragidno    by 1\relax
+\edef\paragid        {parag\number\paragidno}%
+\ifblank\paragnocounter   \else\global\advance\paragnocounter    by 1\relax\fi
+\ifblank\paragtotalcounter\else\global\advance\paragtotalcounter by 1\relax\fi
+% set default paragtag for counted parags
+\ifblank\paragnocounter
+  \else \WhenStrEmpty {\paragtag}
+     {\def\paragtag{\paragdecoratetag{\chaptag.\paragthe{\paragnocounter}}}}\fi
+%%%% structmixin (id and class needed)
+\structmixin{parag}%
+%%%% counters
+\resetparagwidecounters
+%%%% parag main namespace
+\begingroup
+%%%% conf
+\doparagconf{\paragconf}%
+% inherit pdefs from PDEFS\secid
+\ifcsname secid\endcsname\ifcsname PDEFS\secid\endcsname
+    \csgroup\ea\gdef\ea{PDEFS\paragid}\ea{\csname PDEFS\secid\endcsname}\fi\fi
+%%%% structlabels
+\WhenStrNempty {\structid}
+    {\dostructlabels}%
+%%%% start outputting
+\par
+\noindent
+\paragahook
+% paraghead
+\paragheadahook
+\begingroup
+\paragheadbhook
+\paraghead
+\paragheadyhook
+\endgroup
+\paragheadzhook
+% /paraghead
+%%%% toc stuff
+%%%% tasks
+\doparagindexes
+\doparagdefines
+\doparagcredits
+\doparagpdefs
+%%%% main body
+\paragbodyahook
+\begingroup
+\paragbodymacros
+\paragbodybhook
+\paragbody
+\unskip
+\paragbodyextras
+\paragbodyyhook
+\endgroup
+\paragbodyzhook
+\paragfeetahook
+\paragfeet
+\paragfeetzhook
+\paragzhook
+\endgroup % /parag main namespace
+\par
+\paragskip
+\endgroup % /parag total namespace
+\paragleave
+% XXX: is this still useful?
+\hphantom{...}%
+}
+%%}}}
+
+%%{{{ metaprogramming interface 
+
+% XXX: why does the (old) ##3\par\par delimited version work
+% without \long when ##3 contains \par's?
+
+% For atomic parags that do not admit paragextras
+\def\DefAParag #1 {%
+\csgroup\def{#1}##1. ##2\par##3\par\par{\genparag {#1} {##1}{##2}{##3}{}}%
 }
 
-\def\endproblems{%
-\endsectionoid
+% For molecular parags that may have paragextras
+\def\DefMParag #1 {%
+\csgroup\long\def{#1}##1. ##2\par##3\par\par{%
+\MOLPARAGSPLITTER {#1}{##1}{##2} ##3\par\ENDMOLPARAGSPLITTER
+}%
+}
+\long\def\MOLPARAGSPLITTER #1#2#3 #4\par#5\ENDMOLPARAGSPLITTER{\genparag {#1}{#2}{#3}{#4\unskip}{#5}}
+
+% Flex versions define two versions of parag macros:
+% \foo .. \endfoo  and  \Foo ..
+\def\DefFlexAParag #1#2 {%
+\uppercase{\def\FirstLetter{#1}}%
+\csgroup\csgroup\def{#1#2}##1. ##2\par##3\par{end#1#2}\par{\genparag {#1#2} {##1}{##2}{##3}{}}%
+\csgroup\def{\FirstLetter #2}##1. ##2\par##3\par\par{\genparag {#1#2} {##1}{##2}{##3}{}}%
 }
 
-\def\further#1. #2\par{%
-\sectionoidwrapper{\ifEqStr{#1}{}\furthername\else#1\fi}{#2}%
+\def\DefFlexMParag #1#2 {%
+\uppercase{\def\FirstLetter{#1}}%
+\csgroup\csgroup\long\def{#1#2}##1. ##2\par##3\par##4{end#1#2}\par{\genparag {#1#2} {##1}{##2}{##3}{##4}}%
+\csgroup\def{\FirstLetter #2}##1. ##2\par##3\par{\genparag {#1#2} {##1}{##2}{##3}{}}%
 }
 
-\def\endfurther{%
-\endsectionoid
-}
+\def\SetParag #1 #2 #3#{\csgroup\def{PARAG#1#2}#3}
+% 1: class of parag; 2: attr; 3: args string (e.g. #1#2{...} for binary methods)
+% e.g.: \SetParag question decoratetag #1{--\paragtagdecorator#1?--}
 
-\def\history#1. #2\par{%
-\sectionoidwrapper{\ifEqStr{#1}{}\historyname\else#1\fi}{#2}%
-}
+\def\DoParag #1 #2 {\csgroup{PARAG#1#2}}
+% 1: class of parag; 2: attr
 
-\def\endhistory{%
-\endsectionoid
-}
-
-\def\summary#1. #2\par{%
-\sectionoidwrapper{\ifEqStr{#1}{}\summaryname\else#1\fi}{#2}%
-}
-
-\def\endsummary{%
-\endsectionoid
-}
-
-
-\def\hintsection#1. #2\par{%
-\def\hintsectiontitle{\hintsname\ \##1}
-\sectionoidwrapper{\hintsname\ \##1}{#2}
-}
-
-\def\endhintsection{%
-\endsectionoid
-\goodbreak
-}
-
+% \DefAtomParagMac is used to define a general-functionality macro for parags
+% \LetParagMac is used to \let an already defined parag macro to the scope of this parag
+% some ####-hell is avoided this way
+\def\DefAtomParagMac #1 {\csgroup\def{PARAGMACRO#1}}
+\def\LetParagMac #1 = #2 {\csgroup\csgroup\let{#1}={PARAGMACRO#2}}
 
 %%}}}
 
 %%}}}
 
-%%{{{ math structure 
+%%{{{ generic / shared 
 
-%%{{{ xrefs 
-\def\eqconstruct#1{\the\chapterno{.}#1}
-\def\taglabel#1#2{\tag{#1}\definexref{#2}{#1}{math}}
-\def\tagref#1{\eqref{#1}}
-\def\axtaglabel#1#2{\taglabel{#1}{ax_#2}}
-\def\axref#1{\ensuremath{\text{\ref{ax_#1}}}}
+\definecolor{declarecolor}{cmyk}{1,0,0,0.5}
+
+\DefStyle d {\sl}
+
+\def\dterm#1{{\dstyle #1}}
+
+\def\warningsign{{\sizex\bf !}}
+\def\questionsign{{\sizex\bf ?}}
+
+\def\activityhead{%
+\eightbf
+\ea\ea\ea\toupper\ea{\paragclassname}\enspace
+{\ninebf \paragtag}%
+\WhenStrNempty {\paragtitle} { {\ninebf (\paragtitle)}}%
+\WhenStrNempty {\paragaka}   { {\ninebf (\paragaka)}}%
+}
+
+% XXX: enspace might not have the right size here
+\def\rhang#1{\rlap{\enspace{\eightrm #1}}}
+
+\def\moveqedup{\unskip\vskip-12pt}
+
+%%{{{ ParagMacs
+
+\DefAtomParagMac egsolution #1. #2\par{%
+\eop\noi
+\argumentationheadstylize{\IfStrEmpty{#1}{\sayName{solution}}{#1}. }%
+#2%
+\unskip
+}
+
+\DefAtomParagMac eganswer #1. #2\par{%
+\eop\noi
+\argumentationheadstylize{\IfStrEmpty{#1}{\sayName{answer}}{#1}. }%
+#2%
+\unskip
+}
+
 %%}}}
 
-%%{{{ needed symbols 
-\def\qedsymbol{\vrule width .3em height 1.8ex depth .1ex\relax}
-\def\qecsymbol{\vrule width .3em height 1.8ex depth .1ex\relax}
-\def\qessymbol{\boxit{0pt}{\phantom{\qedsymbol}}}
-\def\qexsymbol{\ensuremath{\bullet}}
-\def\qepsymbol{\ensuremath{\fatsemi}}
+%%}}}
+
+%%{{{ proclaim toolkit 
+
+\DefStyle proclaim {\sl}
+\DefStyle case              {\scshape}
+\DefStyle proof             {\scshape}
+\DefStyle proofpart         {\scshape}
+\DefStyle proofalt          {\scshape}
+\DefStyle argumentationhead {\scshape}
+
+\def\relatessymbol{\raise.2ex\hbox{$\scriptstyle\triangleleft$}}
+\def\teasessymbol{\raise.2ex\hbox{$\scriptstyle\triangleright$}}
+
+%%{{{ \makeparagprovable 
+\def\makeparagprovable{%
+\let\noproof=\relax
+\def\preproofhead   {}%
+\def\preproofbody   {}%
+\def\sketchhead     {}%
+\def\sketchbody     {}%
+\def\wrongproofhead {}%
+\def\wrongproofbody {}%
+\def\wrongproofref  {}%
+\def\proofhead      {}%
+\def\proofbody      {}%
+\def\hideproof{\hideprooftrue}%
+\def\headless{\headlesstrue}%
+\innernewif\ifhideproof
+\innernewif\ifheadless
+\innernewif\ifpreproofhead
+\innernewif\ifpreproofbody
+\innernewif\ifsketchhead
+\innernewif\ifsketchbody
+\innernewif\ifwrongproofhead
+\innernewif\ifwrongproofbody
+\innernewif\ifwrongproofref
+\innernewif\ifproofhead
+\innernewif\ifproofbody
+\LetParagMac preproof   = preproof
+\LetParagMac sketch     = sketch
+\LetParagMac wrongproof = wrongproof
+\LetParagMac proof      = proof
+}
+%%}}}
+
+%%{{{ Def provable ParagMacs 
+\DefAtomParagMac preproof #1. #2\par{%
+\def\preproofhead{#1}%
+\def\preproofbody{#2}%
+\ifx\NIL\preproofhead\else\preproofheadtrue\fi
+\preproofbodytrue
+}
+
+\DefAtomParagMac wrongproof #1. #2\par{%
+\def\wrongproofhead{#1}%
+\def\wrongproofbody{#2}%
+\def\check ##1 {\def\wrongproofref{\reftag[##1]}\wrongproofreftrue}%
+\ifx\NIL\wrongproofhead\else\wrongproofheadtrue\fi
+\wrongproofbodytrue
+}
+
+\DefAtomParagMac sketch #1. #2\par{%
+\def\sketchhead{#1}%
+\def\sketchbody{#2}%
+\ifx\NIL\sketchhead\else\sketchheadtrue\fi
+\sketchbodytrue
+\hideprooftrue
+}
+
+\DefAtomParagMac proof #1. #2\par{%
+\def\proofhead{#1}%
+\def\proofbody{#2}%
+%\StrExpand[0]{#2}{\proofbody}%
+\ifx\NIL\proofhead\else\proofheadtrue\fi
+\proofbodytrue
+}
+%%}}}
+
+%%{{{ \doproofs 
+\def\doproofs{%
+%%%% if there is a preproof, show it
+\ifpreproofbody
+\eop
+\bigskip
+\noindent
+\bgroup
+\ifpreproofhead\noindent\argumentationheadstylize{\preproofhead}. \fi
+\noindent
+\preproofbody
+\egroup
+\eop
+\bigskip
+\fi
+%%%% /if preproofbody
+%%%% if there is a wrongproof, show it
+\ifwrongproofbody % if wrongproof
+\eop
+\medskip
+\noindent
+\bgroup
+\llap{\activitysymbol\enspace}%
+\ifwrongproofhead\else\edef\wrongproofhead{\sayName{wrongproof}}\fi
+\argumentationheadstylize{\wrongproofhead.\enspace}%
+\wrongproofbody
+\XXXeolllap{\mistakesymbol}%
+\ifwrongproofref\rhang{\teasessymbol\enspace(\wrongproofref)}\fi
+\egroup
+\eop
+\medskip
+\fi
+%%%% /if wrongproof
+%%%% if there is a sketch, show it
+\ifsketchbody % if sketch
+\hideproof
+\medskip
+\endgraf\noindent
+\llap{\activitysymbol\enspace}%
+\argumentationheadstylize{\ifsketchhead\sketchhead\else\sayName{sketch}\fi}.
+\bgroup
+\sketchbody
+\XXXeolfill\qessymbol % XXX: nolinebreak bad workaround
+\ifproofbody\rhang{(\paragtag\reftagofid[\paragid_fullproof])\ifprint\enspace(\refpabbrofid[{\paragid_fullproof}])\fi}\fi
+\egroup
+\eop
+\fi
+%%%% /if sketch
+%%%% if there is a proof, handle it
+\ifproofbody
+\ifproofhead\else\edef\proofhead{\sayName{proof}}\fi
+%%%%%%%% if hideproof
+\ifhideproof
+\writefullproof
+    {\number\chapterno}
+    {\paragid}
+    {\paragtag}
+    {\unless\ifheadless{\unexpanded{\argumentationheadstyle}\proofhead.\enspace}\fi
+     \ea\ea\ea\unexpanded\ea{\proofbody}\unexpanded{\hfill\qedsymbol}}%
+\else % else (don't hide the proof, show it)
+\medskip\endgraf\noindent
+\bgroup
+\ifheadless\else\argumentationheadstylize{\proofhead.\enspace}\fi
+\proofbody
+\XXXeolllap{\qedsymbol}%
+\egroup
+\endgraf
+\fi
+%%%%%%%% /if hideproof
+\fi
+%%%% /if proof
+}
+%%}}}
+
+%%{{{ user toolkit 
+
+% XXX: use better delims (. or : ?)
+\def\case#1{\noindent\casestylize{#1}}
+\def\proofpart#1{\noindent\proofpartstylize{#1}}
+\def\crcase#1{\endgraf\case{#1}}
+\def\crproofpart#1{\endgraf\proofpart{#1}}
+\def\crtabcase#1{\endgraf\indent\case{#1}}
+\def\crtabproofpart#1{\endgraf\indent\proofpart{#1}}
+\def\proofalt#1{\noindent\proofaltstylize{#1}}
+\def\crproofalt#1{\endgraf\proofalt{#1}}
+\def\crtabproofalt#1{\endgraf\indent\proofalt{#1}}
+\def\mistake{\hfill\mistakesymbol}%
+
+%%}}}
+
+%%}}}
+
+%%{{{ activities toolkit 
+
+\DefStyle activity     {\rm}
+
+%%{{{ needed symbols for activities
+\def\activitysymbol{\raise.4ex\hbox{$\scriptscriptstyle\blacktriangleright$}}
+\def\qedsymbol{\vrule width .3em height 1.8ex depth .1ex\relax} % end of proof
+\def\qecsymbol{\vrule width .3em height 1.8ex depth .1ex\relax} % end of construction
+\def\qessymbol{\boxit{0pt}{\phantom{\qedsymbol}}} % end of sketch
+\def\qexsymbol{\ensuremath{\bullet}} % end of example
+\def\qepsymbol{\ensuremath{\fatsemi}} % end of program
 \def\mistakesymbol{\ensuremath{\lightning}}
 \def\qedword{{\scshape οεδ}}
 \def\qecword{{\scshape οεπ}}
 \def\qesword{{\scshape οες}}
-\def\qedof#1.{\hfill\qedsymbol (#1)}
+\def\qedof#1.{\hfill\qedsymbol~(#1)} % we don't want to \rlap this
 %%}}}
 
-%%{{{ proclamations 
+%%{{{ HINTS, SOLUTIONS, FULLPROOFS 
 
-\def\moveqedup{\unskip\vskip-12pt}
-\def\notemixin{
-\def\notecounter{\noteno}%
-\def\notecounterinc{\global\advance\notecounter by 1\relax}%
-\def\notecounterdec{\global\advance\notecounter by -1\relax}%
-\def\notetagdecorate##1{##1}
-\def\notetag{\notetagdecorate{\the\chapterno.\the\notecounter}}%
-\def\notename{}%
-\def\noterefclass{}%
-\def\notehead{\medbreak\noindent\bgroup\bf\notetag.~\ifEmpty\notename\else\notename.\enspace\fi\egroup}%
-\def\notebodyahook{\bgroup}%
-\def\notebodyzhook{\egroup\par\medbreak}%
-\def\notebodytext{}%
-\def\notebody{\notebodyahook\notebodytext\notebodyzhook}%
-}
+% skips
+\Newskip hint=1\baselineskip;
+\Newskip solution=2\hintskipamount;
+\Newskip fullproof=\solutionskipamount;
 
-\def\note#1. #2\par{%
-{%
-\notemixin%
-% overrides:
-\notecounterinc%
-\def\notename{#1}%
-\def\notebodytext{%
-\def\label####1{\definexref{####1}{\notetag}{note}}%
-#2
-}%
-\def\notekind{note}%
-% print it:
-%\notehead%
-\medbreak%
-\noindent%
-{\bf\notetag.\enspace%
-\ifEmpty\notename\else\notename.\enspace\fi}%
-\notebody%
-}%
-}
-
-\def\gennote#1#2#3#4{
-% #1: name of note (theorem)
-% #2: title (Thales)
-% #3: body
-% #4: tag decorator
-{%
-\notemixin%
-% overrides:
-\def\notekind{#1}
-\def\notetagdecorate##1{#4##1}
-\notecounterinc%
-\ifnull#2\\%
-\edef\notename{\csname#1name\endcsname}%
-\else%
-\edef\notename{\csname#1name\endcsname~(#2)}%
-\fi%
-\def\notelabel{note\notetag}
-\def\label##1{\definexref{##1}{\notetag}{note}}%
-\def\notebodytext{%
-\def\label####1{\definexref{####1}{\notetag}{#1}}%
-%%%%%%%
-#3%
-}%
-\expandafter\label{\notelabel}%
-\notehead%
-\notebody%
-}%
-\medbreak
-}
-
-\def\proclaimstyle{\sl}
-\def\genproclaim#1#2#3#4{%
-% #1: name of note (theorem)
-% #2: title (Thales)
-% #3: body
-% #4: tag decorator
-\gennote{#1}{#2}{%
-\innernewif\ifhideproof%
-\hideprooffalse%
-%%%%
-% preproof 
-\long\def\preproof####1. ####2\endpreproof{%
-\medskip
-\endgraf%
-\bgroup\rm%
-\ifEqStr{####1}{}%
-\else%
-\noindent\argumentationheadstyle{####1}. %
-\fi%
-\noindent ####2%
-\egroup%
-\endgraf%
-\medskip
-}%
-%%%%
-% sketch
-\long\def\sketch####1. ####2\qes{%
-\hideprooftrue%
-\medskip
-\endgraf\noindent%
-\llap{\activitysymbol\enspace}%
-\ifEqStr{####1}{}%
-\argumentationheadstyle{\sketchname}. %
-\else%
-\argumentationheadstyle{####1}. %
-\fi%
-\bgroup\rm%
-####2%
-\XXXeolfill\qessymbol% XXX: nolinebreak bad workaround
-\egroup%
-}%
-%%%%
-% wrongproof 
-\long\def\wrongproof####1. ####2\mistaqed{%
-\hideprooftrue%
-\endgraf\noindent%
-\bgroup\rm%
-\ifEqStr{####1}{}%
-\argumentationheadstyle{\llap{\activitysymbol\enspace}\proofname}. %
-\else%
-\argumentationheadstyle{\llap{\activitysymbol\enspace}####1}. %
-\fi%
-####2%
-{\hfill\mistakesymbol}%
-\egroup%
-\endgraf%
-}%
-%%%%
-% proof 
-\long\def\proof####1. ####2\qed{%
-\ifEqStr{####1}{}%
-\def\proofhead{\proofname. }%
-\else%
-\def\proofhead{####1. }%
-\fi%
-\ifhideproof%
-\rlap{~{\eightrm (\xrefn[p.]{\notelabel_fullproof})}}%
-\immediate\writefullproof{\number\chapterno}{\notetag}{\notelabel}{{\unexpanded{\scshape} \proofhead}\unexpanded{####2}\unexpanded{\hfill\qedsymbol}}%
-\else%
-\endgraf\noindent%
-\bgroup\rm%
-%
-\argumentationheadstyle{\proofhead}%
-####2%
-{\hfill\qedsymbol}%
-\egroup%
-\endgraf%
-\fi%
-}%
-\proclaimstyle#3}{#4}%
-}
-
-\def\theorem#1. #2\par{\genproclaim{theorem}{#1}{#2}{Θ}}
-\def\lemma#1. #2\par{\genproclaim{lemma}{#1}{#2}{Λ}}
-\def\proposition#1. #2\par{\genproclaim{proposition}{#1}{#2}{}}
-\def\property#1. #2\par{\genproclaim{property}{#1}{#2}{}}
-\def\corollary#1. #2\par{\genproclaim{corollary}{#1}{#2}{}}
-\def\conjecture#1. #2\par{\genproclaim{conjecture}{#1}{#2}{}}
-\def\openproblem#1. #2\par{\genproclaim{openproblem}{#1}{#2}{}}
-\def\question#1. #2\par{\genproclaim{question}{#1}{#2}{Q}}
-\def\axiom#1. #2\par{\genproclaim{axiom}{#1}{#2}{A}}
-\def\law#1. #2\par{\genproclaim{law}{#1}{#2}{}}
-\def\principle#1. #2\par{\genproclaim{principle}{#1}{#2}{}}
-\def\hypothesis#1. #2\par{\genproclaim{hypothesis}{#1}{#2}{}}
-\def\criterion#1. #2\par{\genproclaim{criterion}{#1}{#2}{}}
-\def\algorithm#1. #2\par{\gennote{algorithm}{#1}{#2}{}}
-\def\program#1. #2\par{\gennote{program}{#1}{#2}{}}
-\def\grammar#1. #2\par{\gennote{grammar}{#1}{#2}{}}
-\def\remark#1. #2\par{\gennote{remark}{#1}{#2}{}}
-\def\advice#1. #2\par{\gennote{advice}{#1}{#2}{}}
-\def\beware#1. #2\par{\gennote{beware}{#1}{#2}{}}
-\def\warning#1. #2\par{\gennote{warning}{#1}{#2}{}}
-\def\primitive#1. #2\par{\gennote{primitive}{#1}{#2}{P}}
-\def\definition#1. #2\par{\gennote{definition}{#1}{#2}{D}}
-\def\notation#1. #2\par{\gennote{notation}{#1}{#2}{}}
-\def\pseudodefinition#1. #2\par{\gennote{pseudodefinition}{#1}{#2}{D}}
-\def\specification#1. #2\par{\gennote{specification}{#1}{#2}{S}}
-\def\implementation#1. #2\par{\gennote{implementation}{#1}{#2}{D}}
-\def\teaser#1. #2\par{\gennote{teaser}{#1}{#2}{}}
-\def\joke#1. #2\par{\genproclaim{joke}{#1}{#2}{}}
-\def\blah#1. #2\par{\medskip\ifEqStr{#1}{}#2\medskip\else\noindent{\bf #1.}\enspace#2\fi\medskip}
-
-\def\algospec INPUT: #1 OUTPUT: #2\endspec{%
-\halign{%
-\hfil##&##\hfil\cr
-\casestyle{\algoinputname:}  & #1\cr
-\casestyle{\algooutputname:} & #2\cr
-}
-}
-
-\definecolor{declarecolor}{cmyk}{1,0,0,0.5}
-\def\dstyle#1{{\sl #1}}
-\def\dsym#1{#1}%
-\def\dterm#1{%
-\dstyle{#1}%
-}
-
-%%{{{ Indexing commands 
-\def\sdefined#1#2{%
-\global\advance\symbolno by 1\relax%
-\definexref{symbol\number\symbolno}{\notetag}{\notekind}%
-\immediate\writesymbol%
-{\number\chapterno}%1
-{\notetag}%2
-{\notekind}%3
-{\number\pageno}%4
-{symbol\number\symbolno}%5
-{\unexpanded{\ensuremath{#1}}}%6
-{\unexpanded{#2}}%7
-}
-\def\tdefined#1{%
-\sidx[pagemarkup=idxpmdefpage]{#1}%
-}
-\def\ii{\sidx}
-\def\iisee{\sidx[see]}
-\def\iiseealso{\sidx[seealso]}
-\def\iipl#1 {\ii{#1}}% to be redefined in thatexbook-LANG
-\def\nameindex#1#2{%
-\sndxname{#1}{#2}%
-}
-%%}}}
-
-%%}}}
-
-%%{{{ HINTS, SOLUTIONS, AND FULLPROOFS 
-\newskip\hintskip
-\newskip\solutionskip
-\newskip\fullproofskip
-\hintskip=1\baselineskip\relax
-\solutionskip=2\hintskip\relax
-\fullproofskip=\solutionskip\relax
-
+% files
 \newwrite\hintsfile
 \newwrite\solutionsfile
 \newwrite\fullproofsfile
@@ -864,69 +1653,60 @@
 \immediate\openout\symbolsfile=\jobname.symbols
 
 % stylistic
+
 \definecolor{hintstatuscolor}{cmyk}{0,0,0,.666}
-\def\hintstatusstyle#1{{\sixrm\color{hintstatuscolor} (#1)}}
 
-\def\writesymbol#1#2#3#4#5#6#7{%
-% #1: chapterno
-% #2: notetag (3.2)
-% #3: notekind (definition)
-% #4: pageno
-% #5: symbolno
-% #6: symbol
-% #7: pronunciation
-\write\symbolsfile{%
-\expandafter\string\csname symbolentry\endcsname
+\DefStyle hintstatus   {\color{hintstatuscolor}\sixrm}
+
+\def\rhanghintstatus#1{\rlap{\raise.125ex\hbox{\hintstatusstylize{(\thinspace\structtag\thinspace \hinttagdecorator\thinspace#1)}}}}
+
+\def\writesymbol#1#2#3#4{%
+% 1: symbolid
+% 2: symbol
+% 3: pronunciation
+% 4: pageno
+\immediate\write\symbolsfile{%
+\ea\string\csname symbolentry\endcsname
     {#1}
     {#2}
     {#3}
     {#4}
-    {#5}
-    {#6}
-    {#7}
-}%
-}
-\def\writehint#1#2#3#4#5#6{%
-% #1: group (exercise or problem)
-% #2: chapterno
-% #3: tag (x4.2)
-% #4: label (exercise_x4.2)
-% #5: count (4)
-% #6: hint text
-\write\hintsfile{%
-\expandafter\string\csname hintentry\endcsname
-    {#1}
-    {#2}
-    {#3}
-    {#4}
-    {#5}
-    {#6}
 }%
 }
 
-\def\writesolution#1#2#3#4#5{%
-% #1: group (exercise or problem)
-% #2: chapterno
-% #3: tag (x4.2)
-% #4: label (exercise_x4.2)
-% #5: solution text
-\write\solutionsfile{%
-\expandafter\string\csname solutionentry\endcsname
+\def\writehint#1#2#3{%
+% 1: paragid
+% 2: hint no
+% 3: hint body
+\immediate\write\hintsfile{%
+\ea\string\csname hintentry\endcsname
     {#1}
     {#2}
     {#3}
-    {#4}
-    {#5}
 }%
 }
+
+\def\writesolution#1#2#3{%
+% 1: paragid
+% 2: chapterno
+% 3: solution body
+\immediate\write\solutionsfile{%
+\ea\string\csname solutionentry\endcsname
+    {#1}
+    {#2}
+    {#3}
+}%
+}
+
+\def\letpdef#1#2{\csgroup\csgroup\let\noexpand{#1}=\noexpand{#2}\relax}
 
 \def\writefullproof#1#2#3#4{%
-% #1: chapterno
-% #2: tag (Θ4.2, Λ3.2, etc.)
-% #3: label (8.23)
-% #4: proof text
-\write\fullproofsfile{%
-\expandafter\string\csname fullproofentry\endcsname
+% 1: chapterno
+% 2: paragid
+% 3: paragtag (needed because of XXXnoproperreftext)
+% 4: proof body
+\immediate\write\fullproofsfile{%
+\ea\string\csname fullproofentry\endcsname
     {#1}
     {#2}
     {#3}
@@ -936,250 +1716,303 @@
 
 %%}}}
 
-%%{{{ exercise 
-\long\def\exercise#1. #2\par#3\endexercise{%
-% #1: title
-% #2: body
-% #3: hints and solution
-\global\advance\exerciseno by 1\relax%
-\global\advance\exercisetotal by 1\relax%
-\hintno=0
-{% exercise-scope
-\def\exercisetag{x\the\chapterno.\the\exerciseno}%
-\let\notetag=\exercisetag%
-\def\notekind{exercise}%
-\def\exerciselabel{x\the\chapterno.\the\exerciseno}%
-\def\label##1{\definexref{##1}{\exercisetag}{exercise}}%
-\goodbreak\smallbreak\noindent%
-\llap{\activitysymbol\enspace}%
-\leftline{\eightbf \toupper{\exercisename}~{\ninebf \exercisetag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
-\expandafter\label{\exerciselabel}%
-\break
-\bgroup%
-% hints
+%%{{{ \makeparagsolvable 
+\def\makeparagsolvable{%
+\let\nohelp=\relax
+\hintno=0\relax
+\LetParagMac hint     = hint
+\LetParagMac solution = solution
 \def\printhintstatus{%
-\XXXeolfill%
-\ifnum\hintno>0%
-\hintstatusstyle{%
+\XXXeolfill
+% ifhints
+\ifnum\hintno>0\relax % there are hints!
+% calculate half of hintno
+\rhanghintstatus{%
 \ifprint
-\number\hintno
-\else%
-\count1=0
-\loop%
-\advance\count1 by 1
-\xref{\exerciselabel_hint_\number\count1}%
-\thinspace%
-\ifnum\count1<\hintno
-\repeat
+    \number\hintno
+\else
+    \global\hintstatusno=0\relax
+    \loop
+        \global\advance\hintstatusno by 1\relax
+        {\sixrm\reftagofid[\paragid_hint_\number\hintstatusno]}\thinspace
+        \ifnum \hintstatusno < \hintno \repeat
 \fi % /ifprint
 }
-\else
-\hintstatusstyle{0}
-\fi
-}
-\def\hint##1\par{%
-\advance\hintno by 1\relax%
-\ifnum\hintno>\maxhintno%
-\global\advance\maxhintno by 1\relax%
-\fi
-\immediate\writehint{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\number\hintno}{\unexpanded{{##1}}}%
-}
-% solution
-\def\solution##1\par{%
-\immediate\writesolution{exercise}{\number\chapterno}{\exercisetag}{\exerciselabel}{\unexpanded{{##1}}}%
+\else % no hints
+\rhanghintstatus{0\thinspace}%
+\fi % /ifhints
 }%
-#2% output body
-#3% process hints
-\printhintstatus%
-\par\egroup\medbreak
-}% /exercise-scope
 }
 %%}}}
 
-%%{{{ example 
-\long\def\example#1. #2\endexample{%
-\global\advance\noteno by 1\relax%
-{% example-scope 
-\def\exampletag{\the\chapterno.\the\noteno}%
-\let\notetag=\exampletag%
-\def\notekind{example}%
-\def\examplelabel{eg\the\chapterno.\the\noteno}%
-\def\label##1{\definexref{##1}{\exampletag}{example}}%
-\goodbreak\smallbreak\noindent%
-\llap{\examplesymbol\enspace}%
-\leftline{\eightbf \toupper{\examplename}~{\ninebf \exampletag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
-\expandafter\label{\examplelabel}%
-\break
-\bgroup%
-\def\label##1{\definexref{##1}{\exampletag}{example}}% label for example body 
-% solution
-\def\solution##1\par{%
-\noindent%
-%\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
-%\argumentationheadstyle{\solutionname}. %
-%\else%
-%\argumentationheadstyle{{##1}}%
-%\fi%
-\argumentationheadstyle{\solutionname}. %
-{{##1}}
-}%
-#2%
-\XXXeolfill$\qexsymbol$\par\egroup\medbreak
-}% /example-scope
-}
-%%}}}
+%%{{{ Def solvable ParagMac 
 
-%%{{{ nonexample 
-\long\def\nonexample#1. #2\endnonexample{%
-\global\advance\noteno by 1\relax%
-{% nonexample-scope 
-\def\nonexampletag{\the\chapterno.\the\noteno}%
-\let\notetag=\nonexampletag%
-\def\notekind{nonexample}%
-\def\nonexamplelabel{eg\the\chapterno.\the\noteno}%
-\def\label##1{\definexref{##1}{\nonexampletag}{nonexample}}%
-\goodbreak\smallbreak\noindent%
-\llap{\nonexamplesymbol\enspace}%
-\leftline{\eightbf \toupper{\nonexamplename}~{\ninebf \nonexampletag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
-\expandafter\label{\nonexamplelabel}%
-\break
-\bgroup%
-\def\label##1{\definexref{##1}{\nonexampletag}{nonexample}}% label for nonexample body 
-% solution
-\def\solution##1\par{%
-\noindent%
-%\ifEqStr{##1}{}% In case we switch to "\solution." and "\solution Resposta." etc.
-%\argumentationheadstyle{\solutionname}. %
-%\else%
-%\argumentationheadstyle{{##1}}%
-%\fi%
-\argumentationheadstyle{\solutionname}. %
-{{##1}}
-}%
-#2%
-\XXXeolfill$\qexsymbol$\par\egroup\medbreak
-}% /nonexample-scope
-}
-%%}}}
-
-%%{{{ codeit 
-\long\def\codeit#1. #2\endcodeit{%
-\global\advance\codeitno by 1\relax%
-\hintno=0
-\def\codeittag{c\the\chapterno.\the\codeitno}%
-\goodbreak\smallbreak\noindent%
-\llap{\activitysymbol\enspace}%
-\leftline{\eightbf \toupper{\codeitname}~{\ninebf \codeittag}\ifnull#1\\\else~{\ninebf (\;{\ninett #1}\;)}\fi.}\break
-\bgroup
-\def\label##1{%
-\definexref{##1}{\codeittag}{codeit}%
-}%
-% hints
-\def\hint##1\par{%
-\advance\hintno by 1\relax%
-\ifnum\hintno>\maxhintno%
-\global\advance\maxhintno by 1\relax%
-\fi
-\immediate\writehint{codeit}{\number\chapterno}{\codeittag}{\codeitlabel}{\number\hintno}{\unexpanded{##1}}%
-}
-#2
-\par\egroup\medbreak
-}
-%%}}}
-
-%%{{{ problem 
-\long\def\problem#1. #2\par#3\endproblem{%
-% #1: title
-% #2: body
-% #3: hints and solution
-\global\advance\problemno by 1\relax%
-\global\advance\problemtotal by 1\relax%
-\hintno=0
-{% problem-scope
-\def\problemtag{Π\the\chapterno.\the\problemno}%
-\let\notetag=\problemtag%
-\def\notekind{problem}%
-\def\problemlabel{Pi\the\chapterno.\the\problemno}%
-\def\label##1{\definexref{##1}{\problemtag}{problem}}%
-\medbreak\noindent%
-\llap{\activitysymbol\enspace}%
-\leftline{\eightbf \toupper{\problemname}~{\ninebf \problemtag}\ifnull#1\\\else~{\ninebf (#1)}\fi.}%
-\expandafter\label{\problemlabel}%
-\break
-\bgroup%
-% hints
-\def\printhintstatus{%
-\XXXeolfill%
-\ifnum\hintno>0%
-\hintstatusstyle{%
-\ifprint%
-\number\hintno
-\else
-\count1=0
-\loop
-\advance\count1 by 1
-\xref{\problemlabel_hint_\number\count1}%
-\thinspace%
-\ifnum\count1<\hintno
-\repeat
-\fi % /ifprint
-}
-\else
-\hintstatusstyle{0}
-\fi
-}
-\def\hint##1\par{
+\DefAtomParagMac hint #1\par{%
 \advance\hintno by 1\relax
-\ifnum\hintno>\maxhintno%
-\global\advance\maxhintno by 1\relax%
+\ifnum \hintno > \maxhintno
+\global\advance\maxhintno by 1\relax
 \fi
-\immediate\writehint{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\number\hintno}{\unexpanded{{##1}}}
+\writehint
+    {\paragid}
+    {\number\hintno}
+    {\unexpanded{#1}}%
 }
-% solution
-\def\solution##1\par{%
-\immediate\writesolution{problem}{\number\chapterno}{\problemtag}{\problemlabel}{\unexpanded{{##1}}}%
-}%
-#2%
-#3%
-\printhintstatus%
-\par\egroup%
-}% /problem-scope
+
+\DefAtomParagMac solution #1\par{%
+\writesolution
+    {\paragid}
+    {\number\chapterno}
+    {\unexpanded{#1}}%
 }
+
+%%}}}
+
+%%}}}
+
+%%{{{ parag instances 
+
+\SetParag blah nocounter    {}
+\SetParag blah totalcounter {}
+\SetParag blah head      {\IfStrEmpty{\paragtitle}{}{\paragtitle}}% simple \paragtitle won't do
+\SetParag blah headyhook {\IfStrEmpty{\paragtitle}{}{.}}
+\SetParag blah headzhook {\IfStrEmpty{\paragtitle}{}{\enspace}}
+\SetParag blah bodybhook {\loadeqnumber\aftergroup\saveeqnumber\noindent}
+\SetParag blah tag          {¶}
+\SetParag blah tagdecorator {}
+\DefAParag blah
+
+\SetParag note head {\paragtag\WhenStrNempty{\paragtitle}{. \paragtitle}}
+\DefAParag note
+
+\SetParag question tagdecorator  {Q}
+\SetParag question asymbol       {\questionsign}
+\DefAParag question
+
+\DefAParag remark
+
+\SetParag warning asymbol {\warningsign}
+\DefAParag warning
+
+\SetParag beware asymbol {\warningsign}
+\DefAParag beware
+
+\DefAParag advice
+
+\SetParag primitive tagdecorator {P}
+\DefAParag primitive
+
+\SetParag definition tagdecorator {D}
+\DefAParag definition
+
+\SetParag pseudodefinition tagdecorator {``D''}
+\DefAParag pseudodefinition
+
+\SetParag grammar tagdecorator {Γ}
+\DefAParag grammar
+
+\SetParag algorithm tagdecorator {a}
+\DefAParag algorithm
+
+\SetParag notation tagdecorator {D}
+\DefAParag notation
+
+\SetParag specification tagdecorator {S}
+\DefAParag specification
+
+\DefAParag teaser
+
+\DefAParag joke
+
+\SetParag implementation tagdecorator {D}
+\DefAParag implementation
+
+\SetParag answer tagdecorator {A}
+\DefAParag answer
+
+% for stand-alone proofs (usually with an \of ...)
+\SetParag proof headbhook       {\proofstyle}
+\SetParag proof tagbhook        {\bf}
+\SetParag proof zsymbol         {\qedsymbol}
+\DefAParag proof
+
+% for stand-alone refutations (usually with an \of ...)
+\SetParag refutation headbhook      {\proofstyle}
+\SetParag refutation tagbhook       {\bf}
+\SetParag refutation zsymbol        {\qedsymbol}
+\DefAParag refutation
+
+%%{{{ Egparags 
+% egpags are delimited and have their own solution and answer macros
+
+\def\DefEgparag #1 {%
+\SetParag #1 asymbol   {\qexsymbol}
+\SetParag #1 zsymbol   {\qexsymbol}
+\SetParag #1 head      {\activityhead}
+\SetParag #1 headzhook {\newline}
+\SetParag #1 bodymacros {%
+\LetParagMac solution = egsolution
+\LetParagMac answer   = eganswer
+}
+\DefMParag #1
+}
+
+\DefEgparag example
+\DefEgparag nonexample
+
+%%}}}
+
+%%{{{ Provables 
+
+\def\DefProvable #1: #2 {%
+\SetParag #2 tagdecorator {#1}
+\SetParag #2 bodymacros   {\makeparagprovable}
+\SetParag #2 bodybhook    {\proclaimstyle}
+\SetParag #2 bodyyhook    {\rm\doproofs}
+\DefMParag #2
+}
+
+\DefProvable Θ: theorem
+\DefProvable Λ: lemma
+\DefProvable  : property
+\DefProvable  : criterion
+\DefProvable  : corollary
+\DefProvable  : proposition
+
+% Unprovables:
+
+\SetParag conjecture tagdecorator {?}
+\SetParag conjecture bodybhook {\proclaimstyle}
+\DefAParag conjecture
+
+\SetParag axiom tagdecorator {α}
+\SetParag axiom bodybhook {\proclaimstyle}
+\DefAParag axiom
+
+\SetParag hypothesis bodybhook {\proclaimstyle}
+\DefAParag hypothesis
+
+\SetParag principle bodybhook {\proclaimstyle}
+\DefAParag principle
+
+\SetParag law bodybhook {\proclaimstyle}
+\DefAParag law
+
+%%}}}
+
+%%{{{ Solvables 
+% here a Set..Mixin meta-setter to allow for further customization
+
+\def\SetSolvableMixin #1: #2 {%
+\SetParag #2 tagdecorator {#1}
+\SetParag #2 nocounter    {\csgroup{#2no}}
+\SetParag #2 totalcounter {\csgroup{#2total}}
+\SetParag #2 asymbol      {\activitysymbol}
+\SetParag #2 head         {\activityhead}
+\SetParag #2 headzhook    {\newline}
+\SetParag #2 bodymacros   {\makeparagsolvable}
+\SetParag #2 bodybhook    {\activitystyle}
+\SetParag #2 bodyyhook    {\printhintstatus}
+}
+
+\SetSolvableMixin x: exercise
+\DefMParag exercise
+
+\SetSolvableMixin Π: problem
+\DefMParag problem
+
+\SetSolvableMixin c: codeit
+\DefMParag codeit
+
+\SetSolvableMixin Π: openproblem
+\SetParag openproblem nocounter    {\problemno}
+\SetParag openproblem totalcounter {\problemtotal}
+\DefMParag openproblem
+
+%%}}}
+
+%%}}}
+
 %%}}}
 
 %%{{{ sourcecode listing 
-\def\printlistinglineno{\llap{\explanationstyle{\rm\the\lineno}}\quad}
-\def\sourcecode#1; {\endgraf\bigskip{\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}\bigskip\endgraf\noindent}
+\definecolor{sourcecodelinecolor}{cmyk}{0,0,0,.5}
+\definecolor{sourcecodelinecolorinv}{cmyk}{0,0,0,.1}
+\DefStyle sourcecodeline {\sf}
+\def\printlistinglineno{\hbox{\hbox to 4em{}\llap{\colorboxfb{sourcecodelinecolor}{sourcecodelinecolorinv}{\hbox to 1em{}\sizeviii\sf\twopadthe\lineno}}\quad}}
+\def\sourcecode#1; {\endgraf\bigskip{\sizex\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}\bigskip\endgraf\noindent}
 %%}}}
 
-%%{{{ argumentations 
+\endinput
 
-\def\argumentationheadstyle#1{{\scshape #1}}
-\def\casestyle#1{{\scshape #1}}
-\def\proofstyle#1{{\scshape #1}}
-\def\proofpartstyle#1{{\scshape #1}}
-\def\proofaltstyle#1{{\scshape #1}}
-\def\case#1{\noindent\casestyle{#1}}
-\def\proofpart#1{\noindent\proofpartstyle{#1}}
-\def\crcase#1{\endgraf\case{#1}}
-\def\crproofpart#1{\endgraf\proofpart{#1}}
-\def\crtabcase#1{\endgraf\indent\case{#1}}
-\def\crtabproofpart#1{\endgraf\indent\proofpart{#1}}
-\def\proofalt#1{\noindent\proofaltstyle{#1}}
-\def\crproofalt#1{\endgraf\proofalt{#1}}
-\def\crtabproofalt#1{\endgraf\indent\proofalt{#1}}
-\def\mistake{\hfill\mistakesymbol}%
+\(blah\|note\|question\|remark\|warning\|beware\|advice\|primitive\|definition\|pseudodefinition\|grammar\|algorithm\|notation\|specification\|teaser\|joke\|implementation\|answer\|proof\|refutation\)
+\(example\|nonexample\)
+\(theorem\|lemma\|property\|criterion\|corollary\|proposition\)
+\(conjecture\|axiom\|hypothesis\|principle\|law\)
+\(exercise\|problem\|codeit\|openproblem\)
 
-%%}}}
+\(blah\|note\|question\|remark\|warning\|beware\|advice\|primitive\|definition\|pseudodefinition\|grammar\|algorithm\|notation\|specification\|teaser\|joke\|implementation\|answer\|proof\|refutation\|example\|nonexample\|theorem\|lemma\|property\|criterion\|corollary\|proposition\|conjecture\|axiom\|hypothesis\|principle\|law\|exercise\|problem\|codeit\|openproblem\)
 
-%%{{{ report 
 
-\newwrite\reportfile
-\def\Report{\immediate\openout\reportfile=\jobname.report}
-\def\WriteReport#1#2{\write\reportfile{#1:#2}}
-\def\EndReport{\closeout\reportfile}
+# Examples
 
-%%}}}
+\theorem Fundamental Theorem of Arithmetic.
+\headerize
+\aka unique factorization.
+\label fundamental_theorem_of_arithmetic
+\defines
+    * ~f : ~A \to ~B -- $f$ is a function from $A$ to $B$
+    * ~A \inter ~B   -- the intersection of $A$ and $B$
+    ;;
+\indexes
+    * theorem!fundamental of arithmetic
+    * theorem!fundamental of arithmetic     seealso: factorization
+    * fundamental theorem                       see: theorem, fundamental
+    ;;
+\credits
+    * Cantor : paradise
+    ;;
+% note that the credited must be a friend
+\pdefs
+    \pdef csn ####1...{}   % <- no need to % the newline
+    ;;
 
-%%}}}
+Bla bla bla.
 
+Optionally now:
+
+\preproof.
+...
+
+\wrongproof.
+\check optional_label_here_to_refer_to
+...
+
+\sketch.
+...
+
+And now either \noproof or
+
+\proof Won't be shown, not even the period.
+\headless
+...
+\qed
+
+\endtheorem
+
+\proof Demonstração alternativa.
+\of lagrange_theorem
+
+blabla
+blab lla bla
+
+\endproof
+
+or
+
+\Proof Demonstração alternativa.
+\of lagrange_theorem
+
+blablu
+blub lla blu
+
+% just ended because of \par

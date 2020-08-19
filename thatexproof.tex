@@ -31,11 +31,11 @@
 \fi
 }
 
-% Proof{,m,r,mr}:
+% PROOF{,m,r,mr}:
 % m = assume math mode for nodes
 % r = put rule labels in \rulelabel{...}
 
-\def\Proof#1{
+\def\PROOF#1{
 \def\A{\Assumption}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
@@ -45,7 +45,7 @@
 \DisplayProof
 }
 
-\def\Proofm#1{
+\def\PROOFm#1{
 \def\A##1{\Assumption{$##1$}}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
@@ -55,7 +55,7 @@
 \DisplayProof
 }
 
-\def\Proofr#1{
+\def\PROOFr#1{
 \def\A{\Assumption}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
@@ -65,7 +65,7 @@
 \DisplayProof
 }
 
-\def\Proofmr#1{
+\def\PROOFmr#1{
 \def\A##1{\Assumption{$##1$}}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
@@ -74,4 +74,7 @@
 #1
 \DisplayProof
 }
+
+\def\infered#1\endinfered{\PROOF{#1}}
+\def\infer#1\endinfer{\math#1\endmath}
 

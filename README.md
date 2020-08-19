@@ -1,4 +1,4 @@
-# ThaTeX
+# ThaTeX (ΘάTeX)
 
 Thanos's TeX macros for books, lecture notes, and exams.
 
@@ -11,5 +11,5 @@ Just place the whole `thatex` dir somewhere that TeX will find it, for example:
 ## Requirements
 
 Unfortunatelly ThaTeX only works with the XeTeX engine for the time being.
-LuaTeX should eventually be supported as well.
+One of the future plans is to move to LuaTeX.
 

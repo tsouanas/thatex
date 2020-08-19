@@ -1,0 +1,126 @@
+%{{{ [vim] 
+% vim:foldmarker=%{{{,%}}}
+% vim:foldmethod=marker
+% vim:foldcolumn=4
+%}}}
+%% thatexlang-br.tex
+%% author: Thanos Tsouanas <thanos@tsouanas.org>
+
+\def\LANG{br}
+
+\uselanguage{portuguese}% needed for hyphenation
+
+\def\indexseeword{veja}
+\def\indexseealsowords{veja também}
+\def\iipl#1 {\ii{programação!linguagem!#1}}
+
+\def\pageabbr{p{.}}
+\def\pagesabbr{pp{.}}
+
+\def\orword{ou}
+\def\andword{\&}
+
+% num words
+\DefNumWord  zero       zero
+\DefNumWords one        um      um      uma
+\DefNumWords two        dois    dois    duas
+\DefNumWord  three      três
+\DefNumWord  four       quatro
+\DefNumWord  five       cinco
+\DefNumWord  six        seis
+\DefNumWord  seven      sete
+\DefNumWord  eight      oito
+\DefNumWord  nine       nove
+\DefNumWord  ten        dez
+\DefNumWord  eleven     onze
+\DefNumWord  twelve     doze
+\DefNumWord  thirteen   treze
+\DefNumWord  fourteen   quatorze
+\DefNumWord  fifteen    quinze
+\DefNumWord  sixteen    dezesseis
+\DefNumWord  seventeen  dezessete
+\DefNumWord  eighteen   dezoito
+\DefNumWord  nineteen   dezenove
+\DefNumWord  twenty     vinte
+
+\DefTerm  preface       {Preface}
+\DefTerm  toc           {Conteudo detalhado}
+\DefTerm  shorttoc      {Conteudo curto}
+\DefTerm  loa           {Lista de algorítmos}
+\DefTerm  loc           {Lista de código}
+\DefTerm  sourcecode    {Código de programas}
+\DefTerm  hints         {Dícas}
+\DefTerm  solutions     {Resoluções}
+\DefTerm  further       {Leitura complementar}
+\DefTerm  history       {Notas históricas}
+\DefTerm  summary       {Resumo}
+\DefTerm  problems      {Problemas}
+\DefTerm  appendices    {Apêndices}
+\DefTerm  references    {Referências}
+\DefTerm  symglossary   {Glossário de símbolos}
+\DefTerm  index         {Índice geral}
+\DefTerm  nameindex     {Índice de pessoas}
+\DefTerm  fullproofs    {Demonstrações completas}
+
+\DefNoun  proof             f: | Demonstração          | Demonstrações           |
+\DefNoun  wrongproof        f: | {Demonstração errada} | {Demonstrações erradas} |
+\DefNoun  sketch            m: | Esboço                | Esboços                 |
+\DefNoun  hint              f: | Dica                  | Dicas                   |
+\DefNoun  solution          f: | Resolução             | Resoluções              |
+\DefNoun  answer            f: | Resposta              | Respostas               |
+\DefNoun  claim             f: | Afirmação             | Afirmações              |
+\DefNoun  given             m: | Dado                  | Dados                   |
+\DefNoun  goal              m: | Alvo                  | Alvos                   |
+\DefNoun  algoinput         f: | Entrada               | Entradas                |
+\DefNoun  algooutput        f: | Saída                 | Saídas                  |
+
+\DefNoun  chapter           m: | Capítulo              | Capítulos               |
+\DefNoun  appendix          m: | Apêndice              | Apêndices               |
+\DefNoun  section           f: | Secção                | Secções                 |
+\DefNoun  note              f: | Nota                  | Notas                   |
+\DefNoun  paragraph         m: | Parágrafo             | Parágrafos              |
+\DefNoun  theorem           m: | Teorema               | Teorémata               |
+\DefNoun  lemma             m: | Lema                  | Lémata                  |
+\DefNoun  proposition       f: | Proposição            | Proposições             |
+\DefNoun  property          f: | Propriedade           | Propriedades            |
+\DefNoun  corollary         m: | Corolário             | Corolários              |
+\DefNoun  conjecture        f: | Conjectura            | Conjecturas             |
+\DefNoun  openproblem       m: | {Problema em aberto}  | {Problemas em aberto}   |
+\DefNoun  axiom             m: | Axioma                | Axiómata                |
+\DefNoun  law               f: | Lei                   | Leis                    |
+\DefNoun  principle         m: | Princípio             | Princípios              |
+\DefNoun  hypothesis        f: | Hipótese              | Hipoteses               |
+\DefNoun  criterion         m: | Critérion             | Critéria                |
+
+\DefNoun  algorithm         m: | Algoritmo             | Algoritmos              |
+\DefNoun  program           m: | Programa              | Prográmata              |
+\DefNoun  grammar           f: | Gramática             | Gramáticas              |
+\DefNoun  remark            f: | Observação            | Observações             |
+\DefNoun  question          f: | Questão               | Questões                |
+\DefNoun  teaser            m: | Teaser                | Teasers                 |
+\DefNoun  joke              f: | Piada                 | Piadas                  |
+\DefNoun  advice            m: | Conselho              | Conselhos               |
+\DefNoun  beware            m: | Cuidado               | Cuidados                |
+\DefNoun  warning           f: | Aviso                 | Avisos                  |
+\DefNoun  primitive         f: | {Noção primitiva}     | {Noções primitivas}     |
+\DefNoun  definition        f: | Definição             | Definições              |
+\DefNoun  notation          f: | Notação               | Notações                |
+\DefNoun  pseudodefinition  f: | ``Definição''         | ``Definições''          |
+\DefNoun  specification     f: | Especificação         | Especificações          |
+\DefNoun  implementation    f: | Implementação         | Implementações          |
+\DefNoun  example           m: | Exemplo               | Exemplos                |
+\DefNoun  nonexample        m: | Nãœxemplo             | Nãœxemplos              |
+\DefNoun  exercise          m: | Exercício             | Exercícios              |
+\DefNoun  codeit            m: | Code-it               | Code-it                 |
+\DefNoun  problem           m: | Problema              | Problemas               |
+
+\DefNoun  page              f: | Página                | Páginas                 |
+\DefNoun  item              m: | Item                  | Itens                   |
+\DefNoun  phrase            f: | Frase                 | Frases                  |
+\DefNoun  expression        f: | Expressão             | Expressões              |
+\DefNoun  phase             f: | Fase                  | Fases                   |
+\DefNoun  step              m: | Passo                 | Passos                  |
+\DefNoun  stage             f: | Etapa                 | Etapas                  |
+\DefNoun  input             f: | Entrada               | Entradas                |
+\DefNoun  output            f: | Saida                 | Saídas                  |
+

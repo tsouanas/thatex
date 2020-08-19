@@ -28,7 +28,7 @@
 %\loadeurb % cursive roman bold
 \let\AMSproclaim=\proclaim
 \let\proclaim\relax
-\input stmary  % does this load amssym?
+\input stmary  % (this loads amssym)
 \input ofs
 \input amsfn
 \input mathdots
@@ -67,6 +67,8 @@
 %%{{{ mathfonts 
 \def\mathit#1{\hbox{\text{\tenit#1}}}
 \def\mathrm#1{\hbox{\text{\tenrm#1}}}
+\def\textrmsmallish#1{\hbox{\text{\ninerm#1}}}
+\def\mathrmsmallish#1{\hbox{\text{\ninerm#1}}}
 \def\mathrmsmall#1{\hbox{\text{\sevenrm#1}}}
 \def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
 \def\mathsf#1{\hbox{\text{\tenss#1}}}
@@ -120,18 +122,18 @@
 % Example:
 % \DefPar succ
 % assumes the existence of \succ of arity 0 and it defines \succP of arity 1
-\def\DefPar#1 {\expandafter\def\csname #1P\endcsname##1{\csname #1\endcsname\funparen{##1}}}
+\def\DefPar#1 {\csgroup\def{#1P}##1{\csname #1\endcsname\funparen{##1}}}
 % \DefApp is similar but defines a space-as-application version
-\def\DefApp#1 {\expandafter\def\csname #1A\endcsname##1{\csname #1\endcsname\fa{##1}}}
+\def\DefApp#1 {\csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}}
 % \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
 % of the definition of the "parenthesized" version of it if it makes sense
-\def\DefREL#1 #2  {\expandafter\def\csname #1\endcsname{{\namedrel{#2}}}\DefPar #1 }
-\def\DefFUN#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfun{#2}}}\DefPar #1 \DefApp #1 }
-\def\DefFPF#1 #2  {\expandafter\def\csname #1\endcsname{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
-\def\DefOP#1 #2   {\expandafter\def\csname #1\endcsname{{\namedop{#2}}}\DefPar  #1 \DefApp #1 }
-\def\DefOPP#1 #2  {\expandafter\def\csname #1\endcsname##1{{\namedop{#2}\funparen{##1}}}}% always of arity 1, parenthesizing argument
-\def\DefTYPE#1 #2 {\expandafter\def\csname #1\endcsname{{\namedtype{#2}}}}
-\def\DefCAT#1 #2  {\expandafter\def\csname #1\endcsname{{\namedcat{#2}}}}
+\def\DefREL#1 #2  {\csgroup\def{#1}{{\namedrel{#2}}}\DefPar #1 }
+\def\DefFUN#1 #2  {\csgroup\def{#1}{{\namedfun{#2}}}\DefPar #1 \DefApp #1 }
+\def\DefFPF#1 #2  {\csgroup\def{#1}{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
+\def\DefOP#1 #2   {\csgroup\def{#1}{{\namedop{#2}}}\DefPar  #1 \DefApp #1 }
+\def\DefOPP#1 #2  {\csgroup\def{#1}##1{{\namedop{#2}\funparen{##1}}}}% always of arity 1, parenthesizing argument
+\def\DefTYPE#1 #2 {\csgroup\def{#1}{{\namedtype{#2}}}}
+\def\DefCAT#1 #2  {\csgroup\def{#1}{{\namedcat{#2}}}}
 % Use plain \DefThing if the command name coincides with the printed name
 \def\DefRel#1  {\DefREL #1 #1 }
 \def\DefFun#1  {\DefFUN #1 #1 }
@@ -167,6 +169,8 @@
 \def\size#1{\abs{#1}}
 \def\nsize#1{\mathord{\#}{#1}}
 \def\frac#1#2{{#1\over#2}}
+\def\slashfrac#1#2{\leavevmode\kern.1em\raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em/\kern-.15em\lower.25ex\hbox{\the\scriptfont0 #2}} % TeXbook x11.6
+\let\sfrac=\slashfrac
 \def\ntimes{\mathbin{\cdot}}
 \def\nplus{\mathbin{+}}
 \def\stimes{\,}
@@ -174,6 +178,7 @@
 \def\pow#1{^{#1}}
 \def\plus{+}
 \def\floor#1{\left\lfloor#1\right\rfloor}
+\def\bigfloor#1{\mathopen{\big\lfloor}#1\mathclose{\big\rfloor}}
 \def\ceil#1{\left\lceil#1\right\rceil}
 \def\cancel#1{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,color=black!33,text=black]{$#1$};}
 \def\cancelspc#1{\cancel{\,#1\,}}
@@ -192,12 +197,18 @@
 \def\cbrt#1{{\root3\of{#1}}}
 \def\fac#1{{#1}!}
 \def\facp#1{\fac{\paren{#1}}}
-\def\system#1{\aligned#1\endaligned}
-\def\lsystem#1{\left\{\system{#1}\right.}
-\def\rsystem#1{\left.\system{#1}\right\}}
-\def\bsystem#1{\left\{\system{#1}\right\}}
+\def\system#1\endsystem{\math\systemed{#1}\endmath}
+\def\systemed#1{\aligned#1\endaligned}
+\def\lsystemed#1{\left\{\systemed{#1}\right.}
+\def\rsystemed#1{\left.\systemed{#1}\right\}}
+\def\bsystemed#1{\left\{\systemed{#1}\right\}}
 \def\segment#1{\overline{#1}}
 \def\veq{\mathrel{\tikz\node [rotate=90] {=};}}
+%%}}}
+
+%%{{{ sidekicks 
+\def\letterm{{m}}%
+\def\lettert{{t}}%
 %%}}}
 
 %%{{{ matrices 
@@ -279,18 +290,17 @@
 \def\leftangle#1{\left<#1\right.}
 \def\rightangle#1{\left.#1\right>}
 \definecolor{explanationcolor}{cmyk}{0,0,0,.666}
-\def\explanationstyle#1{{\color{explanationcolor} #1}}
-\def\fact#1{~\ensuremath{^{\text{\explanationstyle{(#1)}}}}}
-\def\byfact#1{\text{\explanationstyle{(#1)}}}
-\def\reffact#1{\text{\explanationstyle{(#1)}}}
-\def\mathby#1{\text{\explanationstyle{(#1)}}}
-\def\explanation#1{\text{\explanationstyle{(#1)}}}
-\def\nbby#1{&\qquad&\mathby{#1}}
-\def\noby{&\qquad&\\}
-\let\obvious=\noby
-\def\by#1{\nbby{#1}\\}
-\def\bytag#1#2{\nbby{#1}\tag{#2}\\}
-\def\called#1{&\qqqquad&\textrm{(#1)}\\}
+\DefStyle explanation {\color{explanationcolor}}
+\def\fact#1{~\ensuremath{^{\text{\explanationstylize{(#1)}}}}}
+\def\byfact#1{\text{\explanationstylize{(#1)}}}
+\def\reffact#1{\text{\explanationstylize{(#1)}}}
+\def\mathby#1{\text{\explanationstylize{(#1)}}}
+\def\explanation#1{\text{\explanationstylize{(#1)}}}
+\def\bynb#1{&\qquad&\mathby{#1}}
+\def\bycr#1{\bynb{#1}\\}
+\def\noby{&\qquad&}
+\let\obvious=\noby% needed if no line has any explanation
+\def\by#1{\bynb{#1}}
 \def\qtext#1{\quad\text{#1}\quad}
 \def\qqtext#1{\qquad\text{#1}\qquad}
 \def\qqqtext#1{\qqquad\text{#1}\qqquad}
@@ -308,14 +318,52 @@
 \let\mobraceleg=\moverbraceleg
 \let\mubraceleg=\munderbraceleg
 \def\shell#1\endshell{\quote{\tentt #1}\endquote}% TODO: make a real shell macro
-\def\compute#1\endcompute{$$\alignat2\relax #1\endalignat$$}
-\def\computed#1\endcomputed{\alignedat2\relax #1\endalignedat}
-\def\stepproof#1\endstepproof{$$\alignat2\relax #1\endalignat$$}
+% XXX: these contain hacks to help with math ref/labs
+\def\math#1\endmath{$$\gather\fixmcount #1\endgather\saveeqnumber$$}
+\def\longmath#1\endlongmath{$$\multline\fixmcount #1\endmultline\saveeqnumber$$}
+\def\mathcol#1\endmathcol{$$\alignat1\relax\fixmcount #1\endalignat\saveeqnumber$$}
+\def\mathcols#1 #2\endmathcols{$$\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber$$}
+\def\mathxcols#1 #2\endmathxcols{$$\xxalignat#1\relax\fixmcount #2\endxxalignat\saveeqnumber$$}
+\def\mathtightcols#1 #2\endmathtightcols{$$\alignat#1\relax\fixmcount #2\endalignat\saveeqnumber$$}
+\def\mathcall#1\endmathcall{%
+$$
+\def\called##1{&\qqqquad& \textrm{##1}}%
+\alignat2\relax
+\fixmcount
+#1
+\endalignat
+\saveeqnumber
+$$}
+\def\context#1#2 #3\endcontext{% e.g.: \context tm makes text:math default lines
+$$
+\def\ltype{{#1}}%
+\def\rtype{{#2}}%
+\ifx\ltype\letterm\def\lstylize##1{##1}\else
+\ifx\ltype\lettert\def\lstylize##1{\text{##1}}\fi\fi
+\ifx\rtype\letterm\def\rstylize##1{##1}\else
+\ifx\rtype\lettert\def\rstylize##1{\text{##1}}\fi\fi
+\def\x ##1: ##2; {\lstylize{##1\unskip} &~~\oftype~~\rstylize{##2}}%
+\alignat1\relax
+\fixmcount
+#3
+\endalignat
+\saveeqnumber
+$$}
+\def\compute#1\endcompute{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
+\def\stepproof#1\endstepproof{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
+\def\mathed#1{\gathered#1\endgathered}
+\def\mathcoled#1{\alignedat1\relax #1\endalignedat}
+\def\mathcolsed#1 #2{\alignedat#1\relax #2\endalignedat}
+\def\computed#1{\alignedat2\relax #1\endalignedat}
+\def\sepcol#1{&#1&}
+\def\skipcol{\sepcol{}}
+\def\quadcol{\sepcol{\quad}}
+\def\qquadcol{\sepcol{\qquad}}
 \def\ttherefore{$\therefore$~~}
 \def\proofsteptnb#1{&\text{#1}\\}
 \def\proofstepmnb#1{&{#1}\\}
-\def\proofsteptby#1#2{&\text{#1}\by{#2}}
-\def\proofstepmby#1#2{&{#1}\by{#2}}
+\def\proofsteptby#1#2{&\text{#1}\bynb{#2}\\}
+\def\proofstepmby#1#2{&{#1}\bynb{#2}\\}
 \def\thereforetby#1#2{\proofsteptby{\ttherefore#1}{#2}}
 \def\thereforemby#1#2{\proofsteptby{\ttherefore$#1$}{#2}}
 \def\thereforetnb#1{\proofsteptnb{\ttherefore#1}}
@@ -405,7 +453,7 @@
 \def\defiff{\mathrel{{\buildrel{\deftag} \over {\iff}}}}
 \def\alertdefiff{\mathrel{{\buildrel{\text{\sixss \alert{def}}} \over {\iff}}}}
 \def\defiffsymbol{\mathop{\buildrel{\deftag} \over {\Longleftrightarrow}}}
-\def\impliesbecause#1{\mathrel{{\buildrel{\text{\explanationstyle{\sixrm #1}}} \over {\implies}}}}
+\def\impliesbecause#1{\mathrel{{\buildrel{\text{\explanationstylize{\sixrm #1}}} \over {\implies}}}}
 \def\pseudodefiff{\mathrel{{\buildrel{\text{\sixss ``def''}} \over {\iff}}}}
 \def\askdots{{\dots\text{?}\dots}}
 \def\assiff{\mathrel{\;:\Longleftrightarrow \;}}
@@ -426,7 +474,9 @@
 \def\bangrel#1{\mathrel{{\buildrel{\text!} \over {#1}}}}
 \def\wowrel#1{\mathrel{{\buildrel{\text{!!}} \over {#1}}}}
 \def\wtfrel#1{\mathrel{{\buildrel{\text{?!}} \over {#1}}}}
-\def\labelrel#1#2{\mathrel{{\buildrel{\text{\explanationstyle{(#2)}}} \over {#1}}}}
+% TODO: check uses
+\def\labelrel#1#2{\mathrel{{\buildrel{\text{#2}} \over {#1}}}}
+\def\tagrel#1#2{\mathrel{{\buildrel{\text{\explanationstylize{(#2)}}} \over {#1}}}}
 % handy uses:
 \def\spaceq{\spacerel=}
 \def\heartiff{\heartrel\iff}
@@ -436,7 +486,9 @@
 \def\wowiff{\wowrel\iff}
 \def\wtfiff{\wtfrel\iff}
 \def\dotsiff{\longdotsrel\iff}
-\def\ifflabel#1{\labelrel{\iff}#1}
+% TODO: check uses
+\def\ifflabel#1{\labelrel{\iff}{#1}}
+\def\ifftag#1{\reltag{\iff}{#1}}
 \def\heartimplies{\heartrel\implies}
 \def\askimplies{\askrel\implies}
 \def\askimpliedby{\askrel\impliedby}
@@ -449,7 +501,9 @@
 \def\woweq{\wowrel=}
 \def\wtfeq{\wtfrel=}
 \def\dotseq{\dotsrel=}
-\def\eqlabel#1{\labelrel{=}#1}
+% TODO: check uses
+\def\eqlabel#1{\labelrel{=}{#1}}
+\def\eqtag#1{\reltag{=}{#1}}
 % end of decorated mathrels
 \def\eqass{\mathrel{=:}}
 \def\asseq{\mathrel{:=}}
@@ -636,11 +690,11 @@
 \def\longfrom{\mathrel{\mathord{\longleftarrow-\mkern-8mu-\mkern-8mu}}}
 \def\toby#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\longrightarrow}}}}
 \def\inctoby#1{\mathrel{\decorateover{#1}{\mathord{\incto}}}}
-\def\longtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{4}{-\mkern-8mu}\longrightarrow}}}}
-\def\xlongtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat{12}{-\mkern-8mu}\longrightarrow}}}}
+\def\longtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat 4 {-\mkern-8mu}\longrightarrow}}}}
+\def\xlongtoby#1{\mathrel{\decorateover{#1}{\mathord{\nrepeat 12 {-\mkern-8mu}\longrightarrow}}}}
 \def\fromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\mkern-8mu-\mkern-8mu-}}}}
-\def\longfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{4}{\mkern-8mu-}}}}}
-\def\xlongfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat{12}{\mkern-8mu-}}}}}
+\def\longfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat 4 {\mkern-8mu-}}}}}
+\def\xlongfromby#1{\mathrel{\decorateover{#1}{\mathord{\longleftarrow\nrepeat 12 {\mkern-8mu-}}}}}
 \def\reltoby#1{\mathrel{\decorateover{#1}{\mathord{-\mkern-8mu-\mkern-8mu\rightarrowtriangle}}}}
 \def\relfromby#1{\mathrel{\decorateover{#1}{\mathord{\leftarrowtriangle\mkern-8mu-\mkern-8mu-}}}}
 \let\rtoby=\reltoby
@@ -1008,7 +1062,7 @@
 \def\go{\mathbin{\pmb{\cdot}}}
 \def\gop#1{{#1}^{\mathrmtiny{op}}}
 \def\gopp#1{\gop{\paren{#1}}}
-\def\quogroup#1#2{\quoset#1#2}
+\def\quogroup#1#2{\quoset{#1}{#2}}
 \let\quogrp=\quogroup
 \def\gord#1{\mathord{o}\funparen{#1}}
 \def\tord#1{\namedop{ord}\funparen{#1}}
@@ -1116,8 +1170,19 @@
 \def\concat{\mathbin{+\mkern-8mu+}}
 %%}}}
 
-%%{{{ algorithm styling 
-\def\algorithmstyle#1{\text{{\scshape #1}}}
+%%{{{ algorithms 
+
+\def\algorithmstylize#1{\text{{\scshape #1}}}
+
+%TODO: get rid off this
+\def\algospec INPUT: #1 OUTPUT: #2\endspec{%
+\halign{%
+\hfil##&##\hfil\cr
+\casestylize{\algoinputname:}  & #1\cr
+\casestylize{\algooutputname:} & #2\cr
+}
+}
+
 %%}}}
 
 %%{{{ code 
@@ -1184,7 +1249,7 @@
 {%
 \halign{
 \hfil##\hfil &\strut\vrule \hfil##\hfil\cr
-{\bf \givensname} & {\bf \goalsname}\cr\noalign{\hrule}
+{\bf \sayName{givens}} & {\bf \sayName{goals}}\cr\noalign{\hrule}
 \vtop{%
 \def\git##1{##1\cr}%
 \def\gim##1{$##1$\cr}%
@@ -1208,7 +1273,7 @@
 \hbox to \hsize{
 \vtop{
 \halign to .333\hsize{##\hfil\cr
-\proofstyle{\proofname.}\cr
+\proofstylize{\proofname.}\cr
 #1
 }
 }
@@ -1238,3 +1303,41 @@
 
 %%}}}
 
+\endinput
+
+Notes:
+
+\math .. \endmath
+for simple math stuff, uses gather so it understands \\
+
+\longmath .. \endlongmath
+for math that's too long for a single line (break with \\), uses multline
+
+\mathcol ..\endmathcol
+makes a single (\alignat 1) r/l-columnblock
+
+\mathcols n .. \endmathcols
+makes n (\xalignat n) r/l-columnblocks, justly spaced
+
+\mathxcols n .. \endmathcols
+makes n (\xxalignat n) r/l-columnblocks, maximally spaced
+
+\mathtightcols n .. \endmathtightcols
+makes n (\alignat n) r/l-columnblocks, minimally spaced (tight)
+
+\mathcall .. \endmathcall
+r/l-columnblock that supports \called:
+\lfp f &\defeq \min(\fixpoints f)  \called {the \dterm{least fixpoint} of $f$} \\
+
+-ed versions: mathed, mathcoled, mathcolsed, computed
+They get their main argument non-delimited:
+\computed { ... }
+\mathcolsed 12 { ... }
+
+\context lr % <- l/r must be t/m, corresponding to left and right default mode
+\x this: \reals ;
+\x this: \reals \mtag[spot=*];
+\endcontext
+
+note that you must stick the \*tag to ;
+(this is terrible)

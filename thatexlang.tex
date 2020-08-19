@@ -13,5 +13,10 @@
 
 \def\LANG{}
 \def\CONTENTPREFIX{content/}
-\def\langi#1;{\input \CONTENTPREFIX\LANG/#1}
+
+\def\langi#1 {%
+\input \CONTENTPREFIX\LANG/#1
+}
+
 \def\thatexlang#1{\def\LANG{#1}\write\langfile{#1}\closeout\langfile}
+
