@@ -552,30 +552,44 @@
 % \struct* stuff are practically locally set just
 % for the purpose of setting the labels with \dostructlabels
 
-%%{{{ \structmixin 
-% \structmixin #1 sets struct attributes to \#1attr
-% CLASSclass should be set before calling structmixin
-\def\structmixin#1{%
+%%{{{ \structpreconfmixin 
+% \structpreconfmixin #1 sets struct attributes to \#1attr
+% CLASSclass should be set before calling structpreconfmixin
+\def\structpreconfmixin#1{%
 \edef\structbase{#1}%
 % clear/set default values
 \def\structid{}%
-\def\structformal{\sayName{\structclass} \structtag}% <- probably bad idea to overwrite
 \def\structclass{}% <- this must be provided by the context of the caller
 \def\structtag{}%   <- this may be provided by the context of the caller
+\def\structformal{\sayName{\structclass} \structtag}% <- probably bad idea to overwrite
+\def\structclassname{}%
 \def\structtitle{}%
-\def\structparen{}%
+\def\structaka{}%
 \def\structlabel{}%
-\def\structname{\sayName{\structclass}}%
 \def\structfull{\structformal\ifvanishes\structtitle\\\else\spacechar(\structtitle)\fi}%
-\def\structsmart{\structname \structtag\ifvanishes\structparen\\\else\spacechar(\structparen)\fi}%
+\def\structsmart{\structclassname \structtag\ifvanishes\structaka\\\else\spacechar(\structaka)\fi}%
+% XXX: most of these will be re-mixedin later by structpostconfmixin
 \Mixin
-    class tag
-    id formal title aka name
-    full smart
+    class classname tag
+    id title aka
+    full smart formal
     \from {\structbase}
     \to struct
-% class should be set before calling structmixin:
-\ifvanishes\structclass\\\thatexerror[class must be set before you structmixin]\fi
+% class should be set before calling structpreconfmixin:
+\ifvanishes\structclass\\\thatexerror[class must be set before you structpreconfmixin]\fi
+}
+%%}}}
+
+%%{{{ \structpostconfmixin 
+% call this after doing the conf
+\def\structpostconfmixin#1{%
+\edef\structbase{#1}%
+\Mixin
+    classname tag
+    title aka
+    full smart formal
+    \from {\structbase}
+    \to struct
 }
 %%}}}
 
@@ -589,7 +603,8 @@
 \WhenStrNempty {\structtag}
     {\labtagofid[\structid=\structtag]}%
 % these labels need structlabel to be set
-\WhenStrNempty {\structlabel} {% if we have \structlabel
+%%%% if we have \structlabel
+\WhenStrNempty {\structlabel} {%
 % low <-> high is actually an injection high >-> low:
 \labidof[\structlabel=\structid]%
 \lablabelofid[\structid=\structlabel]%
@@ -601,7 +616,7 @@
 \labsmart[\structlabel=\structsmart]%
 \labfull[\structlabel=\structfull]%
 \lab[\structlabel=\structtag]% <- maybe this is never used?
-}% / if we have \structlabel
+}%%%% /if we have \structlabel
 }}
 %%}}}
 
@@ -721,11 +736,11 @@
 \global\advance\chaptotal by 1\relax
 %%%% chap getter (gets chapter##1, appendix##1, etc.)
 \def\getchapclass##1{\csname\chapclass ##1\endcsname}%
-%%%% tag and id are needed to call structmixin
+%%%% tag and id are needed to call structpreconfmixin
 \edef\chaptag     {\chapthe{\number\chapno}}%
 \edef\chapid      {chap\number\chapidno}%
 %%%% we have: class, title, tag, id.
-\structmixin{chap}%
+\structpreconfmixin{chap}%
 %%%% page decorations
 \titlepagetrue
 \global\topmarker={\sayName{\chapclass} \chaptag:  \chaptitle}%
@@ -737,6 +752,7 @@
 %%%% conf
 \dochapconf{\chapconf}%
 %%%% structlabels
+\structpostconfmixin{chap}%
 \WhenStrNempty {\structid}
     {\dostructlabels}%
 %%%% toc stuff
@@ -1014,14 +1030,14 @@
 \global\advance\secidno by 1\relax
 \ifblank\secno   \else\global\advance\secno    by 1\relax\fi
 \ifblank\sectotal\else\global\advance\sectotal by 1\relax\fi
-%%%% id is needed to call structmixin
+%%%% id is needed to call structpreconfmixin
 \edef\secid      {sec\number\secidno}%
 \ifblank\secno\else\edef\sectag{\secdecoratetag{\secthe{\number\secno}}}\fi
 %%%% title for secblah and other notaggeds
 \ifblank\secno\WhenStrEmpty {\sectitle}
     {\edef\sectitle{\csgroup{\secclass term}}}\fi
-%%%% structmixin
-\structmixin{sec}%
+%%%% structpreconfmixin
+\structpreconfmixin{sec}%
 %%%% page decorations
 \def\toptitlewithsec{\sechead}%
 \global\toptitle=\ea{\toptitlewithsec}%
@@ -1035,6 +1051,7 @@
 \ifcsname PDEFS\chapid\endcsname
     \csgroup\ea\gdef\ea{PDEFS\secid}\ea{\csname PDEFS\chapid\endcsname}\fi
 %%%% structlabels
+\structpostconfmixin{sec}%
 \WhenStrNempty {\structid}
     {\dostructlabels}%
 %%%% start outputting
@@ -1297,18 +1314,20 @@
 \ifblank\paragnocounter
   \else \WhenStrEmpty {\paragtag}
      {\def\paragtag{\paragdecoratetag{\chaptag.\paragthe{\paragnocounter}}}}\fi
-%%%% structmixin (id and class needed)
-\structmixin{parag}%
+%%%% structpreconfmixin (id and class needed)
+\structpreconfmixin{parag}%
 %%%% counters
 \resetparagwidecounters
 %%%% parag main namespace
 \begingroup
 %%%% conf
 \doparagconf{\paragconf}%
+%%%% counters
 % inherit pdefs from PDEFS\secid
 \ifcsname secid\endcsname\ifcsname PDEFS\secid\endcsname
     \csgroup\ea\gdef\ea{PDEFS\paragid}\ea{\csname PDEFS\secid\endcsname}\fi\fi
 %%%% structlabels
+\structpostconfmixin{parag}%
 \WhenStrNempty {\structid}
     {\dostructlabels}%
 %%%% start outputting
