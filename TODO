@@ -5,3 +5,4 @@ Switch to LuaTeX.
 Reimplement double/triplecolumns because eplain's doesn't play well with lists.
 (But maybe it does with ThaTeX's lists.)
 
+Support altlabels for a chap/sec/parag.
