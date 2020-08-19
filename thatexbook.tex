@@ -1944,14 +1944,6 @@
 
 \endinput
 
-\(blah\|note\|question\|remark\|warning\|beware\|advice\|primitive\|definition\|pseudodefinition\|grammar\|algorithm\|notation\|specification\|teaser\|joke\|implementation\|answer\|proof\|refutation\)
-\(example\|nonexample\)
-\(theorem\|lemma\|property\|criterion\|corollary\|proposition\)
-\(conjecture\|axiom\|hypothesis\|principle\|law\)
-\(exercise\|problem\|codeit\|openproblem\)
-
-\(blah\|note\|question\|remark\|warning\|beware\|advice\|primitive\|definition\|pseudodefinition\|grammar\|algorithm\|notation\|specification\|teaser\|joke\|implementation\|answer\|proof\|refutation\|example\|nonexample\|theorem\|lemma\|property\|criterion\|corollary\|proposition\|conjecture\|axiom\|hypothesis\|principle\|law\|exercise\|problem\|codeit\|openproblem\)
-
 
 # Examples
 
@@ -1962,18 +1954,19 @@
 \defines
     * ~f : ~A \to ~B -- $f$ is a function from $A$ to $B$
     * ~A \inter ~B   -- the intersection of $A$ and $B$
+    * homomorphism
     ;;
 \indexes
     * theorem!fundamental of arithmetic
     * theorem!fundamental of arithmetic     seealso: factorization
     * fundamental theorem                       see: theorem, fundamental
     ;;
+% note that the credited must be a friend
 \credits
     * Cantor : paradise
     ;;
-% note that the credited must be a friend
 \pdefs
-    \pdef csn ####1...{}   % <- no need to % the newline
+    \pdef csn ####1...{...}   % <- no need to % the newline
     ;;
 
 Bla bla bla.
@@ -1995,24 +1988,13 @@ And now either \noproof or
 \proof Won't be shown, not even the period.
 \headless
 ...
-\qed
 
-\endtheorem
 
+% there is a proof parag for standalone proofs
 \proof Demonstração alternativa.
 \of lagrange_theorem
 
 blabla
 blab lla bla
 
-\endproof
 
-or
-
-\Proof Demonstração alternativa.
-\of lagrange_theorem
-
-blablu
-blub lla blu
-
-% just ended because of \par
