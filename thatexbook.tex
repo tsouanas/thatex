@@ -284,6 +284,7 @@
 
 %%{{{ general-style 
 
+% XXX: not implemented yet
 \newdimen\vcur      % to hold current vpos
 \newdimen\vminsec   % constant of minimum vspace required to start a section
 \vminsec=42mm       % free space required to start section(oid)
@@ -298,20 +299,20 @@
 %\paperheight=297mm
 %\paperwidth=210mm
 
+\pdfpagewidth=8.5in
+\pdfpageheight=11in
+\paperheight=11in
+\paperwidth=8.5in
+
 % margins (THESE ARE NOT REGISTERS, see eplain)
-\topmargin=26mm
+\topmargin=28mm
 \bottommargin=28mm
 \leftmargin=34mm
 \rightmargin=34mm
 
 \normalbaselineskip=12pt \sizexi\rm
 
-\everyfootnote={\baselineskip=12pt \sizeix\rm}
-
-%\hsize=210mm
-%\vsize=297mm
-%\advance\hsize by -3in
-%\advance\vsize by -3in
+\everyfootnote={\baselineskip=11pt \sizeix\rm}
 
 %%}}} 
 
@@ -646,8 +647,9 @@
 %%{{{ chap(teroids) 
 
 \Newskip chaptitle=12ex;
+\Newskip chapblahtitle=.5\chaptitleskipamount;
 
-\definecolor{introcolor}{cmyk}{0.5,.1,.3,.4}
+\definecolor{introcolor}{cmyk}{.5,.5,.5,1}
 \definecolor{wherecolor}{cmyk}{0.5,.1,.3,.4}
 \definecolor{wheretoccolor}{cmyk}{0.5,.1,.3,.4}
 \definecolor{quotecolor}{cmyk}{0.5,.1,.3,.4}
@@ -675,7 +677,7 @@
 \let\OLDcredits=\credits
 \let\OLDpdefs=\pdefs
 % set conf-special macros
-\def\where     ##1 ;; {\def\chapwhere{##1}}%
+\def\where ##1 ;; {\def\chapwhere{##1}}%
 \def\quote ##1 \by ##2 ;; {\def\chapquote{##1}\def\chapquoteby{##2}}%
 \def\indexes * ##1 ;; {\def\dochapindexes{\INDEXES * ##1 ;; }}%
 \def\credits * ##1 ;; {\def\dochapcredits{\CREDITS * ##1 ;; }}%
@@ -775,12 +777,11 @@
 \chaptitle
 % for upper use: \ea\ea\ea\toupper\ea{\chaptitle}
 \endcentering
-\chaptitleskip
 %% /chap head
 %% chap necklace
 \dochapwhere
-\chaptitleskip
 %% /chap necklace
+\chaptitleskip
 %%%% tasks
 \dochapindexes
 \dochapcredits
@@ -803,13 +804,14 @@
 \def\dochapwhere{%
 \WhenStrNempty {\chapwhere}
 {%
+\vglue 6ex\relax
 \WRITETOCENTRY
     {where}
     {\chapwhere}%
 \centeringmargin 42pt
 \chapwherestylize{\chapwhere}
 \endcenteringmargin
-\vglue 4ex\relax
+\vglue 6ex\relax
 }%
 }
 %%}}}
@@ -862,7 +864,7 @@
 \let\OLDquote=\quote
 \let\OLDwhere=\where
 % set conf-special macros
-\def\where     ##1 ;; {\def\chapwhere{##1}}%
+\def\where ##1 ;; {\def\chapwhere{##1}}%
 \def\quote ##1 \by ##2 ;; {\def\chapquote{##1}\def\chapquoteby{##2}}%
 % actually do the conf
 #1%
@@ -896,15 +898,18 @@
 \WRITETOCENTRY
     {chapblah}
     {\chapblahtitle}%
-%%%% start outputting
 \titlepagetrue
-%% chapblah head
+%%%% start outputting
+%% chap bandana
 \dochapquote
+%% /chap bandana
+%% chapblah head
 \chapblahtitlestylize{\expanded{\chapblahtitle}}
-\chaptitleskip
-\dochapwhere
-\chaptitleskip
 %% /chapblah head
+%% chapblah necklace
+\dochapwhere
+%% /chapblah necklace
+\chapblahtitleskip
 \noindent
 }
 %%}}}
@@ -934,7 +939,7 @@
 \def\secintro#1\par{\medskip\noindent{#1}\endgraf\sectitleskip}
 
 \Newskip sectitle=.333\chaptitleskipamount;
-\Newskip sec=8ex;
+\Newskip sec=2\bigskipamount;
 
 \def\secno{}
 \def\sectotal{}
@@ -1055,6 +1060,7 @@
 \WhenStrNempty {\structid}
     {\dostructlabels}%
 %%%% start outputting
+\goodbreak
 \secahook
 % sechead
 \secheadahook
@@ -1086,19 +1092,7 @@
 \secbodyzhook
 \endgroup % /sec* main namespace
 \seczhook % maybe evolve into yhook/zhook (for the time being not used)
-\par
-\phantom{XXX}%
-\par
-\vcur=0pt\relax
-\advance \vcur by \pagetotal\relax
-\advance \vcur by \vminsec\relax
-\ifdim \vcur > \vsize % not enough space to start section(oid)
-    \vfill
-    \eject
-\else % enough space to start section(oid)
-    \secskip
-    \goodbreak
-\fi
+\secskip
 \secleave
 \endgroup % /sec* total namespace
 }
@@ -1331,8 +1325,8 @@
 \WhenStrNempty {\structid}
     {\dostructlabels}%
 %%%% start outputting
-\par
-\noindent
+\eop
+\noi
 \paragahook
 % paraghead
 \paragheadahook
@@ -1371,6 +1365,7 @@
 \paragleave
 % XXX: is this still useful?
 \hphantom{...}%
+\goodbreak
 }
 %%}}}
 
@@ -1737,12 +1732,11 @@
 
 %%{{{ \makeparagsolvable 
 \def\makeparagsolvable{%
-\let\nohelp=\relax
 \hintno=0\relax
 \LetParagMac hint     = hint
 \LetParagMac solution = solution
 \def\printhintstatus{%
-\XXXeolfill
+\nobreak\XXXeolfill
 % ifhints
 \ifnum\hintno>0\relax % there are hints!
 % calculate half of hintno
@@ -1866,7 +1860,7 @@
 \def\DefEgparag #1 {%
 \SetParag #1 asymbol   {\qexsymbol}
 \SetParag #1 head      {\activityhead}
-\SetParag #1 headzhook {\newline}
+\SetParag #1 headzhook {\newline\nobreak}
 \SetParag #1 bodymacros {%
 \LetParagMac solution = egsolution
 \LetParagMac answer   = eganswer
