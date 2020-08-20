@@ -246,7 +246,8 @@
 \def\Newskip#1=#2; {%
 \csgroup\newskip{#1skipamount}%
 \csgroup{#1skipamount}=#2\relax
-\csgroup\edef{#1skip}{\csgroup\vskip{#1skipamount}}%
+\csgroup\def{#1skip}{\csgroup\vskip{#1skipamount}\relax}%
+\csgroup\def{#1glue}{\csgroup\vglue{#1skipamount}\relax}%
 }
 
 \Newskip tiny=2pt plus 1pt minus 1pt;

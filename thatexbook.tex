@@ -459,18 +459,18 @@
 
 %%{{{ spoilers 
 
-\Newskip spoiler=3\bigskipamount;
+\Newskip spoiler=4\bigskipamount;
 
 \def\spoiler{% TODO
-\spoilerskip
-\nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
+\spoilerglue
+\nobreak\centerline{{\color{spoiler}\hrulefill\qquad\bf!!~~SPOILER ALERT~~!!\qquad\hrulefill}}%
 \spoilerskip
 \goodbreak
 }
 
 \def\spoilerpage{% TODO
 \nobreak\vfill
-\nobreak\centerline{{\color{spoiler}\hrulefill\quad\bf!!~SPOILER ALERT~!!\quad\hrulefill}}%
+\nobreak\centerline{{\color{spoiler}\hrulefill\qquad\bf!!~~SPOILER ALERT~~!!\qquad\hrulefill}}%
 \nobreak\vfill
 \break
 }
