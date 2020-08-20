@@ -198,6 +198,16 @@
 \edef\ReplaceString{#3}%
 \ea\replacein \ReplaceString[#1=#2]}
 
+\def\Identity#1{#1}
+\let\Id=\Identity
+
+% composition of functions
+\protected\def\defcompose#1=#2#3{\def#1##1{#2{#3{##1}}}}
+\def\Compose[#1 #2]{% XXX: experimental
+\ea\def\csname COMPOSITION#1FOLLOWING#2\endcsname##1{\csname #1\endcsname{\csname #2\endcsname{##1}}}%
+\csname COMPOSITION#1FOLLOWING#2\endcsname}
+% TODO: make an n-ary Compose
+
 \protected\def\Map#1#2#3{% [The Advanced TeXbook, 5.16]
 % #1: separator
 % #2: function
@@ -1008,6 +1018,9 @@
 \def\faded#1{{\color{faded}#1}}
 \def\veryfaded#1{{\color{veryfaded}#1}}
 \def\veryveryfaded#1{{\color{veryveryfaded}#1}}
+\defcompose\ufaded=\faded\underline
+\defcompose\uveryfaded=\veryfaded\underline
+\defcompose\uveryveryfaded=\veryveryfaded\underline
 \def\standout#1\endstandout{%
 \endgraf
 \bigskip
