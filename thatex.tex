@@ -992,7 +992,7 @@
 \let\eop=\endgraf
 \let\noi=\noindent
 \def\emph#1{{\it #1}}
-\def\strikeout#1{$\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,text=black]{$\text{#1}$};$}
+\def\strikeout#1{\ensuremath{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,text=black]{$\text{#1}$};}}
 \def\yearof#1{\oldstylize{#1}}
 \definecolor{alertR}{rgb}{.9,.0,.0}
 \definecolor{alertG}{rgb}{.0,.7,.0}
