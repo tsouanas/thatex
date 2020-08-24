@@ -133,9 +133,13 @@
 \def\twodigitfmt#1{\ifnum #1<10 0\fi#1}
 \def\twopadthe#1{\ifnum #1<10 \phantom0\fi\the#1}
 
-% first is taken from opmac
+% taken from opmac for when we're not \input ing it
+\def\eoldef#1{\def#1{\begingroup \catcode`\^^M=12 \eoldefA#1}%
+   \ea\def\csname\string#1:M\endcsname}
+{\catcode`\^^M=12 \gdef\eoldefA#1#2^^M{\endgroup\csname\string#1:M\endcsname{#2}}}
 \long\def\addto#1#2{\ea\def\ea#1\ea{#1#2}}
-\long\def\gaddto#1#2{\ea\gdef\ea#1\ea{#1#2}}
+\long\def\gaddto#1#2{\ea\gdef\ea#1\ea{#1#2}} % not in opmac
+\def\adef#1{\catcode`#1=13 \begingroup \lccode`\~=`#1\lowercase{\endgroup\def~}}
 
 \long\def\stripgroup#1{#1}% XXX/TODO
 \def\eatfst#1{}
