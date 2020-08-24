@@ -208,7 +208,7 @@
 \let\Id=\Identity
 
 % composition of functions
-\protected\def\defcompose#1=#2#3{\def#1##1{#2{#3{##1}}}}
+\protected\def\defcompose#1#2#3{\def#1##1{#2{#3{##1}}}}
 \def\Compose[#1 #2]{% XXX: experimental
 \ea\def\csname COMPOSITION#1FOLLOWING#2\endcsname##1{\csname #1\endcsname{\csname #2\endcsname{##1}}}%
 \csname COMPOSITION#1FOLLOWING#2\endcsname}
@@ -1024,9 +1024,9 @@
 \def\faded#1{{\color{faded}#1}}
 \def\veryfaded#1{{\color{veryfaded}#1}}
 \def\veryveryfaded#1{{\color{veryveryfaded}#1}}
-\defcompose\ufaded=\faded\underline
-\defcompose\uveryfaded=\veryfaded\underline
-\defcompose\uveryveryfaded=\veryveryfaded\underline
+\defcompose\ufaded\faded\underline
+\defcompose\uveryfaded\veryfaded\underline
+\defcompose\uveryveryfaded\veryveryfaded\underline
 \def\standout#1\endstandout{%
 \endgraf
 \bigskip
