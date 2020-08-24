@@ -1570,15 +1570,18 @@ note that you must stick the \*tag to ;
 example:
 
 \repl
-~    :       Let $f : A \to B$. ;
-~a   :decl   Let $x$ be a real number. ;
+~    : Let $f : A \to B$. ;
+~a   : Let $x$ be a real number. ;
 \givens
-~    :  x : \type{Real} ;
-~   t:  $n$ ímpar ;
-~   =:  \lexists {k \in \ints} {n = 2k+1} ;
+~    : x : \Nat ;
+~   t: $n$ ímpar ;
+~   =: \lexists {k \in \ints} {n = 2k+1} ;
 \goals
 ~a / : coisa ;
 \endrepl
+
+To label some line of repl use  :foo  just like with \li's of lists.
+To refer to it: \refline[foo].
 
 proof part macros: \hidenum \shownum
    gg part macros: \intext \inmath
