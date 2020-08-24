@@ -113,9 +113,15 @@
 \def\WhenStrNeq#1#2#3{\IfStrEq {#1} {#2} {} {#3}}
 \def\WhenStrEmpty#1#2{\IfStrEq {#1} {} {#2} {}}
 \def\WhenStrNempty#1#2{\IfStrEq {#1} {} {} {#2}}
+\def\WhenStrContains#1#2#3{\IfStrContains {#1} {#2} {#3} {}}
+\def\WhenStrNcontains#1#2#3{\IfStrContains {#1} {#2} {} {#3}}
 \let\IfStrBeginsWith=\IfBeginWith
 \let\IfStrEndsWith=\IfEndWith
 
+% letters 
+\def\letterm{{m}}%
+\def\lettert{{t}}%
+\def\letterc{{c}}%
 
 % used all over the place in \ifx\NIL..\fi patterns
 \def\NIL{}
