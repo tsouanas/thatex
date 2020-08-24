@@ -44,17 +44,22 @@ $$%
 \tikz [x=0.12cm,y=0.32cm,->,rotate=#1] \draw (0,0) arc (-150:150:1 and 1);%
 }
 
-% mainly for creating \tforall and \texists
 \def\rotnodeopts#1#2#3{% with options
 % #1: opts
 % #2: angle
 % #3: label
-\node [#1, color=white] (tmp) {#3};
+\node [#1] (tmp) {\phantom{#3}};
 \node [#1, rotate around={#2:(tmp.center)}] at (tmp) {#3};
 }
 \def\rotnode#1#2{% without options
 \rotnodeopts {inner sep=0pt, outer sep=0pt} {#1} {#2}
 }
+\def\coloredrotnode#1#2#3{% without options
+\rotnodeopts {inner sep=0pt, outer sep=0pt, color=#1} {#2} {#3}
+}
 \def\rotated#1#2{%
 \tikz \rotnode {#1} {#2};
+}
+\def\coloredrotated#1#2#3{%
+\tikz \coloredrotnode {#1} {#2} {#3};
 }

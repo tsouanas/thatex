@@ -183,6 +183,7 @@
 \def\cancel#1{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,color=black!33,text=black]{$#1$};}
 \def\cancelspc#1{\cancel{\,#1\,}}
 \def\coloredcancel#1#2{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,color=#1,text=black]{$#2$};}
+\def\coloredfbcancel#1#2#3{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,color=#1,text=#2]{$#3$};}
 \def\plusinfty{{+\infty}}
 \def\minusinfty{{-\infty}}
 \def\pminfty{{\pm\infty}}
@@ -524,6 +525,9 @@ $$}
 \def\tripleneq{\mathrel{\smartnot{\tripleeq}}} % symbol
 \def\tripleasseq{\mathrel{:\equiv}} % symbol
 \def\tripleiff{{\Lleftarrow\mkern-3mu\Rrightarrow}} % symbol
+\def\tripleshortiff{{\Lleftarrow\mkern-12mu\Rrightarrow}} % symbol
+\def\tripleviff{{\raise -.666ex \hbox{\rotated{90}{$\tripleshortiff$}}\mkern-6mu}}
+\def\coloredtripleviff#1{{\raise -.666ex \hbox{\rotated{90}{{\color{#1}$\tripleshortiff$}}}\mkern-6mu}}
 \let\syneq=\tripleeq        % syntactic
 \let\synasseq=\tripleasseq
 \let\synneq=\tripleneq
@@ -532,6 +536,7 @@ $$}
 \def\semeq{\mathrel{\eqcirc}}
 \def\semneq{\mathrel{\not\eqcirc}}
 \def\intiff{\;\mathrel{\tripleiff}\;}
+\def\intviff{\tripleviff}
 \def\intiffsymbol{\tripleiff}
 \def\defintiffsymbol{\mathop{\buildrel{\deftag} \over {\intiffsymbol}}}
 \def\abbreq{\mathrel{\;{\buildrel{\abbrtag} \over {\tripleeq}\;}}}
@@ -543,6 +548,8 @@ $$}
 \def\abusedefeq{\mathrel{{\buildrel{\abutag} \over {\inteq}}}}
 \def\abusedefiff{\;\mathrel{{\buildrel{\abutag} \over {\intiff}}\;}}
 \let\means=\intiff
+\let\vmeans=\intviff
+\let\coloredvmeans=\coloredtripleviff
 \let\sugiff=\sugariff
 \let\sugeq=\sugareq
 \let\abbriff=\sugariff
@@ -1239,61 +1246,281 @@ $$}
 \def\topocross{\times}
 %%}}}
 
-%%{{{ givens/goals table 
-\def\gg\givens#1\goals#2\endgg{%
-{%
-\halign{
-\hfil##\hfil &\strut\vrule \hfil##\hfil\cr
-{\bf ~~\sayName{givens}~~} & {\bf ~~\sayName{goals}~~}\cr\noalign{\hrule}
-\vtop{%
-\def\git##1{##1\cr}%
-\def\gim##1{$##1$\cr}%
-\halign{~##~\hfil\cr
-#1
-}}
-&
-\vtop{%
-\def\git##1{##1\cr}%
-\def\gim##1{$##1$\cr}%
-\halign{~##~\hfil\cr
-#2
-}}\cr
-}
-}
+%%{{{ repl/givens/goals table 
+% XXX: the whole implementation has grown too complex/ugly
+% TODO: reimplement / simplify
+
+\Newskip repl=.666\bigskipamount;
+
+\definecolor{replcomment}{cmyk}{0.888,.333,.888,0}
+\definecolor{replmeaning}{cmyk}{0.888,.333,.888,0}
+\DefStyle replcomment {\color{faded}}
+\DefStyle replfaded {\color{faded}}
+\DefStyle replR {\color{alertR}}
+\DefStyle replG {\color{alertG}}
+\DefStyle replB {\color{alertB}}
+
+\def\replalertstyle{\ifreplignorealerts\else\color{alert}\fi}
+
+\newcount\repllineno
+\newif\ifrepllabline
+\newif\ifreplhidelineno
+\newif\ifreplmath
+\newif\ifreplalert
+\newif\ifreplcross
+\newif\ifreplmeaning
+\newif\ifreplcomputation
+\newif\ifreplcontinuation
+\newif\ifreplskipcount
+\newif\ifreplignorealerts
+\newif\ifreplphantom
+\newif\ifreplhide
+
+% TODO: XXX: a better implementation would have \replhandleopts and \replhandleopt
+% TODO: XXX: fix bools: they are mixed (too much!) in and out of thisrepllinestyles
+
+\def\replhandleopts#1{%
+\def\thisrepllinestyles{}%
+\WhenStrContains{#1}{-}{\addto\thisrepllinestyles{\replcommentstyle}}%
+\WhenStrContains{#1}{a}{\replalerttrue\addto\thisrepllinestyles{\replalertstyle}}%
+\WhenStrContains{#1}{f}{\addto\thisrepllinestyles{\replfadedstyle}}%
+\WhenStrContains{#1}{R}{\addto\thisrepllinestyles{\replRstyle}}%
+\WhenStrContains{#1}{G}{\addto\thisrepllinestyles{\replGstyle}}%
+\WhenStrContains{#1}{B}{\addto\thisrepllinestyles{\replBstyle}}%
+\WhenStrContains{#1}{c}{\replcomputationtrue}%
+\WhenStrContains{#1}{,}{\replcontinuationtrue}%
+\WhenStrContains{#1}{t}{\addto\thisrepllinestyles{\replmathfalse}}%
+\WhenStrContains{#1}{m}{\addto\thisrepllinestyles{\replmathtrue}}%
+\WhenStrContains{#1}{/}{\addto\thisrepllinestyles{\replcrosstrue}}%
+\WhenStrContains{#1}{=}{\addto\thisrepllinestyles{\replmeaningtrue}}%
+\WhenStrContains{#1}{x}{\replphantomtrue}%
+\WhenStrContains{#1}{X}{\replhidetrue}%
 }
 
-\def\proofrepl#1\givens#2\goals#3\endproofrepl{%
+\newbox\replmaxscript
+\newbox\replmaxgiven
+\newbox\replmaxgoal
+\newdimen\replscriptwidth
+\newdimen\replgivenswidth
+\newdimen\replgoalswidth
+
+\def\setreplmaxscript#1{\global\setbox\replmaxscript\hbox{#1}\global\replscriptwidth=\wd\replmaxscript}
+\def\setreplmaxgiven#1{\global\setbox\replmaxgiven\hbox{#1}\global\replgivenswidth=\wd\replmaxgiven}
+\def\setreplmaxgoal#1{\global\setbox\replmaxgoal\hbox{#1}\global\replgoalswidth=\wd\replmaxgoal}
+
+\def\replline#1:#2 #3; {% opts:lab body
+% init bools
+\replskipcountfalse
+\replcontinuationfalse
+\replcomputationfalse
+\replphantomfalse
+\replhidefalse
+\repllablinefalse
+% handle opts
+\replhandleopts{#1}%
+\ifreplphantom \def\repllinebody{\phantom{#3\unskip}}%
+\else          \def\repllinebody{#3\unskip}%
+\fi
+\ifvanishes#2\\\else\repllablinetrue\fi
+% implications
+\ifreplcontinuation\replskipcounttrue\fi
+\ifreplphantom\replskipcounttrue\fi
+\ifreplhide\replskipcounttrue\fi % redundant at the moment
+% start
+\ifreplhide
+\else
+\ifreplskipcount
+\else
+\global\advance\repllineno by 1\relax
+\ifreplhidelineno\else\llap{\color{faded}\sizeix\sf\the\repllineno\quad\ \ }\fi
+\fi % /ifreplskipcount
 {%
-\endgraf\bigskip\noindent
-\hbox to \hsize{
-\vtop{
-\halign to .333\hsize{##\hfil\cr
-\proofstylize{\proofname.}\cr
-#1
+\let~=\OLDTILDE
+\thisrepllinestyles
+\ifreplcomputation
+\quad$\computed { \\ \repllinebody }$
+\relax
+\else
+\ifreplcontinuation\quad\fi\repllinebody%
+\fi % \ifreplcomputation
+}%
+\ifrepllabline\labline[#2=\the\repllineno]\fi
+\cr
+\fi % /ifreplhide
 }
+
+\def\replggline#1:#2 #3; {% opts:lab body (lab does nothing here)
+\replhandleopts{#1}%
+\ifreplphantom \def\repllinebody{\phantom{#3\unskip}}%
+\else          \def\repllinebody{#3\unskip}%
+\fi
+\ifreplhide
+\else
+{%
+\let~=\OLDTILDE
+\thisrepllinestyles
+\ifreplcross
+  \ifreplalert
+    \ifreplmath $\coloredcancel{red}{\repllinebody}$
+    \else       $\coloredcancel{red}{\text{\repllinebody}}$
+    \fi
+  \else % (not replalert)
+    \ifreplmath $\coloredfbcancel{black}{black}{\repllinebody}$
+    \else       $\coloredfbcancel{black}{black}{\text{\repllinebody}}$
+    \fi
+  \fi % /ifreplalert
+\else % (not replcross)
+  \ifreplmeaning
+    $\mathcoled{ &\ \raise-.5ex\hbox{$\coloredvmeans{replmeaning}$} \\
+                 &\color{replmeaning}\!\ifreplmath\repllinebody\else\text{\repllinebody}\fi \\}$
+  \else % (not replmeaning) (this is the "plain" case)
+    \ifreplmath$\repllinebody$\else\repllinebody\fi
+  \fi % /ifreplmeaning
+\fi % /ifreplcross
+}%
+\procruster\cr
+\fi % /ifreplhide
 }
-\hfill
-\vtop{
-\halign{
-\hfil##\hfil &\strut\vrule \hfil##\hfil\cr
-{\bf ~~\sayName{givens}~~} & {\bf ~~\sayName{goals}~~}\cr\noalign{\hrule}
-\vtop{%
-\def\git##1{##1\cr}%
-\def\gim##1{$##1$\cr}%
-\halign{~##~\hfil\cr
-#2
-}}
-&
-\vtop{%
-\def\git##1{##1\cr}%
-\def\gim##1{$##1$\cr}%
-\halign{~##~\hfil\cr
-#3
-}}\cr
+
+\def\replpadding{\hglue .666em\relax}
+\def\replvrule{{\color{veryfaded}\vrule width .333em\relax}}
+\def\replhrule{\noalign{{\color{veryfaded}\hrule depth .333pt\relax}}}
+\def\replggvrule{{\color{veryfaded}\vrule width .333pt\relax}}
+
+\def\replshownum{\global\replhidelinenofalse}
+\def\replhidenum{\global\replhidelinenotrue}
+
+\def\replscript #1\endreplscript{%
+\ifreplhidelineno\def\restorereplhidelineno{\global\replhidelinenotrue}%
+\else            \def\restorereplhidelineno{\global\replhidelinenofalse}%
+\fi
+{%
+\global\repllineno=0\relax
+\let\li=\replline
+\let\shownum=\replshownum
+\let\hidenum=\replhidenum
+\let\OLDTILDE=~%
+\def\qed{\hfill\ensuremath{\qedsymbol}}%
+\def~{\li}%
+\ifdim\replscriptwidth>0pt\halign to \replscriptwidth\else\halign\fi { ##\hfil \cr
+{\bf \sayName{proof}}\strut\cr
+\replhrule\cr
+#1%
 }
+}%
+\restorereplhidelineno
 }
+
+\def\givens#1\endgivens{%
+{%
+\global\replmathtrue
+\global\replignorealertsfalse
+\def\inmath{\global\replmathtrue}%
+\def\intext{\global\replmathfalse}%
+\let\li=\replggline
+\let\OLDTILDE=~%
+\def~{\li}%
+\ifdim\replgivenswidth>0pt\halign to \replgivenswidth\else\halign\fi { ##\hfil \cr
+{\bf \sayName{givens}}\strut\cr
+\replhrule\cr
+#1%
 }
+}%
 }
+
+\def\goals#1\endgoals{%
+{%
+\global\replmathtrue
+\global\replignorealertsfalse
+\def\inmath{\global\replmathtrue}%
+\def\intext{\global\replmathfalse}%
+\let\li=\replggline
+\let\OLDTILDE=~%
+\def~{\li}%
+\ifdim\replgoalswidth>0pt\halign to \replgoalswidth\else\halign\fi { ##\hfil \cr
+{\bf \sayName{goals}}\strut\cr
+\replhrule\cr
+#1%
+}
+}%
+}
+
+\def\repltable\givens#1\goals#2\endrepltable{%
+{%
+\eop\replskip\noi
+\hbox to \hsize {%
+\hfil
+\replvrule
+\replpadding
+\vtop{\givens#1\endgivens}%
+\hfil
+\replggvrule
+\hfil
+\vtop{\goals#2\endgoals}%
+\replpadding
+\replvrule
+\hfil
+}
+}%
+\eop\replskip\noi
+}
+
+\def\replproof#1\endreplproof{%
+{%
+\eop\replskip\noi
+\hbox to \hsize {%
+\hfil
+\replvrule
+\replpadding
+\vtop{\replscript#1\endreplscript}%
+\replpadding
+\replvrule
+\hfil
+}
+}%
+\eop\replskip\noi
+}
+
+\def\repl #1\givens#2\goals#3\endrepl{%
+{%
+\eop\replskip\noi
+\hbox to \hsize {%
+\replvrule
+\replpadding
+\vtop{\replscript#1\endreplscript}%
+\replpadding
+\hfil
+\replvrule
+\replpadding
+\vtop{\givens#2\endgivens}%
+\replpadding
+\replggvrule
+\replpadding
+\vtop{\goals#3\endgoals}%
+\replpadding
+\replvrule
+}
+}%
+\eop\replskip\noi
+}
+
+\def\repls #1\endrepls{%
+\begingroup
+\replscriptwidth=0pt\relax
+\replgivenswidth=0pt\relax
+\replgoalswidth =0pt\relax
+% XXX: restorerepls... here, not restorerepl...
+\ifreplhidelineno\def\restorereplshidelineno{\global\replhidelinenotrue}%
+\else            \def\restorereplshidelineno{\global\replhidelinenofalse}%
+\fi
+\let\shownum=\replhidenum
+\let\hidenum=\replhidenum
+\def\maxproof##1: ##2; {\IfStrContains {##1} {m} {\setreplmaxscript{$##2$}} {\setreplmaxscript{##2}}}%
+\def\maxgiven##1: ##2; {\IfStrContains {##1} {t} {\setreplmaxgiven {##2}}   {\setreplmaxgiven {$##2$}}}%
+\def\maxgoal ##1: ##2; {\IfStrContains {##1} {t} {\setreplmaxgoal  {##2}}   {\setreplmaxgoal  {$##2$}}}%
+#1%
+\restorereplshidelineno
+\endgroup
 }
 
 %%}}}
@@ -1336,3 +1563,47 @@ They get their main argument non-delimited:
 
 note that you must stick the \*tag to ;
 (this is terrible)
+
+
+# repls
+
+example:
+
+\repl
+~    :       Let $f : A \to B$. ;
+~a   :decl   Let $x$ be a real number. ;
+\givens
+~    :  x : \type{Real} ;
+~   t:  $n$ ímpar ;
+~   =:  \lexists {k \in \ints} {n = 2k+1} ;
+\goals
+~a / : coisa ;
+\endrepl
+
+proof part macros: \hidenum \shownum
+   gg part macros: \intext \inmath
+
+use \replproof .. \endreplproof when you need just the script part
+use \repltable .. \endrepltable when you need just the Givens/Goals table
+
+options for repl/gg lines:
+  -: comment
+  f: faded (unfocused)
+  a: alert
+  R: red
+  G: green
+  B: blue
+  ,: continuation line
+  x: phantom
+  X: don't show at all
+
+options for repl lines only:
+  c: computed
+  s: skip number (when \shownum)
+
+options for gg lines only:
+  t: this one in text
+  m: this one in math
+  /: cancel out
+  =: meaning of above
+

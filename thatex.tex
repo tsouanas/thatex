@@ -525,6 +525,7 @@
 \def\labsmart       {\labsuffix smart }
 \def\labnear        {\labsuffix near }
 \def\labtag         {\labsuffix tag }
+\def\labline        {\labsuffix line }
 \def\labfull        {\labsuffix full }
 \def\labtitle       {\labsuffix title }
 \def\labformal      {\labsuffix formal }
@@ -539,6 +540,8 @@
 \def\refpabbrofid[#1]{\REFERPAGERAW[\pageabbr:#1]}
 \def\refpwordofid[#1]{\REFERPAGERAW[\pageword:#1]}
 \def\reflabelofid[#1]{\REFERTEXTRAW[#1,label]} % this should normally return the label
+
+\def\refline[#1]{\ALTREFERNUDE[#1,line]}%
 
 \def\refsuffix #1 [#2]{\REFER[#2,#1]}
 \def\refsmart       {\refsuffix smart }
