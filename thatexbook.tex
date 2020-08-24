@@ -662,6 +662,8 @@
 
 \def\chapintro#1\par{\noindent\introstylize{#1}\endgraf\chaptitleskip}
 
+\def\chapclassname{\sayName{\chapclass}}
+
 %%{{{ \dochapconf 
 \def\dochapconf#1{%
 % 1: conf body
@@ -956,6 +958,7 @@
 \def\secheadzhook{\endgroup\hfil\endgraf\sectitleskip}
 \def\secbodyahook{\noindent}
 \def\secbodyzhook{}
+\def\secclassname{\sayName{\secclass}}
 
 %%{{{ \dosecconf 
 % common configuration macros for note
