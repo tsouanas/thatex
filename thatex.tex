@@ -1017,22 +1017,21 @@
 \definecolor{trueR}{rgb}{1,0,0}
 \definecolor{trueG}{rgb}{0,1,0}
 \definecolor{trueB}{rgb}{0,0,1}
+\DefStyle aA {\color{alert}}
 \DefStyle aR {\color{alertR}}
 \DefStyle aG {\color{alertG}}
 \DefStyle aB {\color{alertB}}
-\let\aR=\aRstyle
-\let\aG=\aGstyle
-\let\aB=\aBstyle
-\def\alert#1{{\color{alert}#1}}
-\def\alertR#1{{\color{alertR}#1}}
-\def\alertG#1{{\color{alertG}#1}}
-\def\alertB#1{{\color{alertB}#1}}
+\let\alertstyle=\aAstyle
+\let\aR=\aRstylize
+\let\aG=\aGstylize
+\let\aB=\aBstylize
+\let\alert=\aAstylize
+\let\alertR=\aR
+\let\alertG=\aG
+\let\alertB=\aB
 \def\trueR#1{{\color{trueR}#1}}
 \def\trueG#1{{\color{trueG}#1}}
 \def\trueB#1{{\color{trueB}#1}}
-\let\alerta=\alertR
-\let\alertb=\alertB
-\let\alertc=\alertG
 \def\faded#1{{\color{faded}#1}}
 \def\veryfaded#1{{\color{veryfaded}#1}}
 \def\veryveryfaded#1{{\color{veryveryfaded}#1}}

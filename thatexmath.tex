@@ -1256,11 +1256,11 @@ $$}
 \definecolor{replmeaning}{cmyk}{0.888,.333,.888,0}
 \DefStyle replcomment {\color{faded}}
 \DefStyle replfaded {\color{faded}}
-\DefStyle replR {\color{alertR}}
-\DefStyle replG {\color{alertG}}
-\DefStyle replB {\color{alertB}}
+\DefStyle replR {\aRstyle}
+\DefStyle replG {\aGstyle}
+\DefStyle replB {\aBstyle}
 
-\def\replalertstyle{\ifreplignorealerts\else\color{alert}\fi}
+\def\replalertstyle{\ifreplignorealerts\else\alertstyle\fi}
 
 \newcount\repllineno
 \newif\ifrepllabline
