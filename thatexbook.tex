@@ -88,7 +88,7 @@
 %%{{{ appendix printers  
 
 %%{{{ \printpartpage 
-\def\printpartpage#1{{
+\def\printpartpage#1{{%
 \partpage
 \hbox{}\vfil
 \twentyfourbf
@@ -134,7 +134,8 @@
 \begingroup
 \def\paragid{##2}%
 \def\paragtag{##3\fullprooftagdecorator}%
-\noindent{\bf \reftagofid[##2]\fullprooftagdecorator.}
+\noi
+\llap{{\bf \reftagofid[##2]\fullprooftagdecorator.\enspace}}%
 \labpageofid[##2_fullproof]%
 % XXX: XXXnoproperreftext: reftext would make passing tag redundant:
 % \labtagofid[##2_fullproof={\reftexttagofid{##2}}]
@@ -153,8 +154,8 @@
 
 %%{{{ \printhintsappendix 
 \def\printhintsappendix{%
-{% begin group
 \immediate\closeout\hintsfile
+{% begin group
 \def\hintentry##1##2##3{%
 % 1: paragid
 % 2: hintno
@@ -162,8 +163,8 @@
 \begingroup
 \def\paragid{##1}%
 \ifnum\number\i=##2\relax
-\noindent
-{\bf {\reftagofid[##1]\hinttagdecorator##2}.~}%
+\eop\noi
+\llap{{\bf \reftagofid[##1]\hinttagdecorator##2.\enspace}}%
 {\labtagofid[##1_hint_##2=##2]}%
 \autogetpdefs
 ##3%
@@ -172,16 +173,24 @@
 \fi
 \endgroup
 \goodbreak
-}
-% XXX: ^ to hintentry htan mesa sto Repeat
-\Repeat \for{i} \from{1} \to{\maxhintno} \do {% repeat
+}%
+% XXX: ^ hintentry was inside \Repeat
+\Repeat \for{i} \from{1} \to{\maxhintno} \do {%
+% hintsection sectionoid
 \hintsection \hintsterm \#\number\i.
+%%%% hintsection conf
+% not exactly a conf but that's a good place
 \hldestizepage
+%%%% /hintsection conf
 
+%%%% hintsection body
 \safereadfile{hints}
+\reallynobreak
+%%%% /hintsection body
 
 \endhintsection
-}% /repeat
+% /hintsection
+}% /Repeat
 }% end group
 }
 %%}}}
@@ -200,12 +209,13 @@
 \ifnum##2>\curchapterno
     \curchapterno=##2\relax
     \goodbreak
-    \centerline{\fourteenbf\sayName{chapter} \chapterthe{##2}}\solutionskip
+    \centerline{\fourteenbf\sayName{chapter} \chapterthe{##2}}
+    \nobreak\solutionskip
 \fi
-\noindent
+\noi
 \begingroup
 \def\paragid{##1}%
-{\bf \reftagofid[##1]\solutiontagdecorator.\enspace}%
+\llap{{\bf \reftagofid[##1]\solutiontagdecorator.\enspace}}%
 \autogetpdefs
 ##3%
 \endgroup
@@ -213,6 +223,7 @@
 }
 
 \safereadfile{solutions}
+
 }%
 }
 %%}}}
@@ -820,7 +831,7 @@
 %%}}}
 
 %%{{{ \dochapquote 
-\def\dochapquote{
+\def\dochapquote{%
 \WhenStrNempty {\chapquote}
 {%
 \bgroup \color{quotecolor}%
@@ -1012,7 +1023,7 @@
 %%}}}
 
 %%{{{ \genbeginsec 
-\def\genbeginsec#1#2#3{
+\def\genbeginsec#1#2#3{%
 % NOTE: Some work has been done to make it easy to
 % get a \genbeginsec out of it, but not completely:
 % some section-specific parts remain.
@@ -1071,6 +1082,7 @@
 \sechead
 \secheadzhook
 % /sechead
+\nobreak
 %%%% toc stuff
 \hldestizepage
 \ifblank\secno\WRITETOCENTRY
@@ -1099,6 +1111,7 @@
 \secskip
 \secleave
 \endgroup % /sec* total namespace
+\goodbreak
 }
 
 %%}}}
@@ -1700,7 +1713,7 @@
 \ea\string\csname hintentry\endcsname
     {#1}
     {#2}
-    {#3}
+    {#3}%
 }%
 }
 
@@ -1712,7 +1725,7 @@
 \ea\string\csname solutionentry\endcsname
     {#1}
     {#2}
-    {#3}
+    {#3}%
 }%
 }
 
@@ -1728,7 +1741,7 @@
     {#1}
     {#2}
     {#3}
-    {#4}
+    {#4}%
 }%
 }
 
