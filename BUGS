@@ -4,7 +4,5 @@ Fix fonts, especially sizes won't vary \mathit or \dterm in footnotes, etc.
 \it inside $$\text{..}$$ changes meaning, as shown by \show\it.
 This is because of amstex.tex.
 
-\footnote won't be printed when in hint.
-
 \sourcecode can't display some unicode characters, like \nats, etc.
 
