@@ -423,10 +423,10 @@
 %%{{{ ThaTeX citations 
 
 % high level interface, based on thatex-eplain
-\def\printcitestart{\bgroup\ninessdc[}
-\def\printcitefinish{]\egroup}
-\def\printcitenote#1{\ninerm:~{\relax#1}}
-\def\printbetweencitations#1{{\ninesl,}~}
+\def\printcitestart{\bgroup\ninebf[\bgroup\ninebf}
+\def\printcitefinish{\egroup]\egroup}
+\def\printcitenote#1{\ninebf:\ninerm~{\relax#1}}
+\def\printbetweencitations#1{{,}~}
 \def\CITE#1{\eplaincite{#1}}
 \def\CITEIN#1: #2\ENDCITEIN{\eplaincite[#2]{#1}}
 \def\cite[#1]{\IfStrContains {#1} {: }
