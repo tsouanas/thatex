@@ -262,6 +262,8 @@
 \def\spade{\spadesuit}
 \def\heartop{\mathbin{\heartsuit}}
 \def\spadeop{\mathbin{\spadesuit}}
+\def\doublemidrel{\mathrel{\mid\mkern-2mu\mid}}
+\def\doublemidbin{\mathbin{\mid\mkern-2mu\mid}}
 %%}}}
 
 %%{{{ combinatorics 
@@ -1029,7 +1031,7 @@ $$}
 \def\covby{\mathrel{-\mkern-9mu<}}
 \def\wellbelow{\mathrel{\ll}}
 \let\wbelow=\wellbelow
-\def\incomparable{\mathrel{\mid\mkern-2mu\mid}}
+\def\incomparable{\doublemidrel}
 \def\altincomparable{\mathrel{\rangle\mkern-5mu\langle}}
 \let\incomp=\incomparable
 \def\embto{\mathrel{\hookrightarrow}}
