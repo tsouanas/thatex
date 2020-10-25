@@ -6,3 +6,5 @@ This is because of amstex.tex.
 
 \sourcecode can't display some unicode characters, like \nats, etc.
 
+\pdefs should use `*`, not `\pdef`
+
