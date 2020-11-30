@@ -150,17 +150,32 @@
 % TODO: create \KnuthSave macro
 %%}}}
 
+%%{{{ misc symbols 
+\def\caret{\hat{}}
+\def\heart{\heartsuit}
+\def\spade{\spadesuit}
+\def\heartop{\mathbin{\heartsuit}}
+\def\spadeop{\mathbin{\spadesuit}}
+\def\doublemidrel{\mathrel{\mid\mkern-2mu\mid}}
+\def\doublemidbin{\mathbin{\mid\mkern-2mu\mid}}
+\def\blackleq{\mathrel{\ooalign{\raise .2ex\hbox{$\blacktriangleleft$}\cr$\leq$\cr}}}% TODO: fix size flexibility (text size and mathstyle) (mathpalette?)
+\def\subsetbar{\mathrel{\subset\mkern-7.24mu \raise .22ex \hbox{\vrule width .4pt height 1.2ex depth 0ex}}}% TODO: same
+\def\bang{\mathord{!}}
+\def\postbang#1{\mathord{#1\mkern1mu!}}
+\def\postbangp#1{\mathord{\paren{#1}!}}
+\def\prebang#1{\mathord{!\mkern1mu#1}}
+\def\prebangp#1{\mathord{!\paren{#1}}}
+%%}}}
+
 %%{{{ elementary math 
 \let\knuthsum=\sum
 \let\knuthprod=\prod
 \let\Sum=\knuthsum
 \let\Product=\knuthprod
 \let\Prod=\Product
-\let\Pro=\Product
 \let\Coproduct=\coprod
 \let\Coprod=\Coproduct
 \let\Copr=\Coproduct
-\let\Cop=\Coproduct
 \let\sum\relax
 \def\prod{\mathbin{\Pi}}
 \def\coprod{\amalg}
@@ -205,6 +220,11 @@
 \def\bsystemed#1{\left\{\systemed{#1}\right\}}
 \def\segment#1{\overline{#1}}
 \def\veq{\mathrel{\tikz\node [rotate=90] {=};}}
+\let\factorial=\postbang
+\let\factorialp=\postbangp
+\let\fac=\factorial
+\let\facp=\factorialp
+\def\numbase #1 #2{{#2}_{\text{\sixss (#1)}}}
 %%}}}
 
 %%{{{ matrices 
@@ -254,17 +274,6 @@
 \let\varsigma=\UNDEFINED
 \let\varphi=\UNDEFINED
 
-%%}}}
-
-%%{{{ misc symbols 
-\def\caret{\hat{}}
-\def\heart{\heartsuit}
-\def\spade{\spadesuit}
-\def\heartop{\mathbin{\heartsuit}}
-\def\spadeop{\mathbin{\spadesuit}}
-\def\doublemidrel{\mathrel{\mid\mkern-2mu\mid}}
-\def\doublemidbin{\mathbin{\mid\mkern-2mu\mid}}
-\def\blackleq{\mathrel{\ooalign{\raise .2ex\hbox{$\blacktriangleleft$}\cr$\leq$\cr}}}
 %%}}}
 
 %%{{{ combinatorics 
