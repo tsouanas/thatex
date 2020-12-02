@@ -210,6 +210,10 @@
 \let\nifty=\neginfty
 \def\interval#1#2#3{\left#1{#2}\right#3}
 \let\ival=\interval
+\def\ivaloo(#1,#2){\ival({#1,#2})}
+\def\ivaloc(#1,#2]{\ival({#1,#2})}
+\def\ivalco[#1,#2){\ival[{#1,#2})}
+\def\ivalcc[#1,#2]{\ival[{#1,#2}]}
 \def\cbrt#1{{\root3\of{#1}}}
 \def\fac#1{{#1}!}
 \def\facp#1{\fac{\paren{#1}}}
