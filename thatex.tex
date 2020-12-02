@@ -650,7 +650,7 @@
         \tliststartedtrue
         \noindent\llap{##1\tlitemspace}\ignorespaces
         \global\tlistjustskippedfalse}
-    \def\ctlitemlab##1##2{\ctlitem{##1}\ifvanishes##2\\\else\labp[##2=##1]\labsmart[##2=\fartag{##1}]\labnear[##2=\neartag{##1}]\fi}
+    \def\ctlitemlab##1##2{\ctlitem{##1}\ifvanishes##2\\\else\labp[##2=##1]\labsmart[##2=\fartag{##1}]\labnear[##2=\neartag{##1}]\labtag[##2=##1]\fi}
     % default tlitem
     \def\tlitem{\ctlitem{\tlitemtag}}
     % tlitem that works with empty or nonempty tag
