@@ -293,6 +293,14 @@
 %%}}}
 
 %%{{{ layout/text tools 
+\def\centersubr#1#2{\phantom{{}_{#2}}{#1}{{}_{#2}}}
+\def\centersubl#1#2{{{}_{#2}}{#1}\phantom{{}_{#2}}}
+\def\centersupr#1#2{\phantom{{}^{#2}}{#1}{{}^{#2}}}
+\def\centersupl#1#2{{{}^{#2}}{#1}\phantom{{}^{#2}}}
+\def\centermidr#1#2{\phantom{\mathord{#2}}{#1}{\mathord{#2}}}
+\def\centermidl#1#2{{\mathord{#2}}{#1}\phantom{\mathord{#2}}}
+\let\centersub=\centersubr
+\let\centersup=\centersupr
 \def\halmos{\vrule width .3em height 1.8ex depth .1ex\relax}
 \def\lmathwith#1#2{$$\xxalignat2{#1}&{#2}&&\endxxalignat$$}
 \def\lmath#1\endlmath{\lmathwith{\qqqquad}{#1}}
