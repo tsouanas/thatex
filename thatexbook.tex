@@ -436,7 +436,7 @@
 
 \def\INDEXSYMBOLPRIME#1{\INDEXSYMBOLPRIMEPRIME #1\END}
 \def\INDEXSYMBOLPRIMEPRIME #1-- #2\END{\INDEXSYMBOL{#1 }{#2}}
-\def\INDEXDEForINDEXSYMBOLPRIME#1{\saveexpandmode\noexpandarg\IfStrContains{#1}{--}{\INDEXSYMBOLPRIME{#1}}{\INDEXDEF{#1}}\restoreexpandmode}
+\def\INDEXDEForINDEXSYMBOLPRIME#1{\saveexpandmode\noexpandarg\IfStrContains{#1}{-- }{\INDEXSYMBOLPRIME{#1}}{\INDEXDEF{#1}}\restoreexpandmode}
 \def\INDEXSYMBOL#1#2{%
 % 1: symbol
 % 2: pronunciation
