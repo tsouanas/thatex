@@ -163,12 +163,12 @@
 \begingroup
 \def\paragid{##1}%
 \ifnum\number\i=##2\relax
-\eop\noi
+\reallynobreak\noi
 \llap{{\bf \reftagofid[##1]\hinttagdecorator##2.\enspace}}%
 {\labtagofid[##1_hint_##2=##2]}%
 \autogetpdefs
 ##3%
-\goodbreak
+\eop\goodbreak
 \hintskip
 \fi
 \endgroup
@@ -184,8 +184,8 @@
 %%%% /hintsection conf
 
 %%%% hintsection body
-\safereadfile{hints}
 \reallynobreak
+\safereadfile{hints}
 %%%% /hintsection body
 
 \endhintsection
