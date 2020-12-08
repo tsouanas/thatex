@@ -187,8 +187,12 @@
 \def\slashfrac#1#2{\leavevmode\kern.1em\raise.5ex\hbox{\the\scriptfont0 #1}\kern-.1em/\kern-.15em\lower.25ex\hbox{\the\scriptfont0 #2}} % TeXbook x11.6
 \let\sfrac=\slashfrac
 \def\ntimes{\mathbin{\cdot}}
+\def\spaceop{\mathbin{\,}}
+\def\invisop{{\,}}
+\def\juxtap{{}}
+\let\sop=\spaceop
+\let\stimes=\invisop
 \def\nplus{\mathbin{+}}
-\def\stimes{\,}
 \def\expop{\mathbin{\caret}}
 \def\pow#1{^{#1}}
 \def\plus{+}
