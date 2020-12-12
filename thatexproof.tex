@@ -34,9 +34,10 @@
 \fi
 }
 
-% PROOF{,m,r,mr}:
+% PROOF{,m,r,mr,mrw}:
 % m = assume math mode for nodes
 % r = put rule labels in \rulelabel{...}
+% w = space-delimited args (words)
 
 \def\PROOF#1{
 \def\A{\Assumption}
@@ -72,6 +73,16 @@
 \def\A##1{\Assumption{$##1$}}
 \def\Inf{\InfFromBy}
 \def\I##1##2 ##3##4{
+\InfFromBy##1{\rulelabel{##3}}{$##4$}
+}
+#1
+\DisplayProof
+}
+
+\def\PROOFmrw#1{
+\def\A##1 {\Assumption{$##1$}}
+\def\Inf{\InfFromBy}
+\def\I##1##2 ##3 ##4 {
 \InfFromBy##1{\rulelabel{##3}}{$##4$}
 }
 #1
