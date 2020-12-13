@@ -11,9 +11,6 @@
 % \let\IfStrContains=\IfSubStr\relax
 % \def\WhenStrContains#1#2#3{\IfStrContains {#1} {#2} {#3} {}}
 
-% TODO: \I's ##2 argument is ignored.
-% It should be used to determine the style of inference line: --, ==, etc.
-
 \def\Assumption#1{\AxiomC{#1}}
 \def\InfFromBy#1#2#3#4{% #1: arity; #2: style; #3: label; #4: conclusion
 % write \RightLabel{#3} only for non-0 case
@@ -23,13 +20,13 @@
 % write \RightLabel{#3} in all cases
 \RightLabel{#3}
 % set style
-\WhenStrContains {#2} {*****} {\noLine}                % no line
-\WhenStrContains {#2} {-----} {\singleLine\solidLine}  % single solid
-\WhenStrContains {#2} {=====} {\doubleLine\solidLine}  % double solid
-\WhenStrContains {#2} {.....} {\singleLine\dottedLine} % single dotted
-\WhenStrContains {#2} {:::::} {\doubleLine\dottedLine} % double dotted
-\WhenStrContains {#2} {'''''} {\singleLine\dashedLine} % single dashed
-\WhenStrContains {#2} {"""""} {\doubleLine\dashedLine} % double dashed
+\WhenStrContains {#2} {**} {\noLine}                % no line
+\WhenStrContains {#2} {--} {\singleLine\solidLine}  % single solid
+\WhenStrContains {#2} {==} {\doubleLine\solidLine}  % double solid
+\WhenStrContains {#2} {..} {\singleLine\dottedLine} % single dotted
+\WhenStrContains {#2} {::} {\doubleLine\dottedLine} % double dotted
+\WhenStrContains {#2} {''} {\singleLine\dashedLine} % single dashed
+\WhenStrContains {#2} {""} {\doubleLine\dashedLine} % double dashed
 % infer conclusion
 \ifcase #1 \UnaryInfC{#4}       % 0
 \or        \UnaryInfC{#4}       % 1
