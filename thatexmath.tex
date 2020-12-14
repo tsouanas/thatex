@@ -375,7 +375,19 @@ $$
 \saveeqnumber
 $$}
 \def\compute#1\endcompute{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
-\def\stepproof#1\endstepproof{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
+\def\proofsteps#1\endproofsteps{$$
+\def\steptnb##1{&\text{##1}\\}
+\def\stepmnb##1{&{##1}\\}
+\def\steptby##1##2{&\text{##1}\by{##2}\\}
+\def\stepmby##1##2{&{##1}\by{##2}\\}
+\def\thfrtby##1##2{\steptby{\ttherefore##1}{##2}}
+\def\thfrmby##1##2{\steptby{\ttherefore$##1$}{##2}}
+\def\thfrtnb##1{\steptnb{\ttherefore##1}}
+\def\thfrmnb##1{\steptnb{\ttherefore$##1$}}
+\alignat2\relax\fixmcount #1\endalignat\saveeqnumber
+$$}
+\def\ttherefore{$\therefore$~~}
+\def\thereforet#1{\text{\ttherefore #1}}
 \def\mathmistake#1\endmathmistake{\eop\vskip 1ex\noi\line{\hfill$#1$\hfil\mistake}}
 \def\submath#1{\Sb#1\endSb}
 \def\supmath#1{\Sp#1\endSp}
@@ -387,16 +399,6 @@ $$}
 \def\skipcol{\sepcol{}}
 \def\quadcol{\sepcol{\quad}}
 \def\qquadcol{\sepcol{\qquad}}
-\def\ttherefore{$\therefore$~~}
-\def\proofsteptnb#1{&\text{#1}\\}
-\def\proofstepmnb#1{&{#1}\\}
-\def\proofsteptby#1#2{&\text{#1}\by{#2}\\}
-\def\proofstepmby#1#2{&{#1}\by{#2}\\}
-\def\thereforetby#1#2{\proofsteptby{\ttherefore#1}{#2}}
-\def\thereforemby#1#2{\proofsteptby{\ttherefore$#1$}{#2}}
-\def\thereforetnb#1{\proofsteptnb{\ttherefore#1}}
-\def\thereforemnb#1{\proofsteptnb{\ttherefore$#1$}}
-\def\thereforet#1{\text{\ttherefore #1}}
 \makeatletter
 \def\paths#1{%
 {%
