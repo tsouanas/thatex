@@ -7,5 +7,3 @@ Reimplement double/triplecolumns because eplain's doesn't play well with lists.
 
 Support altlabels for a chap/sec/parag.
 
-thatexproof currently ignores the inference line style.
-
