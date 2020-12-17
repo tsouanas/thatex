@@ -1000,11 +1000,15 @@
 %%}}}
 
 %%{{{ ThaTeX text 
+
 \let\eop=\endgraf
 \let\noi=\noindent
 \def\emph#1{{\it #1}}
 \def\strikeout#1{\ensuremath{\tikz[baseline] \node [strike out,draw,anchor=text,inner sep=0pt,text=black]{$\text{#1}$};}}
 \def\yearof#1{\oldstylize{#1}}
+
+%%{{{ color related 
+
 \definecolor{alert}{rgb}{.9,.0,.0}
 \definecolor{alertR}{rgb}{.9,.0,.0}
 \definecolor{alertG}{rgb}{.0,.7,.0}
@@ -1040,6 +1044,9 @@
 \defcompose\ufaded\faded\underline
 \defcompose\uveryfaded\veryfaded\underline
 \defcompose\uveryveryfaded\veryveryfaded\underline
+
+%%}}}
+
 \def\standout#1\endstandout{%
 \endgraf
 \bigskip
@@ -1048,24 +1055,9 @@
 \endgraf
 \noindent
 }
-\def\quote{%
-\endgraf
-\medskip
-\goodbreak
-\advance \leftskip 2\parindent \advance \rightskip 2\parindent%
-\begingroup
-\noindent
-}
-\def\quotepar{\quote\indent}
-\def\endquote{%
-\endgraf
-\endgroup
-\medskip
-\goodbreak
-\advance \leftskip -2\parindent \advance \rightskip -2\parindent%
-\noindent
-}
-% text alignments: centering, righting, lefting
+
+%%{{{ text alignments: centering, righting, lefting 
+
 \def\centeringmargin#1 #2\endcenteringmargin{%
 \par
 \begingroup
@@ -1089,6 +1081,7 @@
 \par
 \endgroup
 }
+
 \def\righting#1\endrighting{\rightingmargin 0pt #1\endrightingmargin}
 \def\leftingmargin#1 #2\endleftingmargin{%
 \par
@@ -1117,12 +1110,31 @@
 \advance \leftskip -2\parindent%
 \noindent
 }
+
+%%}}}
+
+%%{{{ quotations 
+
+\def\quote{%
+\endgraf
+\medskip
+\goodbreak
+\advance \leftskip 2\parindent \advance \rightskip 2\parindent%
+\begingroup
+\noindent
+}
+\def\quotepar{\quote\indent}
+\def\endquote{%
+\endgraf
+\endgroup
+\medskip
+\goodbreak
+\advance \leftskip -2\parindent \advance \rightskip -2\parindent%
+\noindent
+}
+
 \def\spoken#1\endspoken{\quote\emph{#1}\endquote}
 \def\dialogue#1\enddialogue{{\tlist: \def\say{\li --: }\def\who ##1: {\li {##1:}: }#1\endtlist}}
-\def\tablerule{\noalign{\smallskip\hrule\smallskip}}
-\def\tablethickrule{\noalign{\smallskip\hrule\hrule\hrule\smallskip}}
-\def\tabletoprule{\noalign{\hrule\smallskip}}
-\def\tablebottomrule{\noalign{\smallskip\hrule}}
 \def\tool#1{{\sf #1}}
 \def\symquote#1{`\,#1\,'}
 \def\symqquote#1{``\,#1\,''}
@@ -1141,6 +1153,19 @@
 \let\msymqq=\mathsymqquote
 \def\utter#1{\wq{#1}}
 \def\flwq#1{\llap{<<}#1\rlap{>>}}% wq with floating quotes for use in \quote's etc.
+
+%%}}}
+
+%%{{{ tabular formats 
+
+\def\tablerule{\noalign{\smallskip\hrule\smallskip}}
+\def\tablethickrule{\noalign{\smallskip\hrule\hrule\hrule\smallskip}}
+\def\tabletoprule{\noalign{\hrule\smallskip}}
+\def\tablebottomrule{\noalign{\smallskip\hrule}}
+\def\ttable#1\endttable{\medskip\hfil\vbox{\halign{#1}}\hfil\medskip\noi}
+
+%%}}}
+
 \def\dotspc{{.} }% XXX: to work with \remark, etc.
 \def\versus{vs\dotspc}% XXX: to work with \remark, etc.
 \let\vs=\versus
@@ -1157,6 +1182,7 @@ $
 }
 $%
 }
+
 %%}}}
 
 %%{{{ ThaTeX aux files 
