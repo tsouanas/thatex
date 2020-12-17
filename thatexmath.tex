@@ -85,6 +85,7 @@
 \def\namedfpf#1{\mathord{\mathit{#1}}}% for functional programming functions
 \def\namedtype#1{\mathord{\mathsf{#1}}}
 \def\namedcat#1{\mathord{\mathsfmbf{#1}}}
+\def\namedfou#1{\mathord{\mathsfmbf{#1}}}% for foundation/theory acronyms
 \def\namedop#1{\operatorname{#1}}
 \def\namedoplims#1{\operatornamewithlimits{#1}}
 \def\cal{\Cal}
@@ -134,6 +135,7 @@
 \def\DefOPP#1 #2  {\csgroup\def{#1}##1{{\namedop{#2}\funparen{##1}}}}% always of arity 1, parenthesizing argument
 \def\DefTYPE#1 #2 {\csgroup\def{#1}{{\namedtype{#2}}}}
 \def\DefCAT#1 #2  {\csgroup\def{#1}{{\namedcat{#2}}}}
+\def\DefFOU#1 #2  {\csgroup\def{#1}{{\namedfou{#2}}}}
 % Use plain \DefThing if the command name coincides with the printed name
 \def\DefRel#1  {\DefREL #1 #1 }
 \def\DefFun#1  {\DefFUN #1 #1 }
@@ -142,6 +144,7 @@
 \def\DefOpP#1  {\DefOPP #1 #1 }
 \def\DefType#1 {\DefTYPE #1 #1 }
 \def\DefCat#1  {\DefCAT #1 #1 }
+\def\DefFou#1  {\DefFOU #1 #1 }
 % WARNING: use the above macros without % at the end, because it needs
 % (and eats) the whitespace.  For example:
 % \DefFUN suc succ
@@ -1030,6 +1033,24 @@ $$}
 \def\kleenestarp#1{\paren{#1}^\star}
 \let\kstar=\kleenestar
 \let\kstarp=\kleenestarp
+%%}}}
+
+%%{{{ foundational systems and theories 
+\DefFou ZF
+\DefFou ZFC
+\DefFou AC
+\DefFou DC
+\DefFou ZFDC
+\DefFou NBG
+\DefFou NF
+\DefFou MK
+\DefFou CZF
+\DefFou IZF
+\DefFou MLTT
+\DefFou HoTT
+\DefFou ETCS
+\DefFou CL
+\def\ACN{\mathord{\AC}_\nats}
 %%}}}
 
 %%{{{ type theory 
