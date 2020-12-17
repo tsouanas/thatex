@@ -326,6 +326,10 @@
 \def\by#1{&\qquad&\mathby{#1}}
 \def\noby{&\qquad&}
 \let\obvious=\noby% needed if no line has any explanation
+\def\ltext#1{&\text{#1}&\quad}
+\def\rtext#1{&\quad&\text{#1}}
+\def\lexplain#1{&\explanation{#1}&\quad}
+\def\rexplain#1{&\quad&\explanation{#1}}
 \def\qtext#1{\quad\text{#1}\quad}
 \def\qqtext#1{\qquad\text{#1}\qquad}
 \def\qqqtext#1{\qqquad\text{#1}\qqquad}
@@ -350,14 +354,14 @@
 \def\mathcols#1 #2\endmathcols{$$\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber$$}
 \def\mathxcols#1 #2\endmathxcols{$$\xxalignat#1\relax\fixmcount #2\endxxalignat\saveeqnumber$$}
 \def\mathtightcols#1 #2\endmathtightcols{$$\alignat#1\relax\fixmcount #2\endalignat\saveeqnumber$$}
+\def\mathnote#1\endmathnote{$$\alignat2\relax\fixmcount #1 \endalignat\saveeqnumber$$}
+\def\compute#1\endcompute{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
 \def\mathcall#1\endmathcall{%
 $$
 \def\called##1{&\qqqquad& \textrm{##1}}%
-\alignat2\relax
-\fixmcount
+\alignat2\relax\fixmcount
 #1
-\endalignat
-\saveeqnumber
+\endalignat\saveeqnumber
 $$}
 \def\context#1#2 #3\endcontext{% e.g.: \context tm makes text:math default lines
 $$
@@ -368,13 +372,10 @@ $$
 \ifx\rtype\letterm\def\rstylize##1{##1}\else
 \ifx\rtype\lettert\def\rstylize##1{\text{##1}}\fi\fi
 \def\x ##1: ##2; {\lstylize{##1\unskip} &~~\oftype~~\rstylize{##2}}%
-\alignat1\relax
-\fixmcount
+\alignat1\relax\fixmcount
 #3
-\endalignat
-\saveeqnumber
+\endalignat\saveeqnumber
 $$}
-\def\compute#1\endcompute{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
 \def\proofsteps#1\endproofsteps{$$
 \def\steptnb##1{&\text{##1}\\}
 \def\stepmnb##1{&{##1}\\}
@@ -394,6 +395,7 @@ $$}
 \def\mathed#1{\gathered#1\endgathered}
 \def\mathcoled#1{\alignedat1\relax #1\endalignedat}
 \def\mathcolsed#1 #2{\alignedat#1\relax #2\endalignedat}
+\def\mathnoted#1{\alignedat2\relax #1\endalignedat}
 \def\computed#1{\alignedat2\relax #1\endalignedat}
 \def\sepcol#1{&#1&}
 \def\skipcol{\sepcol{}}
