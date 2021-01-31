@@ -1328,13 +1328,13 @@ z+w  &= 2x  \by {by Lemma}  \autotag[foo] \\ % Tags this as (1) and labels it 'f
 To decorate an existing tag use \decotag:
 
 \math
-1 + 1 = 3   \decotag[terror=joke with _*] % Tags this as (Fun*) and labels it 'terror'
+1 + 1 = 3  \decotag[terror=joke with _*] % Tags this as (Fun*) and labels it 'terror'
 \endmath
 
 You may decorate autotagged stuff as well:
 
 \math
-z+w = 3x \decotag[altfoo=foo with *_']   % Tags this as (*1') and labels it 'altfoo'
+z+w = 3x   \decotag[altfoo=foo with *_'] % Tags this as (*1') and labels it 'altfoo'
 \endmath
 
 You may abuse decotag to have subequations.
@@ -1350,6 +1350,7 @@ Then use \decotag:
 
 Makes no sense to use a \subeqnumber counter for this,
 since usually they are few and more easily managed like this.
+
 %%}}}
 
 %%{{{ How to use enums 
