@@ -1,0 +1,55 @@
+% ThaTeX
+\input thatex
+\input thatexmath
+\input thatexfonts
+\input thatexlang
+\input thatextikz
+\input thatexcd
+\input thatexproof
+\input thatexlang-br
+
+\def\strutdepth{\dp\strutbox}
+\def\marginalnote#1{\strut\vadjust{\kern-\strutdepth
+   \vtop to \strutdepth{\baselineskip\strutdepth\vss\llap{#1\phantom{xx}}\null}}}
+\def\points#1{\marginalnote{(#1)}}
+
+\DefStyle proofpart {\scshape}
+\DefStyle case      {\scshape}
+\DefStyle proclaim  {\sl}
+
+\def\case#1{\noindent\casestylize{#1}}
+\def\proofpart#1{\noindent\proofpartstylize{#1}}
+\def\crcase#1{\endgraf\case{#1}}
+\def\crproofpart#1{\endgraf\proofpart{#1}}
+\def\reversed#1{{#1}$^{\leftarrow}$}
+
+\def\definition #1. #2\par{\noindent{\bf #1.}\par\noindent #2\medskip}
+\def\proposition #1. #2\par{\noindent{\bf #1.}\par\noindent {\sl #2}\medskip}
+\def\question #1. #2\par{\noindent{\bf #1.}\par\noindent #2\medskip}
+\def\Question #1. [#2] #3\par{\noindent{\bf #1.}\points{#2}\par\noindent #3\medskip}
+\def\answer #1. #2\par{\medskip\par\noindent{\bf #1.}\par\noindent {#2}\bigskip}
+
+\def\dterm#1{{\sl #1}}
+\def\qed{\hfill\ensuremath{\halmos}}
+
+\def\lemmaskip{\vskip 16mm}
+
+\def\mktitle{%
+\noindent
+\centerline{\twelvebf \COURSE, \SEMESTER}
+\centerline{Professor: \PROFESSOR}
+\medskip
+\noindent
+\centerline{\twelvebf \HANDOUT}
+\medskip
+\noindent
+\centerline{(points: \POINTS; deadline: \DEADLINE)}
+\vskip 2cm
+}
+
+% default values
+\def\PROFESSOR {Thanos}
+\def\POINTS    {100}
+
+\tenrm
+\sizex
