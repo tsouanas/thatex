@@ -38,18 +38,19 @@
 \noindent
 \centerline{\twelvebf \COURSE, \SEMESTER}
 \centerline{Professor: \PROFESSOR}
-\medskip
-\noindent
+\medskip\noindent
 \centerline{\twelvebf \HANDOUT}
-\medskip
-\noindent
+\medskip\noindent
 \centerline{(points: \POINTS; deadline: \DEADLINE)}
-\vskip 2cm
+\WhenStrNempty {\STUDENT} {\medskip\noindent\centerline{Student: \STUDENT}}
+\medskip
+\vskip 16mm
 }
 
 % default values
 \def\PROFESSOR {Thanos}
 \def\POINTS    {100}
+\def\STUDENT   {}
 
 \tenrm
 \sizex
