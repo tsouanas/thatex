@@ -34,6 +34,7 @@
 \def\qed{\hfill\ensuremath{\halmos}}
 
 \def\lemmaskip{\vskip 16mm}
+\def\titleskip{\vskip 8mm}
 
 \def\mktitle{%
 \noindent
@@ -43,14 +44,13 @@
 \centerline{\twelvebf \HANDOUT}
 \medskip\noindent
 \centerline{(points: \POINTS; deadline: \DEADLINE)}
-\WhenStrNempty {\STUDENT} {\medskip\noindent\centerline{Student: {\it \STUDENT}}}
-\medskip
-\vskip 16mm
+\WhenStrNempty {\STUDENT} {\medskip\noindent {Student: {\it \STUDENT}}}
+\titleskip
 }
 
 
 % default values
-\def\PROFESSOR {Thanos}
+\def\PROFESSOR {Θάνος}
 \def\POINTS    {100}
 \def\STUDENT   {}
 
