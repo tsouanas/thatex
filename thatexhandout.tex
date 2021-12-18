@@ -17,11 +17,13 @@
 \DefStyle case      {\scshape}
 \DefStyle proclaim  {\sl}
 
+\def\statement#1{{\proclaimstyle #1}}
 \def\case#1{\noindent\casestylize{#1}}
 \def\proofpart#1{\noindent\proofpartstylize{#1}}
 \def\crcase#1{\endgraf\case{#1}}
 \def\crproofpart#1{\endgraf\proofpart{#1}}
 \def\reversed#1{{#1}$^{\leftarrow}$}
+\def\dterm#1{{\sl #1}}
 
 \def\definition #1. #2\par{\noindent{\bf #1.}\par\noindent #2\medskip}
 \def\proposition #1. #2\par{\noindent{\bf #1.}\par\noindent {\sl #2}\medskip}
@@ -29,7 +31,6 @@
 \def\Question #1. [#2] #3\par{\noindent{\bf #1.}\points{#2}\par\noindent #3\medskip}
 \def\answer #1. #2\par{\medskip\par\noindent{\bf #1.}\par\noindent {#2}\bigskip}
 
-\def\dterm#1{{\sl #1}}
 \def\qed{\hfill\ensuremath{\halmos}}
 
 \def\lemmaskip{\vskip 16mm}
@@ -42,10 +43,11 @@
 \centerline{\twelvebf \HANDOUT}
 \medskip\noindent
 \centerline{(points: \POINTS; deadline: \DEADLINE)}
-\WhenStrNempty {\STUDENT} {\medskip\noindent\centerline{Student: \STUDENT}}
+\WhenStrNempty {\STUDENT} {\medskip\noindent\centerline{Student: {\it \STUDENT}}}
 \medskip
 \vskip 16mm
 }
+
 
 % default values
 \def\PROFESSOR {Thanos}
