@@ -31,10 +31,14 @@
 \def\Question #1. [#2] #3\par{\noindent{\bf #1.}\points{#2}\par\noindent #3\medskip}
 \def\answer #1. #2\par{\medskip\par\noindent{\bf #1.}\par\noindent {#2}\bigskip}
 
+\def\rules #1. #2\par{\eop\noindent{\bf #1.} \elist I: #2 \endelist\rulesskip}
+\def\rule #1 {\li #1 }
+
 \def\qed{\hfill\ensuremath{\halmos}}
 
 \def\lemmaskip{\vskip 16mm}
 \def\titleskip{\vskip 8mm}
+\def\rulesskip{\vskip 16mm}
 
 \def\mktitle{%
 \noindent
