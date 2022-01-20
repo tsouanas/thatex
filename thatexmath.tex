@@ -455,14 +455,17 @@ $$}
 %%{{{ number theory 
 \def\divides{\mathrel{\mid}}
 \def\divideseqwidth{\;\mathrel{\mid}\;}
+\def\ndivides{\mathrel{\nmid}}
+\let\divs=\divides
+\let\divseqw=\divideseqwidth
 \let\knuthcong=\cong
 \let\knuthncong=\ncong
+\let\knuthdiv=\div
 \def\cong{\equiv}
 \undefine\ncong
 \def\ncong{\mathrel{\not\equiv}}
 \def\congmod#1{\mathrel{\cong_{#1}}}
 \def\modulo#1{\left(\mod{#1}\right)}
-\def\ndivides{\mathrel{\nmid}}
 \def\gengcd#1{\mathopen{\text{\rm gcd}(}#1\mathclose{)}}
 \def\genlcm#1{\mathopen{\text{\rm lcm}(}#1\mathclose{)}}
 \def\gcd#1#2{\left(#1,#2\right)}
@@ -474,6 +477,8 @@ $$}
 \DefRel Prime
 \DefRel Even
 \DefRel Odd
+\DefFun quot
+\DefFun rem
 %%}}}
 
 %%{{{ logic metalang 
@@ -778,8 +783,6 @@ $$}
 \DefFun uncurry
 \DefFun eval
 \DefFun compose
-\DefFun quot
-\DefFun rem
 \def\paren#1{{\left({#1}\right)}}
 \def\nparen#1{{(\left.{#1}\right.)}}% forced normal-size parens
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
