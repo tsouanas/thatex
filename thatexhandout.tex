@@ -19,20 +19,21 @@
 \DefStyle proclaim  {\sl}
 
 \def\statement#1{{\proclaimstyle #1}}
-\def\case#1{\noindent\casestylize{#1}}
-\def\proofpart#1{\noindent\proofpartstylize{#1}}
+\def\case#1{\noi\casestylize{#1}}
+\def\proofpart#1{\noi\proofpartstylize{#1}}
 \def\crcase#1{\eop\case{#1}}
 \def\crproofpart#1{\eop\proofpart{#1}}
 \def\reversed#1{{#1}$^{\leftarrow}$}
 \def\dterm#1{{\sl #1}}
 
-\def\definition #1. #2\par{\noindent{\bf #1.}\par\noindent #2\medskip}
-\def\proposition #1. #2\par{\noindent{\bf #1.}\par\noindent {\sl #2}\medskip}
-\def\question #1. #2\par{\noindent{\bf #1.}\par\noindent #2\medskip}
-\def\Question #1. [#2] #3\par{\noindent{\bf #1.}\points{#2}\par\noindent #3\medskip}
-\def\answer #1. #2\par{\medskip\par\noindent{\bf #1.}\par\noindent {#2}\bigskip}
+\def\parhead#1{\noi{\bf #1.}\eop\noi}
+\def\definition #1. #2\par{\parhead{#1}{#2}\medskip}
+\def\proposition #1. #2\par{\parhead{#1}{\sl #2}\medskip}
+\def\question #1. #2\par{\parhead{#1}{#2}\medskip}
+\def\Question #1. [#2] #3\par{\noi{\bf #1.}\points{#2}\par\noi #3\medskip}
+\def\answer #1. #2\par{\medskip\parhead{#1.}{#2}\bigskip}
 
-\def\rules #1. #2\par{\eop\noindent{\bf #1.} \elist I: #2 \endelist\rulesskip}
+\def\rules #1. #2\par{\parhead{#1}\elist 1: #2 \endelist\rulesskip}
 \def\rule #1 {\li #1 }
 
 \def\qed{\hfill\ensuremath{\halmos}}
@@ -42,14 +43,14 @@
 \def\rulesskip{\vskip 16mm}
 
 \def\mktitle{%
-\noindent
+\noi
 \centerline{\twelvebf \COURSE, \SEMESTER}
 \centerline{Professor: \PROFESSOR}
-\medskip\noindent
+\medskip\noi
 \centerline{\twelvebf \HANDOUT}
-\medskip\noindent
+\medskip\noi
 \centerline{(points: \POINTS; deadline: \DEADLINE)}
-\WhenStrNempty {\STUDENT} {\medskip\noindent {Student: {\it \STUDENT}}}
+\WhenStrNempty {\STUDENT} {\medskip\noi {Student: {\it \STUDENT}}}
 \titleskip
 }
 
