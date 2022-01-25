@@ -14,6 +14,7 @@
 \def\points#1{\marginalnote{(#1)}}
 \def\bonus#1{{#1}$^{\flat}$}
 \def\newquestionpage{\newpage}
+\def\newpageifstudent{\WhenStrNempty{\STUDENT}{\newquestionpage}}
 
 \DefStyle proofpart {\scshape}
 \DefStyle case      {\scshape}
@@ -30,8 +31,8 @@
 \def\parhead#1{\noi{\bf #1.}\eop\noi}
 \def\definition #1. #2\par{\parhead{#1}{#2}\medskip}
 \def\proposition #1. #2\par{\parhead{#1}{\sl #2}\medskip}
-\def\question #1. #2\par{\parhead{#1}{#2}\medskip}
-\def\Question #1. [#2] #3\par{\noi{\bf #1.}\points{#2}\par\noi #3\medskip}
+\def\question #1. #2\par{\newpageifstudent\parhead{#1}{#2}\medskip}
+\def\Question #1. [#2] #3\par{\newpageifstudent\noi{\bf #1.}\points{#2}\par\noi #3\medskip}
 \def\answer #1. #2\par{\medskip\parhead{#1}{#2}\bigskip}
 
 \def\rules #1. #2\par{\parhead{#1}\elist 1: #2 \endelist\rulesskip}
