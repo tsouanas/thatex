@@ -1075,7 +1075,6 @@ $$}
 %%}}}
 
 %%{{{ type theory 
-\def\type#1{{\namedtype{#1}}}
 \DefType Nat
 \DefType Int
 \DefType Rat
@@ -1089,8 +1088,10 @@ $$}
 \DefType Obj
 \DefType Cmd
 \DefType Var
+\DefType Type
 \def\oftype{\mathrel{:}}
 \let\is=\oftype
+\let\hastype=\is
 \def\namedrule#1{{\scshape #1}}
 \def\rulelabel#1{{\smaller\scshape #1}}
 %%}}}
