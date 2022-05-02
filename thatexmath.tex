@@ -625,6 +625,12 @@ $$}
 \def\unique{{\exists!}}
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
 \def\quantifiedt#1{\quantified{\text{#1}}}
+\let\qfd=\quantified
+\let\qfdt=\quantifiedt
+\def\cforall#1#2{\pforall{#1}&\quantified{#2}}% for use in \mathcol
+\def\cexists#1#2{\pexists{#1}&\quantified{#2}}% for use in \mathcol
+\def\cforallt#1#2{\pforall{#1}&\quantifiedt{#2}}% for use in \mathcol
+\def\cexistst#1#2{\pexists{#1}&\quantifiedt{#2}}% for use in \mathcol
 \def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
 \def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantifiedt{#3}}
 \def\lforall{\quantifierabbr{\forall}}
