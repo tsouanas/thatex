@@ -980,8 +980,11 @@
 
 \def\decotag[#1=#2 with #3_#4]{\manutag[#1={#3\csgroup{\xrlabel{\refpwd#2}}#4}]}
 
+\def\sametag[#1]{\manutag[#1=#1]}
+
 % abbreviations:
 \let\mtag  = \manutag
+\let\stag  = \sametag
 \let\atag  = \autotag
 \let\axtag  = \axiomtag
 \let\mitag = \manuinvtag
