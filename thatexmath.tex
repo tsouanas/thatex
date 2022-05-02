@@ -1245,7 +1245,6 @@ $$}
 
 %%{{{ placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
-\def\hole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
 \def\dhole{{\mathord{-}}}
 \def\bhole{{\mathord{\bullet}}}
 \def\uhole{{\mathord{\_}}}
@@ -1256,9 +1255,12 @@ $$}
 \def\asklhole{{\lthole?\lthole}}
 \def\askbox{{\holed ?}}
 \def\namedhole#1{\text{\thole$#1$\thole}}
-\def\holed#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
+\def\chole{{\ensuremath{\colorbox{holecolor}{$\phantom{x}$}}}}
+\def\choled#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
 \def\dotswithsome#1{\dots#1\dots#1\dots}
 \def\holewithsome#1{\lthole#1\lthole#1\lthole}
+\let\hole=\chole
+\let\holed=\choled
 %%}}}
 
 %%{{{ strings 
