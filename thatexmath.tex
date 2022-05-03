@@ -350,7 +350,7 @@
 \let\mubrace=\munderbrace
 \let\mobraceb=\moverbracebig
 \let\mubraceb=\munderbracebig
-\def\shell#1\endshell{\quote{\tentt #1}\endquote}% TODO: make a real shell macro
+\def\shell#1\endshell{\quote{\let\\=\newline\tentt #1}\endquote}% TODO: make a real shell macro
 \def\cases#1{{\let\\=\cr\knuthcases{#1}}}
 % XXX: these contain hacks to help with math ref/labs
 \def\math#1\endmath{$$\gather\fixmcount #1\endgather\saveeqnumber$$}
@@ -1293,6 +1293,7 @@ $$}
 
 %%{{{ code 
 \def\code#1{\mathtt{#1}}
+\def\cmd#1{$\code{#1}$}
 %%}}}
 
 %%{{{ numerical 
