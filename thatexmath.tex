@@ -383,7 +383,7 @@ $$
 \endalignat\saveeqnumber
 $$}
 \def\proofsteps#1\endproofsteps{$$
-\def\steptnb##1{&\text{##1}\\}
+\def\steptnb##1{&\text{##1}&&\phantom.\\}
 \def\stepmnb##1{&{##1}\\}
 \def\steptby##1##2{&\text{##1}\by{##2}\\}
 \def\stepmby##1##2{&{##1}\by{##2}\\}
@@ -716,7 +716,8 @@ $$}
 \let\pcontaind=\psubset
 \def\nsubset{\smartnot\subset}
 \def\nsupset{\smartnot\supset}
-\def\notni{\smartnot\ni}
+\def\nin{\smartnot\in}
+\def\nni{\smartnot\ni}
 \def\nleq{\mathrel{\not\leq}}
 \def\ngeq{\mathrel{\not\geq}}
 \def\intersection{\cap}
@@ -908,10 +909,10 @@ $$}
 \def\descr#1#2{\descrsym\,{#1}\,.\,{#2}}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
 \def\inbag{\mathrel{\knuthvarepsilon}}
+\def\ninbag{\mathrel{\mkern-2mu\not{\mkern-3mu\knuthvarepsilon}}}
 \def\bagunion{\mathbin{\Cup}}
 \def\baginter{\mathbin{\Cap}}
 \def\bagplus{\mathbin{\oplus}}
-\def\notinbag{\mathrel{\mkern-2mu\not{\mkern-3mu\knuthvarepsilon}}}
 \def\subbag{\mathrel{\Subset}}
 \def\notsubbag{\mathrel{\not\Subset}}
 \def\emptybag{\bag{\mkern-3mu}}
