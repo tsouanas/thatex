@@ -8,3 +8,5 @@ This is because of amstex.tex.
 
 \pdefs should use `*`, not `\pdef`
 
+\pdefs defined on a chapter level seem to be empty-defined on appendices.
+
