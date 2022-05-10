@@ -301,6 +301,7 @@
 %%}}}
 
 %%{{{ layout/text tools 
+\let\knuthbrace=\brace
 \def\proclaim#1{\proclaimstylize{#1}}
 \def\centersubr#1#2{\phantom{{}_{#2}}{#1}{{}_{#2}}}
 \def\centersubl#1#2{{{}_{#2}}{#1}\phantom{{}_{#2}}}
@@ -315,7 +316,6 @@
 \def\lmath#1\endlmath{\lmathwith{\qqqquad}{#1}}
 \def\leftbrace#1{\left\{#1\right.}
 \def\rightbrace#1{\left.#1\right\}}
-\let\knuthbrace=\brace
 \def\brace#1{\left\{#1\right\}}
 \def\leftangle#1{\left<#1\right.}
 \def\rightangle#1{\left.#1\right>}
@@ -806,6 +806,7 @@ $$}
 \def\bracket#1{{\left[{#1}\right]}}
 \def\bigbracket#1{{\mathopen{\big[}{#1}\mathclose{\big]}}}
 \def\Bigbracket#1{{\mathopen{\Big[}{#1}\mathclose{\Big]}}}
+
 \def\st{\;\mathord{\pmb{\mid}}\;}
 \def\setst#1#2{\set{\,#1 \;\st\; #2\,}}% set such that
 \def\setstt#1#2{\set{\,#1 \;\st\; \text{#2}\,}}% textmode in filter
@@ -946,18 +947,24 @@ $$}
 \def\rtranscl#1{\decorateover{*}{#1}}
 \def\symcl#1{\decorateover{\leftrightarrow}{#1}}
 \def\refcl#1{\decorateover{=}{#1}}
-\def\cross{\times}
+\let\cross=\times
 \def\funspace#1#2#3{\mathord{\paren{#1 #2 #3}}}% funspace: set of #2 functions from #1 to #3
 \def\funs#1#2{\funspace{#1} \to    {#2}}
 \def\injs#1#2{\funspace{#1} \injto {#2}}
 \def\surs#1#2{\funspace{#1} \surto {#2}}
 \def\bijs#1#2{\funspace{#1} \bijto {#2}}
 \def\pars#1#2{\funspace{#1} \parto {#2}}
-\def\fcase#1#2{\mathord{\bracket{#1,#2}}}
-\def\fplus#1#2{\mathord{#1+#2}}% function-like (prefix) +
+% functions associated with products and coproducts
+\def\fcase#1#2{\mathord{\leftbrace{\mkern-3mu{\mathord{{\vphantom f #1} \atop {\vphantom f #2}}}}}}
 \def\fpair#1#2{\mathord{\tup{#1,#2}}}
-\def\fcross#1#2{\mathord{#1\cross#2}}% function-like (prefix) \cross
-\def\pfcross#1#2{\mathord{\paren{#1\cross#2}}}
+\def\fprod#1#2{\mathord{#1\cross#2}}% function-like (prefix) \cross
+\def\pfprod#1#2{\mathord{\paren{\fprod{#1}{#2}}}}
+\def\fcopair#1#2{\mathord{\bracket{#1,#2}}}
+\def\fcoprod#1#2{\mathord{#1+#2}}% function-like (prefix) +
+\def\pfcoprod#1#2{\mathord{\paren{\fplus{#1}{#2}}}}
+\let\pfsum=\pfcoprod
+\let\fsum=\fcoprod
+% more functions "for free"
 \def\diag{\Delta} % diagonal
 \def\diagdom#1{\diag_{#1}}
 \def\chr#1{\chi_{#1}}
