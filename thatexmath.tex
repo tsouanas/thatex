@@ -105,6 +105,21 @@
 \def\complex{{\bbb C}}
 \def\bools{{\bbb B}}
 \def\polys#1#2{#1\bracket{#2}} % #1: field ; #2: variable
+\def\negs#1{{#1}_{< 0}}
+\def\poss#1{{#1}_{< 0}}
+\def\nonnegs#1{{#1}_{\geq 0}}
+\def\nonposs#1{{#1}_{\leq 0}}
+\def\phants#1{{#1}_{\phantom{\geq 0}}}
+\def\posints{\poss\ints}
+\def\negints{\negs\ints}
+\def\nonposints{\nonposs\ints}
+\def\nonnegints{\nonnegs\ints}
+\def\phantsints{\phants\ints}
+\let\pints=\posints
+\let\nints=\negints
+\let\nnints=\nonnegints
+\let\npints=\nonposints
+\let\phints=\phantsints
 %%}}}
 
 %%{{{ alternative font for other uses (for example implementations) 
