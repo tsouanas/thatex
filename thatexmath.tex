@@ -1004,7 +1004,8 @@ $$}
 \let\comftt=\composeftt
 \let\oflab=\composeftt
 \def\app{\nobreak\,\nobreak}
-\def\diverges{\mathord{\uparrow}}
+\def\diverges#1{\mathopen{}{#1}\;\mathclose{\uparrow}}
+\def\converges#1{\mathopen{}{#1}\;\mathclose{\downarrow}}
 %%}}}
 
 %%{{{ lambda calculus 
