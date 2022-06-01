@@ -833,7 +833,6 @@ $$}
 \def\bracket#1{{\left[{#1}\right]}}
 \def\bigbracket#1{{\mathopen{\big[}{#1}\mathclose{\big]}}}
 \def\Bigbracket#1{{\mathopen{\Big[}{#1}\mathclose{\Big]}}}
-
 \def\st{\;\mathord{\pmb{\mid}}\;}
 \def\setst#1#2{\set{\,#1 \;\st\; #2\,}}% set such that
 \def\setstt#1#2{\set{\,#1 \;\st\; \text{#2}\,}}% textmode in filter
@@ -888,10 +887,29 @@ $$}
 \DefOp graph
 \DefOp range
 \DefOp domain
+
+% img / pre
 \def\funimg#1#2{#1\bracket{#2}}
-\def\funpreimg#1#2{#1^{-1}\bracket{#2}}
-\let\img=\funimg
-\let\pre=\funpreimg
+\def\funpre#1#2{#1^{-1}\bracket{#2}}
+\def\funpre#1#2{#1_{-1}\bracket{#2}}
+\def\rwimg#1#2{#1\mathbin{``}#2} % russell & whitehead
+\def\astimg#1{{#1}_*}
+\def\astpre#1{{#1}^*}
+\def\bangimg#1{{#1}_!}
+\def\bangpre#1{{#1}^!}
+\def\pimgsym{\mathord{{\vec{\wp}}}}
+\def\ppresym{\mathord{{\cev{\wp}}}}
+\def\pimg{\pimgsym}
+\def\ppre{\ppresym}
+\def\pimgsub#1{\mathord{{\vec{\wp}_{\!#1}}}}
+\def\ppresub#1{\mathord{{\cev{\wp}_{\!#1}}}}
+\def\existsfun#1{\exists_{#1}}
+\def\forallfun#1{\forall_{#1}}
+
+% default: usage: \img f A, \pre f B
+\let\img=\funimg % default; usage: \img f A
+\let\pre=\funpre % default; usage: \pre f B
+
 \let\rel=\mathrel
 \def\relp#1{\rel{\paren{#1}}}
 \let\of=\fcompose
