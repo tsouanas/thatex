@@ -856,7 +856,10 @@ $$}
 \def\famil#1#2#3{{\family {{#1}_{#2}} {{#2}\in{#3}}}}
 \def\faml#1#2{{\family {{#1}_{#2}} {{#2}}}}
 \def\sequence#1#2{{\paren{#1}_{#2}}}
+\let\seq=\sequence
 \def\seqn#1#2{\sequence {{#1}_{#2}} {#2}}
+\def\sequencefromto#1#2#3{{\paren{#1}_{#2}^{#3}}}
+\def\seqnft#1#2#3#4{\sequencefromto {#1} {{#2}={#3}} {#4}} % from to
 \def\seqnset#1#2{\set {{#1}_{#2}}_{#2}}
 \def\ssetp#1#2{({#1}\mathrel{;}{#2})}
 \def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
