@@ -213,7 +213,7 @@
 \let\sop=\spaceop
 \let\stimes=\invisop
 \def\nplus{\mathbin{+}}
-\def\expop{\mathbin{\caret}}
+\def\expop{\mathbin{{}^{{}_{\wedge}}}}
 \def\pow#1{^{#1}}
 \def\plus{+}
 \def\floor#1{\left\lfloor#1\right\rfloor}
@@ -255,6 +255,15 @@
 \def\numbase #1 #2{{#2}_{\text{\sixss (#1)}}}
 \def\minv#1{{#1}^{-1}} % multiplicative inverse
 \def\minvp#1{\finv{\paren{#1}}}
+\def\lexp#1 #2{\tldec{#1}{#2}}
+\def\rexp#1 #2{\trdec{#1}{#2}}
+\def\liter#1#2{\tldec{#1}{#2}}
+\def\riter#1#2{\trdec{#1}{#2}}
+\def\literop#1#2#3{\tldec{#2}{\mathord{#1#3}}}
+\def\riterop#1#2#3{\trdec{#2}{\mathord{#1#3}}}
+\def\iter#1#2{\tldec{#1}{#2}}
+\def\iterop#1#2#3{\tldec{#2}{\mathord{#1#3}}}
+\def\pexp#1 ^ #2{\paren{#1}^{#2}}
 %%}}}
 
 %%{{{ matrices 
@@ -918,14 +927,6 @@ $$}
 \let\of=\fcompose
 \let\following=\compose
 \let\after=\compose
-\def\lexp#1 #2{\tldec{#1}{#2}}
-\def\rexp#1 #2{\trdec{#1}{#2}}
-\def\liter#1#2{\tldec{#1}{#2}}
-\def\riter#1#2{\trdec{#1}{#2}}
-\def\literop#1#2#3{\tldec{#2}{\mathord{#1#3}}}
-\def\riterop#1#2#3{\trdec{#2}{\mathord{#1#3}}}
-\def\iter#1#2{\tldec{#1}{#2}}
-\def\iterop#1#2#3{\tldec{#2}{\mathord{#1#3}}}
 \def\incto{\mathrel{\hookrightarrow}}
 \def\subsetto{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, hook, "\mathord{\subset}"] \| {} \endcd}}
 \def\resto{\mathbin{\mkern-2mu\upharpoonright\mkern-1mu}}
