@@ -664,15 +664,26 @@ $$}
 \def\cexistst#1#2{\pexists{#1}&\quantifiedt{#2}}% for use in \mathcol
 \def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
 \def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantifiedt{#3}}
+\def\quantifiertabbr#1#2#3{\left(\/#1 \text{#2}\right)\!\quantified{#3}}
+\def\quantifiertabbrt#1#2#3{\left(\/#1 \text{#2}\right)\!\quantifiedt{#3}}
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
 \def\lforallt{\quantifierabbrt{\forall}}
 \def\lexistst{\quantifierabbrt{\exists}}
 \def\luniquet{\quantifierabbrt{\unique}}
+\def\ltforall{\quantifiertabbr{\forall}}
+\def\ltexists{\quantifiertabbr{\exists}}
+\def\ltunique{\quantifiertabbr{\unique}}
+\def\ltforallt{\quantifiertabbrt{\forall}}
+\def\ltexistst{\quantifiertabbrt{\exists}}
+\def\ltuniquet{\quantifiertabbrt{\unique}}
 \def\pexists#1{\paren{\exists#1}}
 \def\pforall#1{\paren{\forall#1}}
 \def\punique#1{\paren{\unique#1}}
+\def\ptexists#1{\paren{\exists\text{#1}}}
+\def\ptforall#1{\paren{\forall\text{#1}}}
+\def\ptunique#1{\paren{\unique\text{#1}}}
 \def\sexists#1{{\exists#1}\,}
 \def\sforall#1{{\forall#1}\,}
 \def\sunique#1{{\unique#1}\,}
