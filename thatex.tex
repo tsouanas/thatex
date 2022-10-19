@@ -109,6 +109,8 @@
 % IfSubStr has a bad name
 \let\IfStrContains=\IfSubStr\relax
 \def\IfSubStr#1#2#3{\IfStrContains {#2} {#1} {#3}}
+% StrBehind had a bad name, but I keep StrBehind available too
+\let\StrAfter=\StrBehind\relax
 \def\WhenStrEq#1#2#3{\IfStrEq {#1} {#2} {#3} {}}
 \def\WhenStrNeq#1#2#3{\IfStrEq {#1} {#2} {} {#3}}
 \def\WhenStrEmpty#1#2{\IfStrEq {#1} {} {#2} {}}
