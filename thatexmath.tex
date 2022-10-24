@@ -194,12 +194,12 @@
 \let\knuthsum=\sum
 \let\knuthprod=\prod
 \let\Sum=\knuthsum
-\def\Suml{\Sum\nolimits} % same line
+\def\Suml{\Sum\nolimits}% same line
 \let\Product=\knuthprod
 \let\Prod=\Product
+\def\Productl{\Product\nolimits}
 \let\Coproduct=\coprod
 \let\Coprod=\Coproduct
-\let\Copr=\Coproduct
 \let\sum\relax
 \def\prod{\mathbin{\Pi}}
 \def\coprod{\amalg}
@@ -1437,6 +1437,7 @@ $$}
 
 %%{{{ analysis 
 \def\norm#1{\left\Vert#1\right\Vert}
+\def\normx#1#2{\left\Vert#2\right\Vert_{#1}}% decoraded with a parameter
 \def\limto{\mathrel{\to}}
 \let\tendsto=\limto
 \let\tends=\tendsto
