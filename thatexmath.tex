@@ -246,11 +246,22 @@
 \def\cbrt#1{{\root3\of{#1}}}
 \def\fac#1{{#1}!}
 \def\facp#1{\fac{\paren{#1}}}
-\def\system#1\endsystem{\math\systemed{#1}\endmath}
 \def\systemed#1{\aligned#1\endaligned}
-\def\lsystemed#1{\left\{\systemed{#1}\right.}
-\def\rsystemed#1{\left.\systemed{#1}\right\}}
-\def\bsystemed#1{\left\{\systemed{#1}\right\}}
+\def\lsystemed#1{\leftbrace{\systemed{#1}}}
+\def\rsystemed#1{\rightbrace{\systemed{#1}}}
+\def\bsystemed#1{\brace{\systemed{#1}}}
+\def\modsystemed#1{\alignedat3\relax #1\endalignedat}
+\def\lmodsystemed#1{\leftbrace{\alignedat3\relax #1\endalignedat}}
+\def\rmodsystemed#1{\rightbrace{\alignedat3\relax #1\endalignedat}}
+\def\bmodsystemed#1{\brace{\alignedat3\relax #1\endalignedat}}
+\def\system#1\endsystem{\math\systemed{#1}\endmath}
+\def\lsystem#1\endlsystem{\math\lsystemed{#1}\endmath}
+\def\rsystem#1\endrsystem{\math\rsystemed{#1}\endmath}
+\def\bsystem#1\endbsystem{\math\bsystemed{#1}\endmath}
+\def\modsystem#1\endmodsystem{\math\modsystemed{#1}\endmath}
+\def\lmodsystem#1\endlmodsystem{\math\modlsystemed{#1}\endmath}
+\def\rmodsystem#1\endrmodsystem{\math\modrsystemed{#1}\endmath}
+\def\bmodsystem#1\endbmodsystem{\math\modbsystemed{#1}\endmath}
 \def\segment#1{\overline{#1}}
 \def\veq{\mathrel{\tikz\node [rotate=90] {=};}}
 \let\factorial=\postbang
@@ -359,7 +370,7 @@
 \def\mathby#1{\text{\explanationstylize{(#1)}}}
 \def\explanation#1{\text{\explanationstylize{(#1)}}}
 \def\by#1{&\qquad&\mathby{#1}}
-\def\cmod#1{&&\pmod{#1}}% use inside \modcompute
+\def\cmod#1{&&\pmod{#1}}% column mod: use inside \modcompute(d) and \modsystem(ed)
 \def\noby{&\qquad&}
 \let\obvious=\noby% needed if no line has any explanation
 \def\ltext#1{&\text{#1}&\quad}
