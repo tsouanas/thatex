@@ -396,7 +396,7 @@
 \let\mubraceb=\munderbracebig
 \def\shell#1\endshell{\quote{\let\\=\newline\tentt #1}\endquote}% TODO: make a real shell macro
 \def\cases#1{{\let\\=\cr\knuthcases{#1}}}
-% XXX: these contain hacks to help with math ref/labs
+% XXX: some of these contain hacks to help with math ref/labs
 \def\math#1\endmath{$$\gather\fixmcount #1\endgather\saveeqnumber$$}
 \def\longmath#1\endlongmath{$$\multline\fixmcount #1\endmultline\saveeqnumber$$}
 \def\mathcol#1\endmathcol{$$\alignat1\relax\fixmcount #1\endalignat\saveeqnumber$$}
@@ -404,6 +404,7 @@
 \def\mathxcols#1 #2\endmathxcols{$$\xxalignat#1\relax\fixmcount #2\endxxalignat\saveeqnumber$$}
 \def\mathtightcols#1 #2\endmathtightcols{$$\alignat#1\relax\fixmcount #2\endalignat\saveeqnumber$$}
 \def\mathnote#1\endmathnote{$$\alignat2\relax\fixmcount #1 \endalignat\saveeqnumber$$}
+\def\widecompute#1\\#2\endwidecompute{$$\multline #1 \\ \computed {\quad#2}\endmultline$$}
 \def\compute#1\endcompute{$$\alignat2\relax\fixmcount #1\endalignat\saveeqnumber$$}
 \def\modcompute#1\endmodcompute{$$\alignat3\relax\fixmcount #1\endalignat\saveeqnumber$$}
 \def\mathcall#1\endmathcall{%
