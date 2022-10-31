@@ -1226,16 +1226,12 @@ $$}
 \def\funref[#1.#2]{$#1.#2$}
 \def\fundefPRIME #1:#2\\#3\endfundefPRIME{%
 \mathcoled {%
-&#1 \eqtype #2 \\
+&#1\hastype #2 \\
 &\!\matrix\format\l\;&\;\;\l\\
 #3\endmatrix
 }}
 \def\fundefed#1{\fundefPRIME #1\endfundefPRIME}
-\def\funDefed#1{\DefFun #1 \fundefPRIME #1\endfundefPRIME}
-\def\fundef#1\endfundef{$$\fundefPRIME #1\endfundefPRIME$$}% no \def takes place
-\def\funDef#1:#2\\#3\endfunDef{$$\DefFun #1 \fundefPRIME \fun{#1}:#2\\#3\endfundefPRIME$$}% \def is local to this fundef
-\def\funDEF#1:#2\\#3\endfunDEF{\DefFun #1 $$\fundefPRIME \fun{#1}:#2\\#3\endfundefPRIME$$}% \def takes place on the current scope
-
+\def\fundef#1\endfundef{$$\fundefPRIME #1\endfundefPRIME$$}
 %%}}}
 
 %%{{{ category theory 
