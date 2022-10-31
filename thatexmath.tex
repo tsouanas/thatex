@@ -1206,8 +1206,10 @@ $$}
 \def\namedrule#1{{\scshape #1}}
 \def\rulelabel#1{{\smaller\scshape #1}}
 
-\def\cons#1{\namedcons{#1}}
-\def\type#1{\namedtype{#1}}
+\let\cons=\namedcons
+\let\type=\namedtype
+\let\fun=\namedfun
+\let\rule=\namedrule
 \def\dataorsymbol{\pmb{\mid}}
 \def\dataforms#1 = #2{\mathtt{data}\ \type{#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
 \def\data#1 #2\enddata{%
@@ -1230,8 +1232,10 @@ $$}
 #3\endmatrix
 }}
 \def\fundefed#1{\fundefPRIME #1\endfundefPRIME}
-\def\fundef#1\endfundef{$$\fundefPRIME #1\endfundefPRIME$$}
-\def\funDef#1:#2\\#3\endfunDef{\DefFun #1 $$\fundefPRIME \namedfun{#1}:#2\\#3\endfundefPRIME$$}
+\def\funDefed#1{\DefFun #1 \fundefPRIME #1\endfundefPRIME}
+\def\fundef#1\endfundef{$$\fundefPRIME #1\endfundefPRIME$$}% no \def takes place
+\def\funDef#1:#2\\#3\endfunDef{$$\DefFun #1 \fundefPRIME \fun{#1}:#2\\#3\endfundefPRIME$$}% \def is local to this fundef
+\def\funDEF#1:#2\\#3\endfunDEF{\DefFun #1 $$\fundefPRIME \fun{#1}:#2\\#3\endfundefPRIME$$}% \def takes place on the current scope
 
 %%}}}
 
