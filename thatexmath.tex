@@ -139,11 +139,19 @@
 % \DefPar assumes that its argument is a defined macro of arity 0
 % and it creates its parenthesized version, of arity 1
 % Example:
-% \DefPar succ
-% assumes the existence of \succ of arity 0 and it defines \succP of arity 1
-\def\DefPar#1 {\csgroup\def{#1P}##1{\csname #1\endcsname\funparen{##1}}}
+% \DefPar foo assumes the existence of \foo of arity 0
+% and it defines \fooP,\fooPP,\fooPPP of arities 1,2,3
+\def\DefPar#1 {%
+\csgroup\def{#1P}##1{\csname #1\endcsname\funparen{##1}}%
+\csgroup\def{#1PP}##1##2{\csname #1\endcsname\funparen{##1,##2}}%
+\csgroup\def{#1PPP}##1##2##3{\csname #1\endcsname\funparen{##1,##2,##3}}%
+}
 % \DefApp is similar but defines a space-as-application version
-\def\DefApp#1 {\csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}}
+\def\DefApp#1 {%
+\csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}%
+\csgroup\def{#1AA}##1##2{\csname #1\endcsname\fa{##1}\fa{##2}}%
+\csgroup\def{#1AAA}##1##2##3{\csname #1\endcsname\fa{##1}\fa{##2}\fa{##3}}%
+}
 % \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
 % of the definition of the "parenthesized" version of it if it makes sense
 \def\DefREL#1 #2  {\csgroup\def{#1}{{\namedrel{#2}}}\DefPar #1 }
@@ -1214,6 +1222,16 @@ $$}
         #2
     \endmatrix
 }}
+\def\funref[#1.#2]{$#1.#2$}
+\def\fundefPRIME #1:#2\\#3\endfundefPRIME{%
+\mathcoled {%
+&#1 \eqtype #2 \\
+&\!\matrix\format\l\;&\;\;\l\\
+#3\endmatrix
+}}
+\def\fundefed#1{\fundefPRIME #1\endfundefPRIME}
+\def\fundef#1\endfundef{$$\fundefPRIME #1\endfundefPRIME$$}
+\def\funDef#1:#2\\#3\endfunDef{\DefFun #1 $$\fundefPRIME \namedfun{#1}:#2\\#3\endfundefPRIME$$}
 
 %%}}}
 
