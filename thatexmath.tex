@@ -1213,8 +1213,8 @@ $$}
 \def\dataforms#1 = #2{\mathtt{data}\ \type{#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
 \def\data#1 #2\enddata{%
 \DefType #1
-\def\co   ##1: ##2;{{##1}           & {} \hastype {} &{##2}\\}
-\def\cons ##1: ##2;{\namedcons{##1} & {} \hastype {} &{##2}\\}
+\def\co   ##1: ##2\\{{##1}           & {} \hastype {} &{##2}\\}
+\def\cons ##1: ##2\\{\namedcons{##1} & {} \hastype {} &{##2}\\}
 \mathcoled {
     &\mathtt{data}\ \csgroup{#1} \\
     &\quad
