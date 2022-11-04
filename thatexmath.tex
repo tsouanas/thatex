@@ -146,11 +146,15 @@
 \csgroup\def{#1PP}##1##2{\csname #1\endcsname\funparen{##1,##2}}%
 \csgroup\def{#1PPP}##1##2##3{\csname #1\endcsname\funparen{##1,##2,##3}}%
 }
-% \DefApp is similar but defines a space-as-application version
+% \DefApp is similar but defines a \fa-as-application version
+% and also versions that are space-delimited
 \def\DefApp#1 {%
 \csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}%
 \csgroup\def{#1AA}##1##2{\csname #1\endcsname\fa{##1}\fa{##2}}%
 \csgroup\def{#1AAA}##1##2##3{\csname #1\endcsname\fa{##1}\fa{##2}\fa{##3}}%
+\csgroup\def{#1S}##1 {\csname #1\endcsname\fa{##1}}%
+\csgroup\def{#1SS}##1 ##2 {\csname #1\endcsname\fa{##1}\fa{##2}}%
+\csgroup\def{#1SSS}##1 ##2 ##3 {\csname #1\endcsname\fa{##1}\fa{##2}\fa{##3}}%
 }
 % \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
 % of the definition of the "parenthesized" version of it if it makes sense
