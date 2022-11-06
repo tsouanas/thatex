@@ -686,8 +686,8 @@ $$}
 \def\unique{{\exists!}}
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
 \def\quantifiedt#1{\quantified{\text{#1}}}
-\let\qfd=\quantified
-\let\qfdt=\quantifiedt
+\def\bigquantified#1{\bigbracket{\thinspace#1\thinspace}}% the point is that this won't flex to fit content
+\def\bigquantifiedt#1{\bigquantified{\text{#1}}}
 \def\cforall#1#2{\pforall{#1}&\quantified{#2}}% for use in \mathcol
 \def\cexists#1#2{\pexists{#1}&\quantified{#2}}% for use in \mathcol
 \def\cforallt#1#2{\pforall{#1}&\quantifiedt{#2}}% for use in \mathcol
@@ -696,6 +696,10 @@ $$}
 \def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantifiedt{#3}}
 \def\quantifiertabbr#1#2#3{\left(\/#1 \text{#2}\right)\!\quantified{#3}}
 \def\quantifiertabbrt#1#2#3{\left(\/#1 \text{#2}\right)\!\quantifiedt{#3}}
+\def\bigquantifierabbr#1#2#3{\left(\/#1 #2\right)\!\bigquantified{#3}}
+\def\bigquantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\bigquantifiedt{#3}}
+\def\bigquantifiertabbr#1#2#3{\left(\/#1 \text{#2}\right)\!\bigquantified{#3}}
+\def\bigquantifiertabbrt#1#2#3{\left(\/#1 \text{#2}\right)\!\bigquantifiedt{#3}}
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
@@ -708,6 +712,18 @@ $$}
 \def\ltforallt{\quantifiertabbrt{\forall}}
 \def\ltexistst{\quantifiertabbrt{\exists}}
 \def\ltuniquet{\quantifiertabbrt{\unique}}
+\def\bforall{\bigquantifierabbr{\forall}}% especially useful if quantified content includes o/ubraces.
+\def\bexists{\bigquantifierabbr{\exists}}
+\def\bunique{\bigquantifierabbr{\unique}}
+\def\bforallt{\bigquantifierabbrt{\forall}}
+\def\bexistst{\bigquantifierabbrt{\exists}}
+\def\buniquet{\bigquantifierabbrt{\unique}}
+\def\btforall{\quantifiertabbr{\forall}}
+\def\btexists{\quantifiertabbr{\exists}}
+\def\btunique{\quantifiertabbr{\unique}}
+\def\btforallt{\quantifiertabbrt{\forall}}
+\def\btexistst{\quantifiertabbrt{\exists}}
+\def\btuniquet{\quantifiertabbrt{\unique}}
 \def\pexists#1{\paren{\exists#1}}
 \def\pforall#1{\paren{\forall#1}}
 \def\punique#1{\paren{\unique#1}}
