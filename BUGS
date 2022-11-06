@@ -10,3 +10,4 @@ This is because of amstex.tex.
 
 \pdefs defined on a chapter level seem to be empty-defined on appendices.
 
+In ToC, a chapter may get separated from its description.
