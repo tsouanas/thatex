@@ -630,8 +630,8 @@ $$}
 \def\bidir{($\Leftrightarrow$)}
 \def\lrdirset{($\subset$)}
 \def\rldirset{($\supset$)}
-\def\rlrewrite#1{{#1}$^\leftarrow$}
-\def\lrrewrite#1{{#1}$^\rightarrow$}
+\def\rwrl#1{{#1}$^\leftarrow$}
+\def\rwlr#1{{#1}$^\rightarrow$}
 \def\tripleeq{\mathrel{\equiv}} % symbol
 \def\tripleneq{\mathrel{\smartnot{\tripleeq}}} % symbol
 \def\tripleasseq{\mathrel{:\equiv}} % symbol
@@ -1243,6 +1243,8 @@ $$}
         #2
     \endmatrix
 }}
+\def\funrefrl[#1]{\rwrl{\funref[#1]}}
+\def\funreflr[#1]{\rwlr{\funref[#1]}}
 \def\funref[#1.#2]{$#1.#2$}
 \def\fundefPRIME #1:#2\\#3\endfundefPRIME{%
 \mathcoled {%
