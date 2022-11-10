@@ -1435,10 +1435,12 @@ $$}
 
 %%{{{ placeholder hole 
 \definecolor{holecolor}{cmyk}{.25,.05,.05,0}
-\def\dhole{{\mathord{-}}}
-\def\bhole{{\mathord{\bullet}}}
-\def\uhole{{\mathord{\_}}}
-\def\phole{{\mathord{\_}}}
+\def\dhole{{\mathord{-}}}% dash hole
+\def\bhole{{\mathord{\color{holecolor}\bullet}}}% bullet hole
+\def\uhole{{\mathord{\vphantom x\_}}}% underscore hole
+\def\phole{{\mathord{\vphantom0\_}}}% placeholder
+\def\chole{{\ensuremath{\colorbox{holecolor}{$\vphantom 1\uhole$}}}}% colored hole
+\def\choled#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
 \def\thole{\thinspace\vrule height 0.0pt depth 0.4pt width 1em\thinspace}
 \def\lthole{\thinspace\vrule height 0.0pt depth 0.4pt width 2em\thinspace}
 \def\xlthole{\thinspace\vrule height 0.0pt depth 0.4pt width 4em\thinspace}
@@ -1446,8 +1448,6 @@ $$}
 \def\asklhole{{\lthole?\lthole}}
 \def\askbox{{\holed ?}}
 \def\namedhole#1{\text{\thole$#1$\thole}}
-\def\chole{{\ensuremath{\colorbox{holecolor}{$\vphantom 1\uhole$}}}}
-\def\choled#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
 \def\dotswithsome#1{\dots#1\dots#1\dots}
 \def\holewithsome#1{\lthole#1\lthole#1\lthole}
 \let\hole=\chole
