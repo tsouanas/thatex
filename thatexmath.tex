@@ -1650,6 +1650,7 @@ $$}
 \DefStyle replR {\aRstyle}
 \DefStyle replG {\aGstyle}
 \DefStyle replB {\aBstyle}
+\DefStyle replhead {\sfbf}
 
 \def\replalertstyle{\ifreplignorealerts\else\alertstyle\fi}
 
@@ -1794,7 +1795,7 @@ $$}
 \def\qed{\hfill\ensuremath{\qedsymbol}}%
 \def~{\li}%
 \ifdim\replscriptwidth>0pt\halign to \replscriptwidth\else\halign\fi { ##\hfil \cr
-{\bf \sayName{proof}}\strut\cr
+{\replheadstyle\sayName{proof}}\strut\cr
 \replhrule\cr
 #1%
 }
@@ -1812,7 +1813,7 @@ $$}
 \let\OLDTILDE=~%
 \def~{\li}%
 \ifdim\replgivenswidth>0pt\halign to \replgivenswidth\else\halign\fi { ##\hfil \cr
-{\bf \sayName{givens}}\strut\cr
+{\replheadstyle\sayName{givens}}\strut\cr
 \replhrule\cr
 #1%
 }
@@ -1829,7 +1830,7 @@ $$}
 \let\OLDTILDE=~%
 \def~{\li}%
 \ifdim\replgoalswidth>0pt\halign to \replgoalswidth\else\halign\fi { ##\hfil \cr
-{\bf \sayName{goals}}\strut\cr
+{\replheadstyle\sayName{goals}}\strut\cr
 \replhrule\cr
 #1%
 }
