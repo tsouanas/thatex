@@ -430,7 +430,7 @@
 % but having independent implementations makes it easier to
 % change their behaviour in the future as needed
 
-% \funcompute
+% \funcompute (Bird atributes this style to Wim Feijen)
 \def\funcomputedPRIME#1{%
 \def\does##1{\\\llap{{}##1{}\ \ }{}\quad}%
 \let\by=\mathby
@@ -1905,7 +1905,10 @@ $$}
 
 \endinput
 
-Notes:
+
+% NOTES AND EXAMPLES
+
+%% Math blocks
 
 \math .. \endmath
 for simple math stuff, uses gather so it understands \\
@@ -1929,10 +1932,45 @@ makes n (\alignat n) r/l-columnblocks, minimally spaced (tight)
 r/l-columnblock that supports \called:
 \lfp f &\defeq \min(\fixpoints f)  \called {the \dterm{least fixpoint} of $f$} \\
 
+\compute .. \endcompute
+Computation block, as a specialized \mathcols 2 which supports \by:
+\compute
+blah
+&= blah'  \by {why} \\
+&= blah'' \by {why'} \\
+\endcompute
+
+\funcompute .. \endfuncompute
+Wim Feijen style of writing computations, popular in functional programming:
+\funcompute
+blah
+  \does =    \by {why} \\
+blah'
+  \does \leq \by {why'} \\
+blah''
+\endfuncompute
+
+One can have computations in parallel with:
+\funcomputes 3
+\funcomputed { ... } & \funcomputed { ... } & \funcomputed { ... }
+\endfuncomputes
+
+\poemcompute .. \endpoemcompute
+Poem-looking computation.
+Example:
+\poemcompute
+blah \\
+  =    blah'   \by {why} \\
+  \leq blah''  \by {why'} \\
+\endpoemcompute
+(Has a plural/parallel version similar to \funcomputes: \poemcomputes n .. \endpoemcomputes.)
+
 -ed versions: mathed, mathcoled, mathcolsed, computed
 They get their main argument non-delimited:
 \computed { ... }
 \mathcolsed 12 { ... }
+
+%% REPL-like proofs
 
 \context lr % <- l/r must be t/m, corresponding to left and right default mode
 \x this: \reals ;
@@ -1940,12 +1978,7 @@ They get their main argument non-delimited:
 \endcontext
 
 note that you must stick the \*tag to ;
-(this is terrible)
-
-
-# repls
-
-example:
+(XXX: this is terrible)
 
 \repl
 ~    : Let $f : A \to B$. ;
