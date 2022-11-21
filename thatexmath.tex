@@ -441,16 +441,18 @@
 \let\funcomputed=\funcomputedPRIME
 \def\funcomputesed#1{&\funcomputedPRIME{#1}}% for use in funcomputes only
 \def\funcompute#1\endfuncompute{$$
-\spreadmatrixlines{3pt}%
+\spreadmatrixcr
 \gather\fixmcount
 \funcomputed{#1}
-\endgather\saveeqnumber$$}
+\endgather\saveeqnumber
+$$}
 \def\funcomputes#1 #2\endfuncomputes{$$
 \let\funcomputed=\funcomputesed
-\spreadmatrixlines{3pt}%
+\spreadmatrixcr
 \xalignat#1\relax\fixmcount
 #2
-\endxalignat\saveeqnumber$$}
+\endxalignat\saveeqnumber
+$$}
 
 % \poemcompute
 \def\poemcomputepoems#1{%
@@ -467,11 +469,12 @@
 }}}
 \def\poemcomputed#1{\poemcomputePRIME #1\endpoemcomputePRIME}
 \def\poemcomputesed#1{&\poemcomputePRIME #1\endpoemcomputePRIME}% repetirion of code necessary here
-\def\poemcompute#1\endpoemcompute{$$\spreadmatrixlines{3pt}\poemcomputePRIME #1\endpoemcomputePRIME$$}
+\def\poemcompute#1\endpoemcompute{$$\spreadmatrixcr\poemcomputePRIME #1\endpoemcomputePRIME$$}
 \def\poemcomputes#1 #2\endpoemcomputes{$$
 \let\poemcomputed=\poemcomputesed
-\spreadmatrixlines{3pt}%
-\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber$$}
+\spreadmatrixcr
+\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber
+$$}
 
 % \widecompute
 \def\widecompute#1\\#2\endwidecompute{$$\multline #1 \\ \computed {\quad#2}\endmultline$$}
@@ -1301,24 +1304,33 @@ $$}
 \let\type=\namedtype
 \let\fun=\namedfun
 
+\def\ttkeyword#1{\mathtt{#1}}% type theory keyword
+\def\spreadmatrixcr{\spreadmatrixlines{3pt}}
+
 \def\dataorsymbol{\pmb{\mid}}
-\def\dataforms#1 = #2{\mathtt{data}\ \type{#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
+\def\dataforms#1 = #2{\ttkeyword{data}\ \type{#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
 
 \def\dataPRIME#1#2\enddataPRIME{%
 \def\co   ##1: ##2\\{{##1}           & {} \hastype {} &{##2}\\}
 \def\cons ##1: ##2\\{\namedcons{##1} & {} \hastype {} &{##2}\\}
 \mathcoled {
-    &\mathtt{data}\ {#1} \\
+    &\ttkeyword{data}\ {#1} \\
     &\quad
     \matrix
         \format \l&\;\c\;&\l \\
         #2
     \endmatrix
 }}
-\def\data#1\enddata{$$\dataPRIME#1\enddataPRIME$$}
+\def\data#1\enddata{$$\spreadmatrixcr\dataPRIME#1\enddataPRIME$$}
 \def\dataed#1{\dataPRIME #1\enddataPRIME}
 \def\datased#1{&\dataPRIME #1\enddataPRIME}
-\def\datas#1 #2\enddatas{$$\let\dataed=\datased\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber$$}
+\def\datas#1 #2\enddatas{$$
+\let\dataed=\datased
+\spreadmatrixcr
+\xalignat#1\relax\fixmcount
+#2
+\endxalignat\saveeqnumber
+$$}
 
 \def\funrefrl[#1]{\rwrl{\funref[#1]}}
 \def\funreflr[#1]{\rwlr{\funref[#1]}}
@@ -1336,11 +1348,12 @@ $$}
 }}
 \def\fundefed#1{\fundefPRIME #1\endfundefPRIME}
 \def\fundefsed#1{&\fundefPRIME #1\endfundefPRIME}% repetition of code necessary here
-\def\fundef#1\endfundef{$$\spreadmatrixlines{3pt}\fundefPRIME #1\endfundefPRIME$$}
+\def\fundef#1\endfundef{$$\spreadmatrixcr\fundefPRIME #1\endfundefPRIME$$}
 \def\fundefs#1 #2\endfundefs{$$
 \let\fundefed=\fundefsed
-\spreadmatrixlines{3pt}%
-\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber$$}
+\spreadmatrixcr
+\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber
+$$}
 
 %%}}}
 
