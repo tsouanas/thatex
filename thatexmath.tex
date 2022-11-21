@@ -149,6 +149,7 @@
 }
 % \DefApp is similar but defines a \fa-as-application version
 % and also versions that are space-delimited
+% and also "columnded" versions to be used inside fundefs
 \def\DefApp#1 {%
 \csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}%
 \csgroup\def{#1AA}##1##2{\csname #1\endcsname\fa{##1}\fa{##2}}%
@@ -158,6 +159,10 @@
 \csgroup\def{#1SS}##1 ##2 {\csname #1AA\endcsname{##1}{##2}}%
 \csgroup\def{#1SSS}##1 ##2 ##3 {\csname #1AAA\endcsname{##1}{##2}{##3}}%
 \csgroup\def{#1SSSS}##1 ##2 ##3 ##4 {\csname #1AAAA\endcsname{##1}{##2}{##3}{##4}}%
+\csgroup\def{#1C}##1 {\csname #1\endcsname&{##1}}%
+\csgroup\def{#1CC}##1 ##2 {\csname #1\endcsname&{##1}&{##2}}%
+\csgroup\def{#1CCC}##1 ##2 ##3 {\csname #1\endcsname&{##1}&{##2}&{##3}}%
+\csgroup\def{#1CCCC}##1 ##2 ##3 ##4 {\csname #1\endcsname&{##1}&{##2}&{##3}&{##4}}%
 }
 % \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
 % of the definition of the "parenthesized" version of it if it makes sense
