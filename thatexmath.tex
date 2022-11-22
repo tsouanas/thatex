@@ -67,24 +67,27 @@
 %%}}}
 
 %%{{{ mathfonts 
+\def\mathui#1{\hbox{\text{\tenui#1}}}
 \def\mathit#1{\hbox{\text{\tenit#1}}}
 \def\mathrm#1{\hbox{\text{\tenrm#1}}}
+\def\mathtt#1{\hbox{\text{\tentt#1}}}
+\def\mathttbf#1{\hbox{\text{\tenttbf#1}}}
+\def\mathbf#1{\hbox{\text{\tenbf#1}}}
+\def\mathsl#1{\hbox{\text{\tensl#1}}}
+\def\mathsf#1{\hbox{\text{\tenss#1}}}
+\def\mathsfdc#1{\hbox{\text{\tenssdc#1}}}
+\def\mathsfbf#1{\hbox{\text{\tenssbf#1}}}
+\def\mathsfmbf#1{\hbox{\text{\sfmbf#1}}}
+\def\mathsc#1{\hbox{\text{\scshape #1}}}
 \def\textrmsmallish#1{\hbox{\text{\ninerm#1}}}
 \def\mathrmsmallish#1{\hbox{\text{\ninerm#1}}}
 \def\mathrmsmall#1{\hbox{\text{\sevenrm#1}}}
 \def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
-\def\mathsf#1{\hbox{\text{\tenss#1}}}
-\def\mathsfbf#1{\hbox{\text{\sfbf#1}}}
-\def\mathsfmbf#1{\hbox{\text{\sfmbf#1}}}
-\def\mathsc#1{\hbox{\text{\scshape #1}}}
-\def\mathtt#1{\hbox{\text{\tentt#1}}}
-\def\mathbf#1{\hbox{\text{\tenbf#1}}}
-\def\mathsl#1{\hbox{\text{\tensl#1}}}
 \def\txt#1{\text{\tt #1}}
 \def\textrm#1{\text{\rm#1}}
 \def\namedrel#1{\operatorname{#1}}
 \def\namedfun#1{\mathord{\mathit{#1}}}% for functions
-\def\namedfpf#1{\mathord{\mathit{#1}}}% for functional programming functions
+\def\namedfpf#1{\mathord{\mathui{#1}}}% for functional programming functions
 \def\namedtype#1{\mathord{\mathsf{#1}}}% for data types
 \def\namedcons#1{\mathord{\mathsf{#1}}}% for data constructors
 \def\namedcat#1{\mathord{\mathsfmbf{#1}}}
@@ -1304,7 +1307,7 @@ $$}
 \let\type=\namedtype
 \let\fun=\namedfun
 
-\def\ttkeyword#1{\mathtt{#1}}% type theory keyword
+\def\ttkeyword#1{\mathsfbf{#1}}% type theory keyword
 \def\spreadmatrixcr{\spreadmatrixlines{3pt}}
 
 \def\dataorsymbol{\pmb{\mid}}
