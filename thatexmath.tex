@@ -1337,21 +1337,36 @@ $$}
 \def\funreflr[#1]{\rwlr{\funref[#1]}}
 \def\funref[#1.#2]{$#1.#2$}
 
-\def\fundefeqs#1{%
+% \funcoleqs is the only factored out part for fundef* and funio* macros
+% ended up with code repetition for easier decoupling later on
+\def\funcoleqs#1{% columnized functional equations
 \matrix\format\l\ &{}\l\ &{}\l\ &{}\l\ &{}\l\ &{}\l\ &{}\l\\
 #1
 \endmatrix
 }
+
+% fundef*: for defining functions together with their type
 \def\fundefPRIME #1:#2\\#3\endfundefPRIME{%
 \mathcoled {%
 &#1\hastype #2 \\
-&\!\fundefeqs{\vphantom{E^{E^E}}#3}
+&\!\funcoleqs{\vphantom{E^{E^E}}#3}
 }}
 \def\fundefed#1{\fundefPRIME #1\endfundefPRIME}
 \def\fundefsed#1{&\fundefPRIME #1\endfundefPRIME}% repetition of code necessary here
 \def\fundef#1\endfundef{$$\spreadmatrixcr\fundefPRIME #1\endfundefPRIME$$}
 \def\fundefs#1 #2\endfundefs{$$
 \let\fundefed=\fundefsed
+\spreadmatrixcr
+\xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber
+$$}
+
+% funio*: for listing input-output equations without the type on top
+\def\funioPRIME#1\endfunioPRIME{\funcoleqs{#1}}
+\def\funioed#1{\funioPRIME #1\endfunioPRIME}
+\def\funiosed#1{&\funioPRIME #1\endfunioPRIME}
+\def\funio#1\endfunio{$$\spreadmatrixcr\funioPRIME #1\endfunioPRIME$$}
+\def\funios#1 #2\endfunios{$$
+\let\funioed=\funiosed
 \spreadmatrixcr
 \xalignat#1\relax\fixmcount #2\endxalignat\saveeqnumber
 $$}
