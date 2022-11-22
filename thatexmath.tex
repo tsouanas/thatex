@@ -853,6 +853,8 @@ $$}
 \let\knuthsupsetneq=\supsetneq
 \let\knuthnsubseteq=\nsubseteq
 \let\knuthnsupseteq=\nsupseteq
+\let\knuthsucc=\succ
+\let\knuthlongmapsto=\longmapsto % save original longmapsto
 \let\subset=\UNDEFINED
 \let\subseteq=\UNDEFINED
 \let\subsetneq=\UNDEFINED
@@ -935,7 +937,6 @@ $$}
 \let\rfromby=\relfromby
 \let\ftoby=\toby
 \let\ffromby=\fromby
-\let\knuthlongmapsto=\longmapsto % save original longmapsto
 \def\longmapsto{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsto] \| {} \endcd}}
 \def\longmapsfrom{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsfrom] \| {} \endcd}}
 \def\mapstoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, mapsto, "#1"] \| {} \endcd}}
@@ -961,7 +962,6 @@ $$}
 \DefFun outr
 \DefFun inl
 \DefFun inr
-\let\knuthsucc=\succ% save original math symbol
 \DefFun succ
 \DefFun curry
 \DefFun uncurry
