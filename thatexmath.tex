@@ -214,6 +214,7 @@
 \def\postbangp#1{\mathord{\paren{#1}!}}
 \def\prebang#1{\mathord{!\mkern1mu#1}}
 \def\prebangp#1{\mathord{!\paren{#1}}}
+\def\doublecolon{\mathbin{:\mkern-1mu:}}
 %%}}}
 
 %%{{{ elementary math 
@@ -1298,7 +1299,8 @@ $$}
 \DefType Var
 \DefType Type
 \DefType List
-\def\nilist{\mathord{[\,]}}% Nil list sugar: []
+\def\lnil{\mathord{[\,]}}% Nil list sugar: []
+\def\lcons{\mathbin{\doublecolon}}% Cons list sugar: :
 \def\oftype{\mathrel{:}}
 \let\is=\oftype
 \let\hastype=\is
