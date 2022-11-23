@@ -239,7 +239,7 @@
 \let\sfrac=\slashfrac
 \def\commaop{\mathbin{,}}
 \def\ntimes{\mathbin{\cdot}}
-\def\spaceop{\mathbin{\,}}
+\def\spaceop{\mathbin{{}}}
 \def\invisop{{\,}}
 \def\juxtap{{}}
 \let\sop=\spaceop
@@ -1086,11 +1086,11 @@ $$}
 \def\plamt#1#2{\nparen{\lamt{#1}{#2}}}
 \def\plamp#1#2{\nparen{\lamp{#1}{#2}}}
 \def\lapp{\nobreak\;\nobreak}% lambda term application
-\def\fapp{~}% function application
+\def\fapp{\mathord{\;}}% function application
 \def\at{\mathbin{\@}}% function application explicit infix
 \let\fat=\at
-\def\lappp#1{\lapp\paren{#1}}% parenthesized arg lapp
-\def\fappp#1{\fapp\paren{#1}}% parenthesized arg fapp
+\def\lappp#1{\lapp\!\paren{#1}}% parenthesized arg lapp
+\def\fappp#1{\fapp\!\paren{#1}}% parenthesized arg fapp
 \let\fa=\fapp
 \let\fap=\fappp
 \let\la=\lapp
@@ -1309,6 +1309,41 @@ $$}
 \let\cons=\namedcons
 \let\type=\namedtype
 \let\fun=\namedfun
+\let\var=\namedvar
+
+% fun applicators:
+% fA atomic application
+% fP parenthesized atomic application
+\def\fA          #1#2{{#1}\fa  {#2}}
+\def\fP          #1#2{{#1}\fap {#2}}
+\def\fAA       #1#2#3{{#1}\fa  {#2}\fa  {#3}}
+\def\fAP       #1#2#3{{#1}\fa  {#2}\fap {#3}}
+\def\fPA       #1#2#3{{#1}\fap {#2}\fa  {#3}}
+\def\fPP       #1#2#3{{#1}\fap {#2}\fap {#3}}
+\def\fAAA    #1#2#3#4{{#1}\fa  {#2}\fa  {#3}\fa  {#4}}
+\def\fAAP    #1#2#3#4{{#1}\fa  {#2}\fa  {#3}\fap {#4}}
+\def\fAPA    #1#2#3#4{{#1}\fa  {#2}\fap {#3}\fa  {#4}}
+\def\fAPP    #1#2#3#4{{#1}\fa  {#2}\fap {#3}\fap {#4}}
+\def\fPAA    #1#2#3#4{{#1}\fap {#2}\fa  {#3}\fa  {#4}}
+\def\fPAP    #1#2#3#4{{#1}\fap {#2}\fa  {#3}\fap {#4}}
+\def\fPPA    #1#2#3#4{{#1}\fap {#2}\fap {#3}\fa  {#4}}
+\def\fPPP    #1#2#3#4{{#1}\fap {#2}\fap {#3}\fap {#4}}
+\def\fAAAA #1#2#3#4#5{{#1}\fa  {#2}\fa  {#3}\fa  {#4}\fa  {#5}}
+\def\fAAAP #1#2#3#4#5{{#1}\fa  {#2}\fa  {#3}\fa  {#4}\fap {#5}}
+\def\fAAPA #1#2#3#4#5{{#1}\fa  {#2}\fa  {#3}\fap {#4}\fa  {#5}}
+\def\fAAPP #1#2#3#4#5{{#1}\fa  {#2}\fap {#3}\fap {#4}\fap {#5}}
+\def\fAPAA #1#2#3#4#5{{#1}\fa  {#2}\fap {#3}\fa  {#4}\fa  {#5}}
+\def\fAPAP #1#2#3#4#5{{#1}\fa  {#2}\fap {#3}\fa  {#4}\fap {#5}}
+\def\fAPPA #1#2#3#4#5{{#1}\fa  {#2}\fap {#3}\fap {#4}\fa  {#5}}
+\def\fAPPP #1#2#3#4#5{{#1}\fa  {#2}\fap {#3}\fap {#4}\fap {#5}}
+\def\fPAAA #1#2#3#4#5{{#1}\fap {#2}\fa  {#3}\fa  {#4}\fa  {#5}}
+\def\fPAAP #1#2#3#4#5{{#1}\fap {#2}\fa  {#3}\fa  {#4}\fap {#5}}
+\def\fPAPA #1#2#3#4#5{{#1}\fap {#2}\fa  {#3}\fap {#4}\fa  {#5}}
+\def\fPAPP #1#2#3#4#5{{#1}\fap {#2}\fa  {#3}\fap {#4}\fap {#5}}
+\def\fPPAA #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fa  {#4}\fa  {#5}}
+\def\fPPAP #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fa  {#4}\fap {#5}}
+\def\fPPPA #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fap {#4}\fa  {#5}}
+\def\fPPPP #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fap {#4}\fap {#5}}
 
 \def\ttkeyword#1{\mathsfbf{#1}}% type theory keyword
 \def\spreadmatrixcr{\spreadmatrixlines{3pt}}
