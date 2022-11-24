@@ -176,7 +176,7 @@
 \def\DefCONS#1 #2 {\csgroup\def{#1}{{\namedcons{#2}}}\DefPar #1 \DefApp #1 }
 \def\DefOP#1 #2   {\csgroup\def{#1}{{\namedop{#2}}}\DefPar  #1 \DefApp #1 }
 \def\DefOPP#1 #2  {\csgroup\def{#1}##1{{\namedop{#2}\funparen{##1}}}}% always of arity 1, parenthesizing argument
-\def\DefTYPE#1 #2 {\csgroup\def{#1}{{\namedtype{#2}}}\DefPar #1 \DefApp #1 }
+\def\DefTYPE#1 #2 {\csgroup\def{#1}{{\namedtype{#2}}}\DefPar #1 \DefApp #1 }% Par/App needed for type constructors like List and Maybe
 \def\DefVAR#1 #2  {\csgroup\def{#1}{{\namedvar{#2}}}}
 \def\DefCAT#1 #2  {\csgroup\def{#1}{{\namedcat{#2}}}}
 \def\DefFOU#1 #2  {\csgroup\def{#1}{{\namedfou{#2}}}}
