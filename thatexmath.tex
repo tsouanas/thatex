@@ -860,6 +860,9 @@ $$}
 \let\knuthnsupseteq=\nsupseteq
 \let\knuthsucc=\succ
 \let\knuthlongmapsto=\longmapsto % save original longmapsto
+\let\knuthlim=\lim
+\let\knuthliminf=\liminf
+\let\knuthlimsup=\limsup
 \let\subset=\UNDEFINED
 \let\subseteq=\UNDEFINED
 \let\subsetneq=\UNDEFINED
@@ -897,10 +900,11 @@ $$}
 \def\Union{\bigcup}
 \def\Unionl{\Union\nolimits} % same line
 \def\Interl{\Inter\nolimits} % same line
-\def\liml{\lim\nolimits}     % same line
-\let\limit=\liml
-\let\liminflimits=\liminf
-\let\limsuplimits=\limsup
+\def\liml{\knuthlim\nolimits} % same line
+\def\lim{\knuthlim\nolimits} % lim is sameline by default
+\let\limit=\lim
+\let\liminflimits=\knuthliminf
+\let\limsuplimits=\knuthlimsup
 \edef\liminf{\liminf\nolimits}
 \edef\limsup{\limsup\nolimits}
 \let\minus=\setminus
@@ -1435,6 +1439,8 @@ $$}
 %%}}}
 
 %%{{{ order theory 
+\let\knuthinf=\inf
+\let\knuthsup=\sup
 \def\lt{\mathrel{<}}
 \def\gt{\mathrel{>}}
 \def\nlt{\mathrel{\not\lt}}
@@ -1488,6 +1494,8 @@ $$}
 \let\dual=\dualposet
 \def\ubs#1{{#1}^{\mathrmtiny{U}}}
 \def\lbs#1{{#1}^{\mathrmtiny{L}}}
+\def\inf{\knuthinf\nolimits} % inf is sameline by default
+\def\sup{\knuthsup\nolimits} % sup is sameline by default
 \def\lub{\namedop{lub}}
 \def\glb{\namedop{glb}}
 \def\fixpoints{\namedop{Fix}}
