@@ -303,11 +303,11 @@
 \def\systemed#1{\aligned#1\endaligned}
 \def\lsystemed#1{\leftbrace{\systemed{#1}}}
 \def\rsystemed#1{\rightbrace{\systemed{#1}}}
-\def\bsystemed#1{\brace{\systemed{#1}}}
+\def\bsystemed#1{\flexbrace{\systemed{#1}}}
 \def\modsystemed#1{\alignedat3\relax #1\endalignedat}
 \def\lmodsystemed#1{\leftbrace{\alignedat3\relax #1\endalignedat}}
 \def\rmodsystemed#1{\rightbrace{\alignedat3\relax #1\endalignedat}}
-\def\bmodsystemed#1{\brace{\alignedat3\relax #1\endalignedat}}
+\def\bmodsystemed#1{\flexbrace{\alignedat3\relax #1\endalignedat}}
 \def\system#1\endsystem{\math\systemed{#1}\endmath}
 \def\lsystem#1\endlsystem{\math\lsystemed{#1}\endmath}
 \def\rsystem#1\endrsystem{\math\rsystemed{#1}\endmath}
@@ -413,7 +413,6 @@
 \def\lmath#1\endlmath{\lmathwith{\qqqquad}{#1}}
 \def\leftbrace#1{\left\{#1\right.}
 \def\rightbrace#1{\left.#1\right\}}
-\def\brace#1{\left\{#1\right\}}
 \def\leftangle#1{\left<#1\right.}
 \def\rightangle#1{\left.#1\right>}
 \definecolor{explanationcolor}{cmyk}{0,0,0,.666}
@@ -784,27 +783,43 @@ $$}
 %%}}}
 
 %%{{{ logic formulae 
+% quantifier symbols and defaults
+\let\knuthexists=\exists
+\let\knuthforall=\forall
+\def\uniquesym{\mathord{\knuthexists!}}
+\let\existssym=\knuthexists
+\let\forallsym=\knuthforall
+% defaults
+\let\forall=\forallsym
+\let\exists=\existssym
+\let\unique=\uniquesym
+% /quantifier symbols
 \def\univ{U}
 \def\limplies{\mathbin{\rightarrow}}
 \def\limplied{\mathbin{\leftarrow}}
 \def\liff{\mathbin{\leftrightarrow}}
-\def\unique{{\exists!}}
+% quantified
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
+\def\medquantified#1{\medbracket{\thinspace#1\thinspace}}% the point is that these won't flex to fit content
+\def\bigquantified#1{\bigbracket{\thinspace#1\thinspace}}
 \def\quantifiedt#1{\quantified{\text{#1}}}
-\def\bigquantified#1{\bigbracket{\thinspace#1\thinspace}}% the point is that this won't flex to fit content
+\def\medquantifiedt#1{\medquantified{\text{#1}}}
 \def\bigquantifiedt#1{\bigquantified{\text{#1}}}
-\def\cforall#1#2{\pforall{#1}&\quantified{#2}}% for use in \mathcol
-\def\cexists#1#2{\pexists{#1}&\quantified{#2}}% for use in \mathcol
-\def\cforallt#1#2{\pforall{#1}&\quantifiedt{#2}}% for use in \mathcol
-\def\cexistst#1#2{\pexists{#1}&\quantifiedt{#2}}% for use in \mathcol
-\def\quantifierabbr#1#2#3{\left(\/#1 #2\right)\!\quantified{#3}}
-\def\quantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\quantifiedt{#3}}
-\def\quantifiertabbr#1#2#3{\left(\/#1 \text{#2}\right)\!\quantified{#3}}
-\def\quantifiertabbrt#1#2#3{\left(\/#1 \text{#2}\right)\!\quantifiedt{#3}}
-\def\bigquantifierabbr#1#2#3{\left(\/#1 #2\right)\!\bigquantified{#3}}
-\def\bigquantifierabbrt#1#2#3{\left(\/#1 #2\right)\!\bigquantifiedt{#3}}
-\def\bigquantifiertabbr#1#2#3{\left(\/#1 \text{#2}\right)\!\bigquantified{#3}}
-\def\bigquantifiertabbrt#1#2#3{\left(\/#1 \text{#2}\right)\!\bigquantifiedt{#3}}
+% quantifiers
+\def\quantifierabbr#1#2#3{\paren{\/#1 #2}\quantified{#3}}
+\def\quantifierabbrt#1#2#3{\paren{\/#1 #2}\quantifiedt{#3}}
+\def\quantifiertabbr#1#2#3{\paren{\/#1 \text{#2}}\quantified{#3}}
+\def\quantifiertabbrt#1#2#3{\paren{\/#1 \text{#2}}\quantifiedt{#3}}
+\def\bigquantifierabbr#1#2#3{\paren{\/#1 #2}\bigquantified{#3}}
+\def\bigquantifierabbrt#1#2#3{\paren{\/#1 #2}\bigquantifiedt{#3}}
+\def\bigquantifiertabbr#1#2#3{\paren{\/#1 \text{#2}}\bigquantified{#3}}
+\def\bigquantifiertabbrt#1#2#3{\paren{\/#1 \text{#2}}\bigquantifiedt{#3}}
+% columnized, for use in \mathcol
+\def\cforall#1#2{\pforall{#1}&\quantified{#2}}
+\def\cexists#1#2{\pexists{#1}&\quantified{#2}}
+\def\cforallt#1#2{\pforall{#1}&\quantifiedt{#2}}
+\def\cexistst#1#2{\pexists{#1}&\quantifiedt{#2}}
+% TODO: maybe the \lforall that follows should be called \forall
 \def\lforall{\quantifierabbr{\forall}}
 \def\lexists{\quantifierabbr{\exists}}
 \def\lunique{\quantifierabbr{\unique}}
@@ -823,12 +838,9 @@ $$}
 \def\bforallt{\bigquantifierabbrt{\forall}}
 \def\bexistst{\bigquantifierabbrt{\exists}}
 \def\buniquet{\bigquantifierabbrt{\unique}}
-\def\btforall{\quantifiertabbr{\forall}}
-\def\btexists{\quantifiertabbr{\exists}}
-\def\btunique{\quantifiertabbr{\unique}}
-\def\btforallt{\quantifiertabbrt{\forall}}
-\def\btexistst{\quantifiertabbrt{\exists}}
-\def\btuniquet{\quantifiertabbrt{\unique}}
+\def\tforallt{\quantifiertabbrt{\forall}}
+\def\texistst{\quantifiertabbrt{\exists}}
+\def\tuniquet{\quantifiertabbrt{\unique}}
 \def\pexists#1{\paren{\exists#1}}
 \def\pforall#1{\paren{\forall#1}}
 \def\punique#1{\paren{\unique#1}}
@@ -1002,16 +1014,35 @@ $$}
 \DefFun uncurry
 \DefFun eval
 \DefFun compose
-\def\paren#1{{\left({#1}\right)}}
-\def\nparen#1{{(\left.{#1}\right.)}}% forced normal-size parens
+% parens
+\def\flexparen#1{{\left({#1}\right)}}
 \def\lparen#1{{\left({#1}_{\vphantom ,}\right)}}% smart-large parens XXX
+\def\medparen#1{{\mathopen{(}{#1}\mathclose{)})}}% forced normal-size parens
 \def\bigparen#1{{\mathopen{\big(}{#1}\mathclose{\big)}}}% forced big-size parens
 \def\Bigparen#1{{\mathopen{\Big(}{#1}\mathclose{\Big)}}}% forced Big-size parens
 \def\biggparen#1{{\mathopen{\bigg(}{#1}\mathclose{\bigg)}}}% forced bigg-size parens
-\let\funparen=\paren
-\def\bracket#1{{\left[{#1}\right]}}
+\def\funparen#1{\paren{#1}}
+% brackets
+\def\flexbracket#1{{\left[{#1}\right]}}
+\def\medbracket#1{{\mathopen{[}{#1}\mathclose{]}}}
 \def\bigbracket#1{{\mathopen{\big[}{#1}\mathclose{\big]}}}
 \def\Bigbracket#1{{\mathopen{\Big[}{#1}\mathclose{\Big]}}}
+\def\biggbracket#1{{\mathopen{\bigg[}{#1}\mathclose{\bigg]}}}
+% braces (curly)
+\def\flexbrace#1{\left\{#1\right\}}
+\def\medbrace#1{\mathopen{\{}#1\mathclose{\}}}
+\def\bigbrace#1{\mathopen{\big\{}#1\mathclose{\big\}}}
+\def\Bigbrace#1{\mathopen{\Big\{}#1\mathclose{\Big\}}}
+\def\biggbrace#1{\mathopen{\bigg\{}#1\mathclose{\bigg\}}}
+% flexing contexters
+\def\flex      {\let\brace=\flexbrace\let\paren=\flexparen\let\bracket=\flexbracket}
+\def\noflexmed {\let\brace=\medbrace \let\paren=\medparen \let\bracket=\medbracket }
+\def\noflexbig {\let\brace=\bigbrace \let\paren=\bigparen \let\bracket=\bigbracket }
+\def\noflexBig {\let\brace=\Bigbrace \let\paren=\Bigparen \let\bracket=\Bigbracket }
+\def\noflexbigg{\let\brace=\biggbrace\let\paren=\biggparen\let\bracket=\biggbracket}
+\let\noflex=\noflexbig
+% flex by default (birrrl)
+\flex
 \def\st{\;\mathord{\pmb{\mid}}\;}
 \def\setst#1#2{\set{\,#1 \;\st\; #2\,}}% set such that
 \def\setstt#1#2{\set{\,#1 \;\st\; \text{#2}\,}}% textmode in filter
@@ -1113,9 +1144,9 @@ $$}
 \def\lam#1#2{\lamhead{#1}\,.\,{#2}}
 \def\lamt#1#2{\lam{#1}{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
-\def\plam#1#2{\nparen{\lam{#1}{#2}}}% parenthesize whole term
-\def\plamt#1#2{\nparen{\lamt{#1}{#2}}}
-\def\plamp#1#2{\nparen{\lamp{#1}{#2}}}
+\def\plam#1#2{\medparen{\lam{#1}{#2}}}% parenthesize whole term
+\def\plamt#1#2{\medparen{\lamt{#1}{#2}}}
+\def\plamp#1#2{\medparen{\lamp{#1}{#2}}}
 \def\lapp{\nobreak\;\nobreak}% lambda term application
 \def\fapp{\mathord{\;}}% function application
 \def\at{\mathbin{\@}}% function application explicit infix
