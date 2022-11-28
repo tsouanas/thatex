@@ -156,10 +156,36 @@
 % and also versions that are space-delimited
 % and also "columnded" versions to be used inside fundefs
 \def\DefApp#1 {%
-\csgroup\def{#1A}##1{\csname #1\endcsname\fa{##1}}%
-\csgroup\def{#1AA}##1##2{\csname #1\endcsname\fa{##1}\fa{##2}}%
-\csgroup\def{#1AAA}##1##2##3{\csname #1\endcsname\fa{##1}\fa{##2}\fa{##3}}%
-\csgroup\def{#1AAAA}##1##2##3##4{\csname #1\endcsname\fa{##1}\fa{##2}\fa{##3}\fa{##4}}%
+\csgroup\def{#1A}##1{\csgroup\fA                {#1} {##1}}%
+\csgroup\def{#1P}##1{\csgroup\fP                {#1} {##1}}%
+\csgroup\def{#1AA}##1##2{\csgroup\fAA           {#1} {##1}{##2}}%
+\csgroup\def{#1AP}##1##2{\csgroup\fAP           {#1} {##1}{##2}}%
+\csgroup\def{#1PA}##1##2{\csgroup\fPA           {#1} {##1}{##2}}%
+\csgroup\def{#1PP}##1##2{\csgroup\fPP           {#1} {##1}{##2}}%
+\csgroup\def{#1AAA}##1##2##3{\csgroup\fAAA      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1AAP}##1##2##3{\csgroup\fAAP      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1APA}##1##2##3{\csgroup\fAPA      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1APP}##1##2##3{\csgroup\fAPP      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1PAA}##1##2##3{\csgroup\fPAA      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1PAP}##1##2##3{\csgroup\fPAP      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1PPA}##1##2##3{\csgroup\fPPA      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1PPP}##1##2##3{\csgroup\fPPP      {#1} {##1}{##2}{##3}}%
+\csgroup\def{#1AAAA}##1##2##3##4{\csgroup\fAAAA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1AAAP}##1##2##3##4{\csgroup\fAAAP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1AAPA}##1##2##3##4{\csgroup\fAAPA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1AAPP}##1##2##3##4{\csgroup\fAAPP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1APAA}##1##2##3##4{\csgroup\fAPAA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1APAP}##1##2##3##4{\csgroup\fAPAP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1APPA}##1##2##3##4{\csgroup\fAPPA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1APPP}##1##2##3##4{\csgroup\fAPPP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PAAA}##1##2##3##4{\csgroup\fPAAA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PAAP}##1##2##3##4{\csgroup\fPAAP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PAPA}##1##2##3##4{\csgroup\fPAPA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PAPP}##1##2##3##4{\csgroup\fPAPP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PPAA}##1##2##3##4{\csgroup\fPPAA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PPAP}##1##2##3##4{\csgroup\fPPAP {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PPPA}##1##2##3##4{\csgroup\fPPPA {#1} {##1}{##2}{##3}{##4}}%
+\csgroup\def{#1PPPP}##1##2##3##4{\csgroup\fPPPP {#1} {##1}{##2}{##3}{##4}}%
 \csgroup\def{#1S}##1 {\csname #1A\endcsname{##1}}%
 \csgroup\def{#1SS}##1 ##2 {\csname #1AA\endcsname{##1}{##2}}%
 \csgroup\def{#1SSS}##1 ##2 ##3 {\csname #1AAA\endcsname{##1}{##2}{##3}}%
