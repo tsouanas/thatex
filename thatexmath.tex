@@ -1410,10 +1410,10 @@ $$}
 \def\ttkeyword#1{\mathsfbf{#1}}% type theory keyword
 \def\spreadmatrixcr{\spreadmatrixlines{3pt}}
 
-\def\dataorsymbol{\pmb{\mid}}
+\def\dataorsymbol{\pmbb{\mid}}
 \def\dataforms#1 = #2{\ttkeyword{data}\ \type{#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
 
-\def\dataPRIME#1#2\enddataPRIME{%
+\def\dataPRIME#1\\#2\enddataPRIME{%
 \def\co   ##1: ##2\\{{##1}           & {} \hastype {} &{##2}\\}
 \def\cons ##1: ##2\\{\namedcons{##1} & {} \hastype {} &{##2}\\}
 \mathcoled {
