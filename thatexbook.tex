@@ -674,7 +674,7 @@
 \DefStyle chapquote     {\ninesl}
 \DefStyle chapquoteby   {\elevenrm\scshape}
 
-\def\chapintro#1\par{\noindent\introstylize{#1}\endgraf\chaptitleskip}
+\def\chapintro#1\par{\noi\introstylize{#1}\eop\chaptitleskip}
 
 \def\chapclassname{\sayName{\chapclass}}
 
@@ -804,7 +804,7 @@
 \dochapindexes
 \dochapcredits
 \dochappdefs
-\noindent
+\noi
 }
 %%}}}
 
@@ -928,7 +928,7 @@
 \dochapwhere
 %% /chapblah necklace
 \chapblahtitleskip
-\noindent
+\noi
 }
 %%}}}
 
@@ -954,7 +954,7 @@
 
 %%{{{ default attrs and common macros 
 
-\def\secintro#1\par{\medskip\noindent{#1}\endgraf\sectitleskip}
+\def\secintro#1\par{\medskip\noi{#1}\eop\sectitleskip}
 
 \Newskip sectitle=.333\chaptitleskipamount;
 \Newskip sec=2\bigskipamount;
@@ -968,10 +968,10 @@
 \def\sectitle{}
 \def\secahook{}
 \def\seczhook{}
-\def\secheadahook{\par\noindent\hfil\begingroup\twelvebf}
+\def\secheadahook{\par\noi\hfil\begingroup\twelvebf}
 \def\sechead{\WhenStrNempty{\sectag}{\sectag. }\WhenStrNempty{\sectitle}{\sectitle}}
-\def\secheadzhook{\endgroup\hfil\endgraf\sectitleskip}
-\def\secbodyahook{\noindent}
+\def\secheadzhook{\endgroup\hfil\eop\sectitleskip}
+\def\secbodyahook{\noi}
 \def\secbodyzhook{}
 \def\secclassname{\sayName{\secclass}}
 
@@ -1266,11 +1266,11 @@
 \def\paragzhangzhook{}
 \def\paragshowahang{\ifx\NIL\paragahang\else\paragahangahook\begingroup\paragahangbhook\paragahang\paragahangyhook\endgroup\paragahangzhook\fi}
 \def\paragshowzhang{\ifx\NIL\paragzhang\else\rlap{\paragzhangahook\begingroup\paragzhangbhook\paragzhang\paragzhangyhook\endgroup\paragzhangzhook}\fi}
-\def\paragahook{\noindent\llap{\paragshowahang\paragshowasymbol}}
+\def\paragahook{\noi\llap{\paragshowahang\paragshowasymbol}}
 \def\paragzhook{\paragshowzsymbol\paragshowzhang}
 \def\paragshowtag{\paragtagahook\begingroup\paragtagbhook\paragtag\paragtagyhook\endgroup\paragtagzhook}
 \def\paraghead{\paragshowtag \paragclassname\WhenStrNempty{\paragtitle}{ (\paragtitle)}\WhenStrNempty{\paragaka}{ (\paragaka)}}
-\def\paragheadahook{\noindent}
+\def\paragheadahook{\noi}
 \def\paragheadbhook{\bf}
 \def\paragheadyhook{.}
 \def\paragheadzhook{\enspace}
@@ -1566,10 +1566,10 @@
 \ifpreproofbody
 \eop
 \bigskip
-\noindent
+\noi
 \bgroup
-\ifpreproofhead\noindent\argumentationheadstylize{\preproofhead}. \fi
-\noindent
+\ifpreproofhead\noi\argumentationheadstylize{\preproofhead}. \fi
+\noi
 \preproofbody
 \egroup
 \eop
@@ -1580,7 +1580,7 @@
 \ifwrongproofbody % if wrongproof
 \eop
 \medskip
-\noindent
+\noi
 \bgroup
 \llap{\activitysymbol\enspace}%
 \ifwrongproofhead\else\edef\wrongproofhead{\sayName{wrongproof}}\fi
@@ -1597,7 +1597,7 @@
 \ifsketchbody % if sketch
 \hideproof
 \medskip
-\endgraf\noindent
+\eop\noi
 \llap{\activitysymbol\enspace}%
 \argumentationheadstylize{\ifsketchhead\sketchhead\else\sayName{sketch}\fi}.
 \bgroup
@@ -1620,13 +1620,13 @@
     {\unless\ifheadless{\unexpanded{\argumentationheadstyle}\proofhead.\enspace}\fi
      \ea\ea\ea\unexpanded\ea{\proofbody}\unexpanded{\hfill\qedsymbol}}%
 \else % else (don't hide the proof, show it)
-\medskip\endgraf\noindent
+\medskip\eop\noi
 \bgroup
 \ifheadless\else\argumentationheadstylize{\proofhead.\enspace}\fi
 \proofbody
 \XXXeolllap{\qedsymbol}%
 \egroup
-\endgraf
+\eop
 \fi
 %%%%%%%% /if hideproof
 \fi
@@ -1637,15 +1637,15 @@
 %%{{{ user toolkit 
 
 % XXX: use better delims (. or : ?)
-\def\proofcase#1{\noindent\proofcasestylize{#1}}
-\def\proofpart#1{\noindent\proofpartstylize{#1}}
-\def\crproofcase#1{\endgraf\proofcase{#1}}
-\def\crproofpart#1{\endgraf\proofpart{#1}}
-\def\crtabproofcase#1{\endgraf\indent\proofcase{#1}}
-\def\crtabproofpart#1{\endgraf\indent\proofpart{#1}}
-\def\proofalt#1{\noindent\proofaltstylize{#1}}
-\def\crproofalt#1{\endgraf\proofalt{#1}}
-\def\crtabproofalt#1{\endgraf\indent\proofalt{#1}}
+\def\proofcase#1{\noi\proofcasestylize{#1}}
+\def\proofpart#1{\noi\proofpartstylize{#1}}
+\def\crproofcase#1{\eop\proofcase{#1}}
+\def\crproofpart#1{\eop\proofpart{#1}}
+\def\crtabproofcase#1{\eop\indent\proofcase{#1}}
+\def\crtabproofpart#1{\eop\indent\proofpart{#1}}
+\def\proofalt#1{\noi\proofaltstylize{#1}}
+\def\crproofalt#1{\eop\proofalt{#1}}
+\def\crtabproofalt#1{\eop\indent\proofalt{#1}}
 \def\mistake{\hfill\mistakesymbol}%
 
 %%}}}
@@ -1810,7 +1810,7 @@
 \SetParag blah head      {\IfStrEmpty{\paragtitle}{}{\paragtitle}}% simple \paragtitle won't do
 \SetParag blah headyhook {\IfStrEmpty{\paragtitle}{}{.}}
 \SetParag blah headzhook {\IfStrEmpty{\paragtitle}{}{\enspace}}
-\SetParag blah bodybhook {\loadeqnumber\aftergroup\saveeqnumber\noindent}
+\SetParag blah bodybhook {\loadeqnumber\aftergroup\saveeqnumber\noi}
 \SetParag blah tag          {¶}
 \SetParag blah tagdecorator {}
 \DefAParag blah
@@ -1972,7 +1972,7 @@
 \definecolor{sourcecodelinecolorinv}{cmyk}{0,0,0,.1}
 \DefStyle sourcecodeline {\sf}
 \def\printlistinglineno{\hbox{\hbox to 4em{}\llap{\colorboxfb{sourcecodelinecolor}{sourcecodelinecolorinv}{\hbox to 1em{}\sizeviii\sf\twopadthe\lineno}}\quad}}
-\def\sourcecode#1; {\endgraf\bigskip{\sizex\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}\bigskip\endgraf\noindent}
+\def\sourcecode#1; {\eop\bigskip{\sizex\def\setuplistinghook{\linenumberedlisting\nolastlinelisting}\listing{code/#1}}\bigskip\eop\noi}
 %%}}}
 
 \endinput
