@@ -1486,8 +1486,8 @@
 %%{{{ proclaim toolkit 
 
 \DefStyle proclaim          {\sl}
-\DefStyle case              {\scshape}
 \DefStyle proof             {\scshape}
+\DefStyle proofcase         {\scshape}
 \DefStyle proofpart         {\scshape}
 \DefStyle proofalt          {\scshape}
 \DefStyle argumentationhead {\scshape}
@@ -1637,11 +1637,11 @@
 %%{{{ user toolkit 
 
 % XXX: use better delims (. or : ?)
-\def\case#1{\noindent\casestylize{#1}}
+\def\proofcase#1{\noindent\proofcasestylize{#1}}
 \def\proofpart#1{\noindent\proofpartstylize{#1}}
-\def\crcase#1{\endgraf\case{#1}}
+\def\crproofcase#1{\endgraf\proofcase{#1}}
 \def\crproofpart#1{\endgraf\proofpart{#1}}
-\def\crtabcase#1{\endgraf\indent\case{#1}}
+\def\crtabproofcase#1{\endgraf\indent\proofcase{#1}}
 \def\crtabproofpart#1{\endgraf\indent\proofpart{#1}}
 \def\proofalt#1{\noindent\proofaltstylize{#1}}
 \def\crproofalt#1{\endgraf\proofalt{#1}}
