@@ -996,9 +996,9 @@ $$}
 \def\bijtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, tail, two heads, "#1"] \| {} \endcd}}
 \def\injtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, tail, "#1"] \| {} \endcd}}
 \def\surtoby#1{\mathrel{\cdopt{nodes={inner sep=0}} {} \ar[r, two heads, "#1"] \| {} \endcd}}
-\def\set#1{\left\{#1\right\}}
-\def\fsset#1{\{#1\}}% fixed-size set
-\def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set
+\def\set#1{\brace{#1}}
+\def\fsset#1{\{#1\}}% fixed-size set (alt: use \noflexmed)
+\def\bigset#1{{\mathopen{\big\{}{#1}\mathclose{\big\}}}}% forced big-size set (alt: use \noflexbig)
 \def\tupa#1{\left\langle#1\right\rangle}
 \def\tupp#1{\left(#1\right)}
 \let\tup=\tupa
