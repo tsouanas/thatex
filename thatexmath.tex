@@ -956,6 +956,7 @@ $$}
 \let\olim=\overlim
 \let\ulim=\underlim
 \def\symdiff{\mathbin{\triangle}}
+\let\sdiff=\symdiff
 \def\surjto{\mathrel{\rightarrow\mkern-15mu\rightarrow}}
 \let\surto=\surjto
 \def\to{\mathrel{\rightarrow}}
@@ -1059,11 +1060,17 @@ $$}
 \def\faml#1#2{{\family {{#1}_{#2}} {{#2}}}}
 \def\sequence#1#2{{\paren{#1}_{#2}}}
 \let\seq=\sequence
+\let\sequ=\sequence
+\let\sqc=\sequence
+\def\sequenceset#1#2{{\paren{#1}_{#2}}}
+\let\seqset=\sequenceset
+\let\sqcset=\sequenceset
+\let\sequset=\sequenceset
 \def\seqn#1#2{\sequence {{#1}_{#2}} {#2}}
 \def\sequencefromto#1#2#3{{\paren{#1}_{#2}^{#3}}}
 \def\seqnft#1#2#3#4{\sequencefromto {#1} {{#2}={#3}} {#4}} % from to
 \def\seqnset#1#2{\set {{#1}_{#2}}_{#2}}
-\def\ssetp#1#2{({#1}\mathrel{;}{#2})}
+\def\ssetp#1#2{({#1}\mathrel{;}{#2})}% structured sets
 \def\sseta#1#2{\langle{#1}\mathrel{;}{#2}\rangle}
 \let\sset=\ssetp
 \def\ssetfont{\cal}
