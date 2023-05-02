@@ -50,12 +50,21 @@
 % load the ams msbm fonts
 % use bbold10, bbold7, bbold5 for an alternative font
 % that supports more characters (and digits!)
+% maybe the font bbm has something interesting too
 \font\tenbbb=msbm10
 \font\sevenbbb=msbm7
 \font\fivebbb=msbm5
 \skewchar\tenbbb='177 \skewchar\sevenbbb='177 \skewchar\fivebbb='177
 \newfam\bbbfam \textfont\bbbfam=\tenbbb \scriptfont\bbbfam=\sevenbbb \scriptscriptfont\bbbfam=\fivebbb
-\def\bbb#1{{\fam\bbbfam#1}}
+\def\bbb#1{{\fam\bbbfam\relax#1}}
+
+% load the bbold fonts
+\font\tenbbold=bbold10
+\font\sevenbbold=bbold7
+\font\fivebbold=bbold5
+\skewchar\tenbbold='177 \skewchar\sevenbbold='177 \skewchar\fivebbold='177
+\newfam\bboldfam \textfont\bboldfam=\tenbbold \scriptfont\bboldfam=\sevenbbold \scriptscriptfont\bboldfam=\fivebbold
+\def\bbold#1{{\fam\bboldfam\relax#1}}
 
 % load the eufm fonts
 \font\teneuf=eufm10
