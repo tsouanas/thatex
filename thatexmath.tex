@@ -1499,22 +1499,35 @@ $$}
 %%}}}
 
 %%{{{ category theory 
-\def\cat#1{{\mathsfmbf {#1}}}
-\def\one{{\mathit 1}}
-\def\oneof#1{{\one_{#1}}}
+\let\thecat=\namedcat                  % \thecat {Set}             𝐒𝐞𝐭
+\def\somecat#1{{\bbb #1}}              % \somecat C                ℂ
+\let\cat=\somecat                      % \cat C                    ℂ
+\def\catby#1{\cat C[#1]}               % \catby S                  ℂ[S]
+\def\numcat#1{{\bbold #1}}             % \numcat 1                 𝟙
+\def\one{{\mathit 1}}                  % \one                      1
+\def\oneof#1{{\one_{#1}}}              % \oneof A                  1_A
+\def\arrset#1#2#3{{#1}(#2,#3)}         % \arrset {\cat C} A B      ℂ(A,B)
+\def\homset#1#2{\Hom(#1,#2)}           % \homset A B               Hom(A,B)
+\def\homsetin#1#2#3{\Hom_{#1}(#2,#3)}  % \homsetin {\cat C} A B    Hom_C(A,B)
+\def\prosetal#1#2{#1_{#2}}             % \prosetal \ints \leq      ℤ_(≤)
+\def\theprosetalcat#1#2{\prosetal{\thecat{#1}}{(#2)}} % \theprosetalcat Int \leq  ℤ_(≤)
 \DefOpP Obj
 \DefOpP Arr
-\DefOp Hom
-\DefOp src
-\DefOp tgt
+\DefOp  Hom
+\DefOp  src
+\DefOp  tgt
+\def\SETSUB  {\theprosetalcat {Set} \subset}
+\def\INTLEQ  {\theprosetalcat {Int} \leq}
+\def\INTDIV  {\theprosetalcat {Int} \divides}
+\def\PSET    {\thecat{Set}_{{\star}}}
+\def\ZERO    {\numcat{0}}
+\def\ONE     {\numcat{1}}
+\def\TWO     {\numcat{2}}
 \DefCAT SET         Set
-\DefCAT INTLEQ      IntLeq
-\DefCAT INTDIV      IntDiv
 \DefCAT GROUP       Group
 \DefCAT ABEL        Abel
 \DefCAT RING        Ring
 \DefCAT LATTICE     Lattice
-\DefCAT POINTEDSET  PointedSet
 \DefCAT POSET       Poset
 %%}}}
 
