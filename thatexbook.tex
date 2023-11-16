@@ -581,7 +581,7 @@
 \def\structaka{}%
 \def\structlabel{}%
 \def\structfull{\structformal\ifvanishes\structtitle\\\else\spacechar(\structtitle)\fi}%
-\def\structsmart{\structclassname \structtag\ifvanishes\structaka\\\else\spacechar(\structaka)\fi}%
+\def\structsmart{\ifvanishes\structaka\\\structclassname \structtag\else\structaka\spacechar(\structtag)\fi}%
 % XXX: most of these will be re-mixedin later by structpostconfmixin
 \Mixin
     class classname tag
