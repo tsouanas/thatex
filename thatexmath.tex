@@ -642,6 +642,9 @@ $$}
 \let\knuthcong=\cong
 \let\knuthncong=\ncong
 \let\knuthdiv=\div
+\let\knuthapprox=\approx
+\undefine\approx
+\def\approx{\knuthapprox}
 \def\cong{\equiv}
 \undefine\ncong
 \def\ncong{\mathrel{\not\equiv}}
@@ -1195,7 +1198,7 @@ $$}
 \def\rinvp#1{\rinv{\paren{#1}}}
 \def\rop#1{\rel{{#1}^{\partial}}}
 \def\ropp#1{\rop{\paren{#1}}}
-\def\frel#1{\approx_{#1}}
+\def\frel#1{\knuthapprox_{#1}}
 \def\relto{\mathbin{\rightarrowtriangle}}
 \def\relfrom{\mathbin{\leftarrowtriangle}}
 \let\rto=\relto
@@ -1629,7 +1632,7 @@ $$}
 \def\pmodR#1{\allowbreak \ifinner \mkern 8mu\else \mkern 18mu\fi ({\fam \z@ mod_{R}}\,\,#1)}
 \makeatother
 \def\gconj#1{\sigma_{#1}}
-\def\gconjrel{\approx}
+\def\gconjrel{\knuthapprox}
 \def\gcl#1{\namedop{Cls}\funparen{#1}}
 \let\groupord=\gord
 \def\subgroup{\leq}
@@ -1723,6 +1726,8 @@ $$}
 %%}}}
 
 %%{{{ algorithms 
+
+\def\assympeq{\sim}
 
 \def\algorithmstylize#1{\text{{\scshape #1}}}
 
