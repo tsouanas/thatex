@@ -1590,12 +1590,12 @@ $$}
 \def\up{\mathord{\uparrow}}
 \def\dualposet#1{{#1}^\partial}
 \let\dual=\dualposet
-\def\ubs#1{{#1}^{\mathrmtiny{U}}}
-\def\lbs#1{{#1}^{\mathrmtiny{L}}}
 \def\inf{\knuthinf\nolimits} % inf is sameline by default
 \def\sup{\knuthsup\nolimits} % sup is sameline by default
-\def\lub{\namedop{lub}}
-\def\glb{\namedop{glb}}
+\DefOp lub
+\DefOp glb
+\DefOp ubs
+\DefOp lbs
 \def\fixpoints{\namedop{Fix}}
 \def\lfp{\namedop{lfp}}
 \def\gfp{\namedop{gfp}}
