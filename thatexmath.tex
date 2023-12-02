@@ -127,11 +127,11 @@
 \def\intreals{\reals_\ints}
 \def\ratreals{\reals_\rats}
 \def\algreals{\reals_\algs}
-\def\negs#1{{#1}_{< 0}}
-\def\poss#1{{#1}_{< 0}}
-\def\nonnegs#1{{#1}_{\geq 0}}
-\def\nonposs#1{{#1}_{\leq 0}}
-\def\phants#1{{#1}_{\phantom{\geq 0}}}
+% subsets of rats
+\def\natrats{\rats_\nats}
+\def\intrats{\rats_\ints}
+% subsets of ints
+\def\natints{\ints\nats}
 \def\posints{\poss\ints}
 \def\negints{\negs\ints}
 \def\nonposints{\nonposs\ints}
@@ -142,6 +142,12 @@
 \let\nnints=\nonnegints
 \let\npints=\nonposints
 \let\phints=\phantsints
+% general subset notations
+\def\negs#1{{#1}_{< 0}}
+\def\poss#1{{#1}_{< 0}}
+\def\nonnegs#1{{#1}_{\geq 0}}
+\def\nonposs#1{{#1}_{\leq 0}}
+\def\phants#1{{#1}_{\phantom{\geq 0}}}
 %%}}}
 
 %%{{{ alternative font for other uses (for example implementations) 
