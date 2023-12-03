@@ -1404,6 +1404,9 @@ $$}
 \DefType Var
 \DefType Type
 \DefType List
+\DefType Tree
+\DefType Id
+\DefType Konst
 \def\lnil{\mathord{[\,]}}% Nil list sugar: []
 \def\lcons{\mathbin{\doublecolon}}% Cons list sugar: :
 \def\list#1{\bracket{#1}}
@@ -1415,6 +1418,7 @@ $$}
 \let\cons=\namedcons
 \let\type=\namedtype
 \let\fun=\namedfun
+\let\fpf=\namedfpf
 \let\var=\namedvar
 \def\fsec#1#2{(\fA {\mathord{#1}} {\mathord{#2}})}% sections of binary ops: \fsec + 1; \fsec 1 +; …
 
