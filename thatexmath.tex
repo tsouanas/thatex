@@ -1412,6 +1412,7 @@ $$}
 \let\type=\namedtype
 \let\fun=\namedfun
 \let\var=\namedvar
+\def\fsec#1#2{(\fA {\mathord{#1}} {\mathord{#2}})}% sections of binary ops: \fsec + 1; \fsec 1 +; …
 
 % fun applicators:
 % fA atomic application
@@ -1719,7 +1720,7 @@ $$}
 \def\ushole{{\mathord{\vphantom x\_\mkern-4mu\_}}}% underscore uhole
 \def\vrhole{{\mathord{\vphantom x{\vrule height 0.0pt depth 0.4pt width 0.4em}}}}% vrule uhole
 \let\uhole=\vrhole
-\def\phole{{\mathord{\vphantom0\_}}}% placeholder
+\def\phole{{\mathord{\vphantom0\_}}}% placeholder or pattern-hole
 \def\chole{{\ensuremath{\colorbox{holecolor}{$\vphantom 1\uhole$}}}}% colored hole
 \def\choled#1{{\ensuremath{\colorbox{holecolor}{$#1$}}}}
 \def\thole{\thinspace\vrule height 0.0pt depth 0.4pt width 1em\thinspace}
