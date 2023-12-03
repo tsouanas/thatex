@@ -459,13 +459,17 @@
 \def\toverbrace#1#2{\overbrace{#1}^{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\moverbrace#1#2{\overbrace{#1}^{{#2}}}
 \def\moverbracebig#1#2{\moverbrace {#1} {\dsize #2}}% big (legible) version
+\def\toverbracebig#1#2{\toverbrace {#1} {\tenrm #2}}% big (legible) version
 \def\tunderbrace#1#2{\underbrace{#1}_{\text{\eightrm #2}}}% XXX: default \text can't display some non-ascii
 \def\munderbrace#1#2{\underbrace{#1}_{{#2}}}
 \def\munderbracebig#1#2{\munderbrace {#1} {\dsize #2}}% big (legible) version
+\def\tunderbracebig#1#2{\tunderbrace {#1} {\tenrm #2}}% big (legible) version
 \let\tobrace=\toverbrace
 \let\tubrace=\tunderbrace
 \let\mobrace=\moverbrace
 \let\mubrace=\munderbrace
+\let\tobraceb=\toverbracebig
+\let\tubraceb=\tunderbracebig
 \let\mobraceb=\moverbracebig
 \let\mubraceb=\munderbracebig
 \def\shell#1\endshell{\quote{\let\\=\newline\tentt #1}\endquote}% TODO: make a real shell macro
