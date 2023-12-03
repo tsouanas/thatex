@@ -1171,6 +1171,11 @@ $$}
 \def\pifthenelse#1#2#3{\paren{\ifthenelse{#1}{#2}{#3}}}
 \def\IF#1\THEN#2\ELSE#3\FI{\ifthenelse{#1}{#2}{#3}}
 \def\PIF#1\THEN#2\ELSE#3\FIP{\pifthenelse{#1}{#2}{#3}}
+\def\letin#1#2{\mathbf{let}~#1~\mathbf{in}~#2}
+\def\letcrin#1#2{\topaligned \mathbf{let}~&#1 \\\mathbf{in}~&#2 \endtopaligned}% let..in.. in separate lines
+\def\pletin#1#2{\paren{\letin{#1}{#2}}}
+\def\LET#1\IN#2\TEL{\letcrin{#1}{#2}}
+\def\PLET#1\IN#2\TELP{\pletin{#1}{#2}}
 \def\mapsio#1#2{\paren{#1\mapsto#2}}% maps input (#1) to output (#2)
 \def\lamhead#1{{\lambda}{#1}}% just the head without any body
 \def\lam#1#2{\lamhead{#1}\,.\,{#2}}
