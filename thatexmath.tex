@@ -102,8 +102,8 @@
 \def\namedcons#1{\mathord{\mathsf{#1}}}% for data constructors
 \def\namedcat#1{\mathord{\mathsfmbf{#1}}}
 \def\namedfou#1{\mathord{\mathsfmbf{#1}}}% for foundation/theory acronyms
-\def\namedop#1{\operatorname{#1}}
-\def\namedoplims#1{\operatornamewithlimits{#1}}
+\def\namedop#1{\mathop{\operatorname{#1}}\nolimits}
+\def\namedoplims#1{\mathop{\operatornamewithlimits{#1}}}
 \def\cal{\Cal}
 %%}}}
 
@@ -1613,10 +1613,14 @@ $$}
 \let\dual=\dualposet
 \def\inf{\knuthinf\nolimits} % inf is sameline by default
 \def\sup{\knuthsup\nolimits} % sup is sameline by default
-\DefOp lub
 \DefOp glb
-\DefOp ubs
+\DefOp lub
 \DefOp lbs
+\DefOp ubs
+\DefOp inf
+\DefOp sup
+\DefOp min
+\DefOp max
 \def\fixpoints{\namedop{Fix}}
 \def\lfp{\namedop{lfp}}
 \def\gfp{\namedop{gfp}}
