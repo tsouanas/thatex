@@ -76,6 +76,8 @@
 %%}}}
 
 %%{{{ mathfonts 
+\let\amstext=\text
+\let\liketext=\amstext
 \def\mathui#1{\hbox{\text{\tenui#1}}}
 \def\mathit#1{\hbox{\text{\tenit#1}}}
 \def\mathrm#1{\hbox{\text{\tenrm#1}}}
@@ -88,12 +90,13 @@
 \def\mathsfbf#1{\hbox{\text{\tenssbf#1}}}
 \def\mathsfmbf#1{\hbox{\text{\sfmbf#1}}}
 \def\mathsc#1{\hbox{\text{\scshape #1}}}
+\def\textrm#1{\amstext{\elevenrm #1}}
 \def\textrmsmallish#1{\hbox{\text{\ninerm#1}}}
 \def\mathrmsmallish#1{\hbox{\text{\ninerm#1}}}
 \def\mathrmsmall#1{\hbox{\text{\sevenrm#1}}}
 \def\mathrmtiny#1{\hbox{\text{\sixrm#1}}}
 \def\txt#1{\text{\tt #1}}
-\def\textrm#1{\text{\rm#1}}
+\let\text=\textrm
 \def\namedrel#1{\operatorname{#1}}
 \def\namedfun#1{\mathord{\mathit{#1}}}% for functions
 \def\namedvar#1{\mathord{\mathit{#1}}}% for variables
@@ -217,11 +220,11 @@
 }
 % \DefTHING #1 #2 \defs a command #1 to be printed as #2 and also takes care
 % of the definition of the "parenthesized" version of it if it makes sense
-\def\DefREL#1 #2  {\csgroup\def{#1}{{\namedrel{#2}}}\DefPar #1 }
-\def\DefFUN#1 #2  {\csgroup\def{#1}{{\namedfun{#2}}}\DefPar #1 \DefApp #1 }
-\def\DefFPF#1 #2  {\csgroup\def{#1}{{\namedfpf{#2}}}\DefPar #1 \DefApp #1 }
-\def\DefCONS#1 #2 {\csgroup\def{#1}{{\namedcons{#2}}}\DefPar #1 \DefApp #1 }
-\def\DefOP#1 #2   {\csgroup\def{#1}{{\namedop{#2}}}\DefPar  #1 \DefApp #1 }
+\def\DefREL#1 #2  {\csgroup\def{#1}{\namedrel{#2}}\DefPar #1 }
+\def\DefFUN#1 #2  {\csgroup\def{#1}{\namedfun{#2}}\DefPar #1 \DefApp #1 }
+\def\DefFPF#1 #2  {\csgroup\def{#1}{\namedfpf{#2}}\DefPar #1 \DefApp #1 }
+\def\DefCONS#1 #2 {\csgroup\def{#1}{\namedcons{#2}}\DefPar #1 \DefApp #1 }
+\def\DefOP#1 #2   {\csgroup\def{#1}{\namedop{#2}}\DefPar #1 \DefApp #1 }
 \def\DefOPP#1 #2  {\csgroup\def{#1}##1{{\namedop{#2}\funparen{##1}}}}% always of arity 1, parenthesizing argument
 \def\DefTYPE#1 #2 {\csgroup\def{#1}{{\namedtype{#2}}}\DefPar #1 \DefApp #1 }% Par/App needed for type constructors like List and Maybe
 \def\DefVAR#1 #2  {\csgroup\def{#1}{{\namedvar{#2}}}}
@@ -831,14 +834,14 @@ $$}
 \def\quantified#1{\bracket{\thinspace#1\thinspace}}
 \def\medquantified#1{\medbracket{\thinspace#1\thinspace}}% the point is that these won't flex to fit content
 \def\bigquantified#1{\bigbracket{\thinspace#1\thinspace}}
-\def\quantifiedt#1{\quantified{\text{#1}}}
-\def\medquantifiedt#1{\medquantified{\text{#1}}}
-\def\bigquantifiedt#1{\bigquantified{\text{#1}}}
+\def\quantifiedt#1{\quantified{\textrm{#1}}}
+\def\medquantifiedt#1{\medquantified{\textrm{#1}}}
+\def\bigquantifiedt#1{\bigquantified{\textrm{#1}}}
 % quantifiers
 \def\quantifierabbr#1#2#3{\paren{\/#1 #2}\quantified{#3}}
 \def\quantifierabbrt#1#2#3{\paren{\/#1 #2}\quantifiedt{#3}}
-\def\quantifiertabbr#1#2#3{\paren{\/#1 \text{#2}}\quantified{#3}}
-\def\quantifiertabbrt#1#2#3{\paren{\/#1 \text{#2}}\quantifiedt{#3}}
+\def\quantifiertabbr#1#2#3{\paren{\/#1 \textrm{#2}}\quantified{#3}}
+\def\quantifiertabbrt#1#2#3{\paren{\/#1 \textrm{#2}}\quantifiedt{#3}}
 \def\bigquantifierabbr#1#2#3{\paren{\/#1 #2}\bigquantified{#3}}
 \def\bigquantifierabbrt#1#2#3{\paren{\/#1 #2}\bigquantifiedt{#3}}
 \def\bigquantifiertabbr#1#2#3{\paren{\/#1 \text{#2}}\bigquantified{#3}}
