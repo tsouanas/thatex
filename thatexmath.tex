@@ -600,13 +600,15 @@ $$}
 \def\quadcol{\sepcol{\quad}}
 \def\qquadcol{\sepcol{\qquad}}
 \makeatletter
-\def\paths#1{%
+\def\pathed#1{%
 {%
 \def\pathween##1{\faded{\text{\smaller ##1\vphantom{Gg}}}\cr}%
 \leftangle{%
+\let\\=\cr
 \,\vcenter{\normalbaselines\m@th\ialign{$##\hfil$&\quad##\hfil\crcr#1\crcr}%
 }}}}
 \makeatother
+\def\paths#1\endpaths{\pathed{#1}}
 %%}}}
 
 %%{{{ generic TeX symbol machinery 
