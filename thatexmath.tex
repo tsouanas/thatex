@@ -740,8 +740,10 @@ $$}
 \def\heartimplies{\heartrel\implies}
 \def\askimplies{\askrel\implies}
 \def\askimpliedby{\askrel\impliedby}
+\let\askimplied=\askimpliedby
 \def\dotsimplies{\longdotsrel\implies}
 \def\dotsimpliedby{\longdotsrel\impliedby}
+\let\dotsimplied=\dotsimpliedby
 \def\hearteq{\heartrel=}
 \def\askeq{\askrel=}
 \def\asteq{\astrel=}
@@ -759,13 +761,12 @@ $$}
 \let\eqlet=\eqass
 \def\mland{{\mathbin{\;\;\text{\rm \andword}\;\;}}} % metalang and
 \def\mlor{{\mathbin{\;\;\text{\rm \orword}\;\;}}}   % metalang or
-\def\notimplies{\smartnot\implies}
-\def\notimpliedby{\smartnot\impliedby}
-\let\nimplies=\notimplies
-\let\nimplied=\notimpliedby
+\def\nimplies{\smartnot\implies}
+\def\nimpliedby{\smartnot\impliedby}
+\let\nimplied=\nimpliedby
 \def\tiff{${}\mathrel{\Leftrightarrow}{}$}
 \def\timplies{${}\mathrel{\Rightarrow}{}$}
-\def\timplied{${}\mathrel{\Leftarrow}{}$}
+\def\timpliedby{${}\mathrel{\Leftarrow}{}$}
 \def\lrdir{($\Rightarrow$)}
 \def\rldir{($\Leftarrow$)}
 \def\bidir{($\Leftrightarrow$)}
