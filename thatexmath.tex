@@ -475,6 +475,8 @@
 \let\tubraceb=\tunderbracebig
 \let\mobraceb=\moverbracebig
 \let\mubraceb=\munderbracebig
+\def\byobrace#1#2{\mathrel{\tobrace {#1} {\clap{\explanationstylize{(#2)}}}}}
+\def\byubrace#1#2{\mathrel{\tubrace {#1} {\clap{\explanationstylize{(#2)}}}}}
 \def\shell#1\endshell{\quote{\let\\=\newline\tentt #1}\endquote}% TODO: make a real shell macro
 \def\cased#1{{\let\\=\cr\knuthcases{#1}}}
 \def\cases#1\endcases{\cased{#1}}
