@@ -265,6 +265,10 @@
 \def\prebang#1{\mathord{!\mkern1mu#1}}
 \def\prebangp#1{\mathord{!\paren{#1}}}
 \def\doublecolon{\mathbin{:\mkern-1mu:}}
+\def\rrarr{\rightrightarrows}% ⇉
+\def\rlarr{\rightleftarrows}% ⇄
+\def\lrarr{\leftrightarrows}% ⇆
+\def\llarr{\leftleftarrows}% ⇇
 %%}}}
 
 %%{{{ elementary math 
@@ -1818,6 +1822,13 @@ $$}
 \let\ntendsto=\nlimto
 \let\ntendsfrom=\nlimfrom
 \let\ntends=\ntendsto
+\def\uniformlyto{\mathrel{\rrarr}}
+\def\uniformlyfrom{\mathrel{\llarr}}
+\let\unito=\uniformlyto
+\let\unifrom=\uniformlyfrom
+\let\utendsto=\uniformlyto
+\let\utendsfrom=\uniformlyfrom
+\let\utends=\utendsto
 \def\settles{\mathrel{\rightsquigarrow}}
 \def\convexhull#1{\left\langle#1\right\rangle}
 \let\hull=\convexhull
