@@ -1193,6 +1193,11 @@ $$}
 \def\letin#1#2{\mathbf{let}~#1~\mathbf{in}~#2}
 \def\letcrin#1#2{\topaligned \mathbf{let}~&#1 \\\mathbf{in}~&#2 \endtopaligned}% let..in.. in separate lines
 \def\pletin#1#2{\paren{\letin{#1}{#2}}}
+\def\where#1\endwhere{\quad \mathbf{where}~\mathrlap{\topaligned\funioed{#1}\endtopaligned}}
+\def\nowhere{\quad \phantom{\mathbf{where}}}% use when displaying two fundefs side by side and only one has an extra where line
+\def\whereblock#1\endwhereblock{\quad \mathbf{where}~\left[\mathrlap{\topaligned\funioed{#1}\endtopaligned}\right.}
+\def\wherecr#1\endwherecr{\quad\mathbf{where} \\\qquad\mathrlap{\funioed{#1}}}
+\def\guards#1\endguards{\quad\left|\;\mathrlap{\def\otherwise{\mathrm{otherwise}}\funioed{#1}}\right.}
 \def\LET#1\IN#2\TEL{\letcrin{#1}{#2}}
 \def\PLET#1\IN#2\TELP{\pletin{#1}{#2}}
 \def\mapsio#1#2{\paren{#1\mapsto#2}}% maps input (#1) to output (#2)
