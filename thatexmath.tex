@@ -1186,7 +1186,9 @@ $$}
 \def\ton#1{\rel{\to^{#1}}}
 \def\ifthenelse#1#2#3{\mathbf{if}~#1~\mathbf{then}~#2~\mathbf{else}~#3}
 \def\pifthenelse#1#2#3{\paren{\ifthenelse{#1}{#2}{#3}}}
+\def\ifthenelsecr#1#2#3{\topaligned&\mathbf{if}~#1\\&\phantom{\mathbf{if}~}\mathbf{then}~#2\\&\phantom{\mathbf{if}~}\mathbf{else}~#3\endtopaligned}
 \def\IF#1\THEN#2\ELSE#3\FI{\ifthenelse{#1}{#2}{#3}}
+\def\IFCR#1\THEN#2\ELSE#3\RCFI{\ifthenelsecr{#1}{#2}{#3}}
 \def\PIF#1\THEN#2\ELSE#3\FIP{\pifthenelse{#1}{#2}{#3}}
 \def\letin#1#2{\mathbf{let}~#1~\mathbf{in}~#2}
 \def\letcrin#1#2{\topaligned \mathbf{let}~&#1 \\\mathbf{in}~&#2 \endtopaligned}% let..in.. in separate lines
