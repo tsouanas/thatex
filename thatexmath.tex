@@ -1048,6 +1048,12 @@ $$}
 \def\tupa#1{\left\langle#1\right\rangle}
 \def\tupp#1{\left(#1\right)}
 \let\tup=\tupa
+\def\binprojectionsymbol{\mathbin{\pmb.}}
+\let\bincoprojectionsymbol=\binprojectionsymbol
+\def\project#1.#2{{#1}\binprojectionsymbol{\mathsfdc{#2}}}
+\def\coproject#1.#2{{\mathsfdc{#1}}\bincoprojectionsymbol{#2}}
+\let\prodout=\project
+\let\sumin=\coproject
 \def\proj#1{\pi_{#1}}% projections of implicit arity (pi-notation)
 \def\projfrom#1#2{\pi^{#1}_{#2}}% projections of denoted arity (pi-notation)
 \def\tproj#1{\namedfun{proj}_{#1}}% projections of implicit arity (proj-notation)
@@ -1432,6 +1438,8 @@ $$}
 \DefType Tree
 \DefType Id
 \DefType Konst
+\DefType FinSum
+\DefType FinProd
 \def\lnil{\mathord{[\,]}}% Nil list sugar: []
 \def\lcons{\mathbin{\doublecolon}}% Cons list sugar: :
 \def\list#1{\bracket{#1}}
@@ -1508,6 +1516,20 @@ $$}
 #2
 \endxalignat\saveeqnumber
 $$}
+
+\def\caseofPRIMEsuminpattern   #1.#2-> #3\\{{\sumin #1.#2} & {\mapsto} &{#3}\\}
+\def\caseofPRIMEgenericpattern #1->    #2\\{{#1}           & {\mapsto} &{#2}\\}
+\def\caseofed#1#2{% there is no non-(*ed) version
+\let\ca=\caseofPRIMEsuminpattern
+\let\ga=\caseofPRIMEgenericpattern
+\ttkeyword{case}~{#1}~\ttkeyword{of}~
+    \left\{
+    \matrix
+        \format \l&\;\c\;&\l \\
+        #2
+    \endmatrix
+    \right]
+}
 
 \def\funrefrl[#1]{\rwrl{\funref[#1]}}
 \def\funreflr[#1]{\rwlr{\funref[#1]}}
