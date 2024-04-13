@@ -1064,6 +1064,9 @@ $$}
 \def\tproj#1{\namedfun{proj}_{#1}}% projections of implicit arity (proj-notation)
 \def\tprojfrom#1#2{\namedfun{proj}^{#1}_{#2}}% projections of denoted arity (proj-notation)
 \def\pproj#1#2{\paren{#2}_{#1}}% parenthesized projection via subscript
+\def\FF{\mathord{\ttolkeyword{f}\mkern-2mu\ttolkeyword{f}}}
+\def\TT{\mathord{\ttolkeyword{t}\mkern-3mu\ttolkeyword{t}}}
+\def\boom{\ttolkeyword{boom}}
 \DefFun fst
 \DefFun snd
 \DefFun swap
@@ -1217,8 +1220,10 @@ $$}
 \def\LET#1\IN#2\TEL{\letcrin{#1}{#2}}
 \def\PLET#1\IN#2\TELP{\pletin{#1}{#2}}
 \def\mapsio#1#2{\paren{#1\mapsto#2}}% maps input (#1) to output (#2)
-\def\lamhead#1{{\lambda}{#1}}% just the head without any body
-\def\lam#1#2{\lamhead{#1}\,.\,{#2}}
+\def\binderdot{.}
+\def\lamsym{\mathsf{λ}}
+\def\lamhead#1{{\lamsym}{#1}}% just the head without any body
+\def\lam#1#2{\lamhead{#1}\,\binderdot\,{#2}}
 \def\lamt#1#2{\lam{#1}{\text{#2}}}
 \def\lamp#1#2{\lam{#1}{\paren{#2}}}% parenthesize body
 \def\plam#1#2{\medparen{\lam{#1}{#2}}}% parenthesize whole term
@@ -1234,8 +1239,9 @@ $$}
 \let\fap=\fappp
 \let\la=\lapp
 \let\lap=\lappp
-\def\descrsym{\iota}
-\def\descr#1#2{\descrsym\,{#1}\,.\,{#2}}
+\def\descrsym{\mathsf{ι}}
+\def\descrhead#1{{\descrsym}{#1}}% just the head without any body
+\def\descr#1#2{\descrhead{#1}\,.\,{#2}}
 \def\bag#1{\mathord{\Lbag#1\Rbag}}
 \def\inbag{\mathrel{\knuthvarepsilon}}
 \def\ninbag{\mathrel{\mkern-2mu\not{\mkern-3mu\knuthvarepsilon}}}
@@ -1312,17 +1318,18 @@ $$}
 %%}}}
 
 %%{{{ lambda calculus 
-\def\Llam#1#2{\lambda\,{#1}\,.\,{#2}}
+\def\stepsym{\triangleright}
+\def\Llam#1#2{\lam{#1}{#2}}
 \def\Lmac#1{\underline{\mathtt{#1}}}
 \def\Lfinto{\rightarrow\mathrel{\kern-.8em}\rightarrow}
 \def\Lnum#1{{\underline{#1}}}
-\def\xstep[#1]{\mathrel{\;\triangleright_{\kern-.4em{}_{#1}\;}}}
-\def\tstep[#1]{\xstep[\mathrmtiny{#1}]}
-\def\lamstep{\xstep[\lambda]}
+\def\xstep[#1]{\mathrel{\;\stepsym{\kern-.4em{}_{#1}\;}}}
+\def\tstep[#1]{\mathrel{\;\stepsym{\mkern-4mu{}_{\raise-.2ex\textrmtiny{#1}}\;}}}
+\def\lamstep{\tstep[λ]}
 \def\juststep{\xstep[\phantom{\beta}]}
-\def\alphastep{\xstep[\alpha]}
-\def\betastep{\xstep[\beta]}
-\def\etastep{\xstep[\eta]}
+\def\alphastep{\tstep[α]}
+\def\betastep{\tstep[β]}
+\def\etastep{\tstep[η]}
 \def\calcstep{\tstep[c]}
 \def\invstep{\phantom{\lamstep}}
 \let\istep=\invstep
@@ -1336,6 +1343,8 @@ $$}
 \def\isteq{\istep\lameq}% istep-indent equals
 \def\redex#1{\underline{#1}}
 \let\stepsto=\juststep
+\def\substitute#1#2#3{{#1}\bracket{{#2} \asseq {#3}}}
+\def\subst#1[#2 := #3]{\substitute{#1}{#2}{#3}}
 %%}}}
 
 %%{{{ combinatory logic 
@@ -1430,8 +1439,11 @@ $$}
 \DefType String
 \DefType Person
 \DefType Bool
+\DefTYPE Two   2
 \DefType Unit
+\DefTYPE One   1
 \DefType Empty
+\DefTYPE Zero  0
 \DefType Set
 \DefType Seq
 \DefType Bag
@@ -1444,8 +1456,8 @@ $$}
 \DefType Tree
 \DefType Id
 \DefType Konst
-\DefType FinSum
-\DefType FinProd
+\DefTYPE FinSum  Sum
+\DefTYPE FinProd Prod
 \def\infers{\mathrel{\turnstile}}
 \def\lnil{\mathord{[\,]}}% Nil list sugar: []
 \def\lcons{\mathbin{\doublecolon}}% Cons list sugar: :
@@ -1496,17 +1508,18 @@ $$}
 \def\fPPPA #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fap {#4}\fa  {#5}}
 \def\fPPPP #1#2#3#4#5{{#1}\fap {#2}\fap {#3}\fap {#4}\fap {#5}}
 
-\def\ttkeyword#1{\mathsfbf{#1}}% type theory keyword
+\def\ttmlkeyword#1{\mathsfbf{#1}}% type theory metalanguage keyword
+\def\ttolkeyword#1{\mathsfdc{#1}}% type theory objectlanguage keyword
 \def\spreadmatrixcr{\spreadmatrixlines{3pt}}
 
 \def\dataorsymbol{\pmbb{\mid}}
-\def\dataforms#1= #2{\ttkeyword{data}\ {#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
+\def\dataforms#1= #2{\ttmlkeyword{data}\ {#1}\ \;\mathtt{=}\;\ {\def\dataor{\;\dataorsymbol\;}#2}}
 
 \def\dataPRIME#1\\#2\enddataPRIME{%
 \def\co   ##1: ##2\\{{##1}           & {} \hastype {} &{##2}\\}
 \def\cons ##1: ##2\\{\namedcons{##1} & {} \hastype {} &{##2}\\}
 \mathcoled {
-    &\ttkeyword{data}\ {#1} \\
+    &\ttmlkeyword{data}\ {#1} \\
     &\quad
     \matrix
         \format \l&\;\c\;&\l \\
@@ -1524,12 +1537,15 @@ $$}
 \endxalignat\saveeqnumber
 $$}
 
+\def\ifthenelseed#1#2#3{% there is no non-(*ed) version
+\ttolkeyword{if}~{#1}~\ttolkeyword{then}~{#2}~\ttolkeyword{else}~{#3}%
+}
 \def\caseofPRIMEsuminpattern   #1.#2-> #3\\{{\sumin #1.#2} & {\mapsto} &{#3}\\}
 \def\caseofPRIMEgenericpattern #1->    #2\\{{#1}           & {\mapsto} &{#2}\\}
 \def\caseofed#1#2{% there is no non-(*ed) version
 \let\ca=\caseofPRIMEsuminpattern
 \let\ga=\caseofPRIMEgenericpattern
-\ttkeyword{case}~{#1}~\ttkeyword{of}~
+\ttolkeyword{case}~{#1}~\ttolkeyword{of}~
     \left\{
     \matrix
         \format \l&\;\c\;&\l \\
