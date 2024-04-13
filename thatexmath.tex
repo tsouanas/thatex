@@ -270,6 +270,7 @@
 \def\rlarr{\rightleftarrows}% ⇄
 \def\lrarr{\leftrightarrows}% ⇆
 \def\llarr{\leftleftarrows}% ⇇
+\def\turnstile{\vdash}% ⊢
 %%}}}
 
 %%{{{ elementary math 
@@ -696,6 +697,8 @@ $$}
 
 %%{{{ logic metalang 
 %\def\iffdf{\mathrel{\overset\triangle\iff}}
+\def\proves{\mathrel{\turnstile}}
+\let\derives=\proves
 \def\iffsymbol{\Longleftrightarrow}
 \def\impliessymbol{\Longrightarrow}
 \def\impliedbysymbol{\Longleftarrow}
@@ -1442,6 +1445,7 @@ $$}
 \DefType Konst
 \DefType FinSum
 \DefType FinProd
+\def\infers{\mathrel{\turnstile}}
 \def\lnil{\mathord{[\,]}}% Nil list sugar: []
 \def\lcons{\mathbin{\doublecolon}}% Cons list sugar: :
 \def\list#1{\bracket{#1}}
